@@ -13,7 +13,7 @@ int main()
 {
     try {
         
-        Expresion exp("5*((1+2)*3))");
+        Expresion exp("2*(5*(1+2)*3)");
         exp.imprimirExpresion();
         std::cout << "Resultado: " << exp.evaluar() << std::endl;
 
