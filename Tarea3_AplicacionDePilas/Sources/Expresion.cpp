@@ -59,46 +59,90 @@ void Expresion::imprimirExpresion() {
     std::cout << "Expresion Posfija: " << posfija << std::endl;
 }
 
-/**
- * @brief Evalúa la expresión infija convertida a posfija.
- * 
- * Esta función evalúa la expresión matemática en notación posfija utilizando una pila.
- * Si la expresión es válida, la función devuelve el resultado de la operación.
- * Si hay un error de sintaxis o de ejecución, se lanzará una excepción.
- * 
- * @throws std::runtime_error Si la expresión es inválida o tiene errores en su sintaxis.
- * @return int Resultado de la evaluación.
- */
+//incluir documentacion
 int Expresion::evaluar() {
     if (!valida) {
         throw std::runtime_error("No se puede evaluar una expresión inválida.");
     }
 
-    posfija = convertirAPosfija(); // Convertimos la expresión a notación posfija
-    Pila<int> pilaOperandos;
-    std::stringstream tokens(posfija);
-    std::string token;
+    posfija = convertirAPosfija(); // Convertimos la expresión infija a posfija
 
-    while (tokens >> token) {
-        // Si el token es un número, se apila
-        if (isdigit(token[0])) {
-            pilaOperandos.Apilar(std::stoi(token));
-        } 
-        // Si es un operador, se desapilan operandos y se realiza la operación
-        else {
+    Pila<int> pilaOperandos;
+    std::string elemento = "";
+
+    for (size_t i = 0; i < posfija.size(); ++i) {
+        char caracter = posfija[i];
+
+        // Si el carácter es un espacio, significa que hemos llegado al final de un elemento
+        if (caracter == ' ' && !elemento.empty()) {
+            if (isdigit(elemento[0])) {
+                // Si el elemento es un número, lo apilamos
+                pilaOperandos.Apilar(std::stoi(elemento));
+            } else {
+                // Verificamos si el elemento es un operador
+                if (elemento[0] == '-' && (i == 0 || (posfija[i-1] == ' ' || isOperator(posfija[i-1])))) {
+                    // Si el operador '-' es un signo unario (al principio o después de un operador)
+                    if (pilaOperandos.ObtenerCantElem() < 1) {
+                        throw std::runtime_error("Error: Expresión incorrecta.");
+                    }
+
+                    int operando = pilaOperandos.ObtenerTope();
+                    pilaOperandos.Desapilar();
+
+                    // Realizamos la operación unaria como "0 - operando"
+                    pilaOperandos.Apilar(0 - operando);
+                } else {
+                    // Si es un operador binario, procesamos la operación como antes
+                    if (pilaOperandos.ObtenerCantElem() < 2) {
+                        throw std::runtime_error("Error en la evaluación: Expresión incorrecta.");
+                    }
+
+                    int operando2 = pilaOperandos.ObtenerTope();
+                    pilaOperandos.Desapilar();
+                    int operando1 = pilaOperandos.ObtenerTope();
+                    pilaOperandos.Desapilar();
+
+                    switch (elemento[0]) {
+                        case '+': pilaOperandos.Apilar(operando1 + operando2); break;
+                        case '-': pilaOperandos.Apilar(operando1 - operando2); break;
+                        case '*': pilaOperandos.Apilar(operando1 * operando2); break;
+                        case '/':
+                            if (operando2 == 0) throw std::runtime_error("Error: División por cero.");
+                            pilaOperandos.Apilar(operando1 / operando2);
+                            break;
+                        default:
+                            throw std::runtime_error("Operador desconocido.");
+                    }
+                }
+            }
+
+            elemento = ""; // Limpiamos el elemento para el siguiente
+        }
+        // Si el carácter no es un espacio, lo agregamos al elemento
+        else if (caracter != ' ') {
+            elemento += caracter;
+        }
+    }
+
+    // Procesamos el último elemento si existe
+    if (!elemento.empty()) {
+        if (isdigit(elemento[0])) {
+            pilaOperandos.Apilar(std::stoi(elemento));
+        } else {
             if (pilaOperandos.ObtenerCantElem() < 2) {
                 throw std::runtime_error("Error en la evaluación: Expresión incorrecta.");
             }
-            int operando2 = pilaOperandos.ObtenerTope(); 
+
+            int operando2 = pilaOperandos.ObtenerTope();
             pilaOperandos.Desapilar();
-            int operando1 = pilaOperandos.ObtenerTope(); 
+            int operando1 = pilaOperandos.ObtenerTope();
             pilaOperandos.Desapilar();
 
-            switch (token[0]) {
+            switch (elemento[0]) {
                 case '+': pilaOperandos.Apilar(operando1 + operando2); break;
                 case '-': pilaOperandos.Apilar(operando1 - operando2); break;
                 case '*': pilaOperandos.Apilar(operando1 * operando2); break;
-                case '/': 
+                case '/':
                     if (operando2 == 0) throw std::runtime_error("Error: División por cero.");
                     pilaOperandos.Apilar(operando1 / operando2);
                     break;
@@ -110,6 +154,7 @@ int Expresion::evaluar() {
 
     return pilaOperandos.ObtenerTope(); // Devuelve el resultado final
 }
+
 
 /**
  * @brief Determina la precedencia de un operador matemático.
