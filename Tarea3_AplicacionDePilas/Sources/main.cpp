@@ -1,7 +1,12 @@
 /*
-Descripción: 
-Autor: Amaya Soria Angel Alberto
-Fecha: 04 de Febrero de 2025
+Descripción:este código permite:
+            Leer una expresión matemática de la entrada del usuario.
+            Validar la expresión para asegurar que esté bien formada.
+            Convertirla a notación posfija para facilitar su evaluación.
+            Evaluar la expresión para obtener su resultado. 
+
+Autor: Amaya Soria Angel Alberto && Altamirano Ocejo Michell Berenice 
+Fecha: 15 de Febrero de 2025
 */
 
 
