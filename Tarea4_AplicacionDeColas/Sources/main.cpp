@@ -12,7 +12,7 @@
     #include <unistd.h>
 #endif
 
-#include "../Headers/Cola.hpp"  // Incluir definición de la clase Cola (se asume que está definida en otro archivo)
+#include "../Headers/Cola.hpp"  
 
 using namespace std;
 
@@ -42,25 +42,50 @@ int main() {
 
     limpiarPantalla();  // Limpiamos la pantalla antes de iniciar el bucle
 
+
     try {
 
-        /*Cola<string> nombresCola;
+        Cola<string> nombresCola;
+        Cola<string> cajaUno;
+        string nombreCompleto;
+        string personaCajaUno;
+        int esperaCajaUno = 0, atencionCajaUno = 0;
 
-        for (int i = 0; i < 10; ++i) { 
-            string nombreCompleto = generarNombreAleatorio();
-            nombresCola.Encolar(nombreCompleto);
-        }
+        limpiarPantalla();
 
-        nombresCola.Imprimir();*/
+       
 
         // Bucle que simula la acción de un reloj
         for(int i = 0; i < 10; ++i)
-        {
+        { 
             cout << "Banco" << endl;  // Se imprime "Banco" en cada iteración
             cout << "Reloj: " << i+1 << endl;  // Se imprime el valor del contador con un mensaje de reloj
-            this_thread::sleep_for(chrono::seconds(1));  // Esperamos un segundo entre iteraciones
-            limpiarPantalla();  // Limpiamos la pantalla para simular un reloj en movimiento
-        }
+            cout << "\n\n\n"; 
+
+            
+                if(nombresCola.EstaVacia())
+                    {
+                        cout << "\t\tcaja 1: esta vacia" << endl;
+                    } else {
+                        personaCajaUno = nombresCola.ConocerPrim();
+                        cout << "\t\tcaja 1: atendiendo a " << personaCajaUno << endl;
+                        cajaUno.Encolar(personaCajaUno);
+                    }
+
+                nombreCompleto = generarNombreAleatorio();
+                nombresCola.Encolar(nombreCompleto);
+
+                this_thread::sleep_for(chrono::seconds(3));  // Esperamos entre iteraciones
+
+                // Solo limpiamos la pantalla después de un retraso adicional, dando tiempo para visualizar
+                limpiarPantalla();  // Limpiamos la pantalla para simular un reloj en movimiento
+            
+
+        }    
+
+
+
+
     } catch (const char* mensaje) {
         cerr << "\nError: " << mensaje << endl;  // En caso de error, lo mostramos por consola
     }
