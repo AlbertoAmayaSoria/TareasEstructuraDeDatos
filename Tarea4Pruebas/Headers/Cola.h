@@ -12,18 +12,18 @@ public:
      * @brief Constructor por defecto. Inicializa la cola como vacía.
      */
     Cola();
-    
+
     /**
      * @brief Constructor de copia. Copia los elementos de otra cola.
      * @param c Cola a copiar.
      */
     Cola(const Cola<Tipo>& c);
-    
+
     /**
      * @brief Destructor. Libera la memoria ocupada por la cola.
      */
     ~Cola();
-    
+
     /**
      * @brief Operador de asignación para copiar una cola en otra.
      * @param c Cola a copiar.
@@ -36,42 +36,42 @@ public:
      * @param valor Valor a agregar.
      */
     void Encolar(Tipo valor);
-    
+
     /**
      * @brief Elimina el primer elemento de la cola.
      * @throws Excepción si la cola está vacía.
      */
     void Desencolar();
-    
+
     /**
      * @brief Verifica si la cola está vacía.
      * @return true si la cola está vacía, false en caso contrario.
      */
     bool EstaVacia() const;
-    
+
     /**
      * @brief Elimina todos los elementos de la cola.
      */
     void Vaciar();
-    
+
     /**
      * @brief Devuelve la cantidad de elementos en la cola.
      * @return Número de elementos en la cola.
      */
     int ObtenerCantElem() const;
-    
+
     /**
      * @brief Imprime los elementos de la cola en orden.
      */
     void Imprimir() const;
-    
+
     /**
      * @brief Devuelve el primer elemento de la cola sin eliminarlo.
      * @return Valor del primer elemento.
      * @throws Excepción si la cola está vacía.
      */
     Tipo ConocerPrim() const;
-    
+
     /**
      * @brief Devuelve el último elemento de la cola sin eliminarlo.
      * @return Valor del último elemento.
@@ -81,7 +81,7 @@ public:
 
 private:
     int numElem; ///< Número de elementos en la cola.
-    
+
     /**
      * @brief Estructura que representa un nodo en la cola.
      */

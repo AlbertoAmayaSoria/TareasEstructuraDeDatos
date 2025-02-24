@@ -49,15 +49,15 @@ void Cola<Tipo>::Encolar(Tipo valor) {
 template <typename Tipo>
 void Cola<Tipo>::Desencolar() {
     if (EstaVacia()) throw "Cola vacía...\n";
-    
+
     Elemento* porBorrar = ultimo->siguiente; // Primer elemento
-    
+
     if (numElem == 1) {
         ultimo = nullptr; // La cola queda vacía
     } else {
         ultimo->siguiente = porBorrar->siguiente; // Saltar el primer elemento
     }
-    
+
     delete porBorrar;
     --numElem;
 }
@@ -123,12 +123,10 @@ void Cola<Tipo>::Imprimir() const {
     }
 
     Elemento* porImprimir = ultimo->siguiente; // Primer elemento
-    //std::cout << "Primero -> ";
     for (int i = 0; i < numElem; ++i) {
         std::cout << porImprimir->valor << std::endl;
         porImprimir = porImprimir->siguiente;
     }
-    //std::cout << "\b\b <- Último\n";
 }
 
 /**
@@ -148,4 +146,4 @@ Cola<Tipo>& Cola<Tipo>::operator=(const Cola<Tipo>& c) {
     }
 
     return *this;
-    }
+}
