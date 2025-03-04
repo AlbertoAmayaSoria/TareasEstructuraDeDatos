@@ -1,4 +1,6 @@
+#include <chrono>
 #include <iostream>
+#include <thread>
 #include "../Headers/ListaDoblementeEnlazada.hpp"
 
 bool condicionEliminar(int valor) {
@@ -11,12 +13,14 @@ int main() {
     // Insertar elementos
     std::cout << "Insertando elementos al inicio:" << std::endl;
     lista.insertarInicio(5);
-    lista.insertarInicio(20);
     lista.insertarInicio(30);
+    lista.insertarInicio(100);
     lista.imprimir(); // Imprime la lista
+    lista.eliminarFinal();
+    lista.imprimir();
 
     std::cout << "Insertando elementos al final:" << std::endl;
-    lista.insertarFinal(40);
+    lista.insertarFinal(30);
     lista.insertarFinal(50);
     lista.imprimir(); // Imprime la lista
 
@@ -28,23 +32,40 @@ int main() {
     std::cout << "Modificando el valor en la posición 2:" << std::endl;
     lista.modificarEnPosicion(2, 100);
     lista.imprimir(); // Imprime la lista
+    
 
+    //Ordenear la lista de menor a mayor
+    std::cout << "Ordenando la lista de menor a mayor: " << std::endl;
+    lista.ordenarAscendente();
+    lista.imprimir();
+    std::cout << "El tamaño de la lista es: " << lista.obtenerTamaño() << std::endl;
+
+
+    std::this_thread::sleep_for(std::chrono::seconds(1));
     // Eliminar elementos
     std::cout << "Eliminando el primer elemento:" << std::endl;
-    lista.eliminarInicio();
+    lista.eliminarInicio(); 
     lista.imprimir(); // Imprime la lista
+    std::cout << "El tamaño de la lista es: " << lista.obtenerTamaño() << std::endl;
 
     std::cout << "Eliminando el último elemento:" << std::endl;
-    lista.eliminarFinal();
+    lista.eliminarFinal(); 
     lista.imprimir(); // Imprime la lista
+    lista.imprimir();
+    std::cout << "El tamaño de la lista es: " << lista.obtenerTamaño() << std::endl;
 
     std::cout << "Eliminando el valor 25:" << std::endl;
     lista.eliminarValor(25);
+    //std::cout << "El tamaño de la lista es: " << lista.obtenerTamaño() << std::endl;
     lista.imprimir(); // Imprime la lista
+    std::cout << "El tamaño de la lista es: " << lista.obtenerTamaño() << std::endl;
 
     std::cout << "Eliminando todas las ocurrencias de 100:" << std::endl;
     lista.eliminarTodasOcurrencias(100);
+    //std::cout << "El tamaño de la lista es: " << lista.obtenerTamaño() << std::endl;
     lista.imprimir(); // Imprime la lista
+    std::cout << "El tamaño de la lista es: " << lista.obtenerTamaño() << std::endl;
+
 
     // Buscar un valor
     std::cout << "Buscando el valor 40:" << std::endl;
@@ -64,6 +85,7 @@ int main() {
     lista.insertarFinal(10);
     lista.insertarFinal(10);  // Insertamos un duplicado
     lista.eliminarElementosRepetidos();
+    std::cout << "El tamaño de la lista es: " << lista.obtenerTamaño() << std::endl;
     lista.imprimir(); // Imprime la lista
 
     // Obtener elementos
@@ -72,11 +94,29 @@ int main() {
 
     // Obtener el tamaño de la lista
     std::cout << "El tamaño de la lista es: " << lista.obtenerTamaño() << std::endl;
+    lista.imprimir();
 
     // Vaciar la lista
     std::cout << "Vaciando la lista..." << std::endl;
     lista.vaciar();
     lista.imprimir(); // Imprime la lista vacía
+    //
+    for(int i = 10 ; i > 0 ; --i)
+    {
+        lista.insertarFinal(i);
+    }
+    std::cout << "El tamaño de la lista es: " << lista.obtenerTamaño() << std::endl;
+    lista.imprimir();
+    lista.ordenarAscendente();
+    lista.obtenerTamaño();
+    lista.imprimir();
+    for(int i = 0 ; i < 1 ; ++i)
+    {
+        lista.eliminarFinal();
+    }
+    std::cout << "El tamaño de la lista es: " << lista.obtenerTamaño() << std::endl;
+    lista.imprimir();
+
 
     return 0;
 }

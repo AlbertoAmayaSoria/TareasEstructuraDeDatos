@@ -1,5 +1,7 @@
 // Constructor
+#include <chrono>
 #include <cstddef>
+#include <thread>
 
 // Inicializa la lista vacía. 'primero' y 'ultimo' son punteros a nullptr (sin nodos), y el tamaño es 0.
 template <typename T>
@@ -162,21 +164,24 @@ void ListaDoblementeEnlazada<T>::eliminarInicio() {
 // Eliminar el último nodo
 template <typename T>
 void ListaDoblementeEnlazada<T>::eliminarFinal() {
-    if (!primero) return; // Si la lista está vacía, no hacemos nada
-
-    if (!primero->siguiente) { // Si hay un solo nodo en la lista
-        delete primero; // Eliminamos ese nodo
-        primero = nullptr;
-        ultimo = nullptr;
-    } else {
-        Nodo* temp = ultimo; // Guardamos el último nodo
-        ultimo = ultimo->anterior; // Movemos el puntero 'ultimo' al nodo anterior
-        ultimo->siguiente = nullptr; // Eliminamos la referencia al nodo siguiente
-        delete temp; // Eliminamos el nodo guardado
+    if (!primero) {  // Si la lista está vacía, no hacemos nada
+        return;
     }
 
-    tamaño--; // Decrementamos el tamaño
+    if (primero == ultimo) {  // Si hay un solo nodo en la lista
+        delete primero;  // Eliminamos ese nodo
+        primero = nullptr;  // La lista queda vacía
+        ultimo = nullptr;
+    } else {
+        Nodo* temp = ultimo;  // Guardamos el último nodo
+        ultimo = ultimo->anterior;  // Movemos el puntero 'ultimo' al nodo anterior
+        ultimo->siguiente = nullptr;  // El nuevo último nodo no debe apuntar a nada
+        delete temp;  // Eliminamos el nodo que estaba al final
+    }
+
+    tamaño--;  // Decrementamos el tamaño de la lista
 }
+
 
 
 // Eliminar por posición
@@ -478,13 +483,22 @@ void ListaDoblementeEnlazada<T>::vaciar() {
 // Imprimir lista
 template <typename T>
 void ListaDoblementeEnlazada<T>::imprimir() const {
-    Nodo* temp = primero; // Usamos un puntero para recorrer la lista
-    while (temp) {
-        std::cout << temp->dato << " <-> "; // Imprimimos el dato y el enlace
-        temp = temp->siguiente; // Avanzamos al siguiente nodo
+    Nodo* temp = primero;  // Usamos un puntero para recorrer la lista
+    if (!temp) {  // Si la lista está vacía, imprimimos un mensaje
+        std::cout << "La lista está vacía.\n";
+        return;
     }
-    std::cout << "NULL\n"; // Imprimimos NULL al final para indicar el fin de la lista
+
+    while (temp) {  // Recorremos la lista
+        std::cout << temp->dato;  // Imprimimos el dato
+        if (temp->siguiente) {  // Si hay un siguiente nodo, imprimimos el enlace
+            std::cout << " <-> ";
+        }
+        temp = temp->siguiente;  // Avanzamos al siguiente nodo
+    }
+    std::cout << " <-> NULL\n";  // Imprimimos NULL al final para indicar el fin de la lista
 }
+
 
 
 // Imprimir lista en reversa
@@ -547,5 +561,57 @@ const T& ListaDoblementeEnlazada<T>::operator[](size_t posicion) const {
 
 
 //******************************************************************************************************************************************
+
+// Método para ordenar la lista de menor a mayor con el método de inserción
+template <typename T>
+void ListaDoblementeEnlazada<T>::ordenarAscendente() {
+    // Si la lista está vacía o tiene solo un elemento, no es necesario ordenarla
+    if (tamaño <= 1) return;
+
+    Nodo* actual = primero->siguiente;  // Comenzamos con el segundo nodo (el primero ya está ordenado)
+
+    // Recorremos la lista desde el segundo nodo
+    while (actual) {
+        Nodo* siguienteNodo = actual->siguiente;  // Guardamos el siguiente nodo
+        Nodo* temp = actual;  // Nodo actual que se va a insertar en la lista ordenada
+
+        // Recorremos hacia atrás para encontrar la posición correcta del nodo actual
+        Nodo* anterior = actual->anterior;
+        while (anterior && anterior->dato > temp->dato) {
+            anterior = anterior->anterior;
+        }
+
+        // Si el nodo actual no está en su posición correcta
+        if (anterior != actual->anterior) {
+            // Desconectamos el nodo actual de su posición
+            if (temp->siguiente) {
+                temp->siguiente->anterior = temp->anterior;
+            }
+            if (temp->anterior) {
+                temp->anterior->siguiente = temp->siguiente;
+            }
+
+            // Insertamos el nodo en la nueva posición
+            if (anterior) {
+                temp->siguiente = anterior->siguiente;
+                if (anterior->siguiente) {
+                    anterior->siguiente->anterior = temp;
+                }
+                anterior->siguiente = temp;
+                temp->anterior = anterior;
+            } else {  // Si es el primer nodo
+                temp->siguiente = primero;
+                if (primero) {
+                    primero->anterior = temp;
+                }
+                primero = temp;
+                temp->anterior = nullptr;
+            }
+        }
+
+        actual = siguienteNodo;  // Avanzamos al siguiente nodo
+    }
+}
+
 
 
