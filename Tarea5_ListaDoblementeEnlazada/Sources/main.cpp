@@ -114,9 +114,8 @@ int main() {
     {
         lista.eliminarFinal();
     }
-    std::cout << "El tamaño de la lista es: " << lista.obtenerTamaño() << std::endl;
     lista.imprimir();
-
+    std::cout << "El tamaño de la lista es: " << lista.obtenerTamaño() << std::endl;
 
     return 0;
 }

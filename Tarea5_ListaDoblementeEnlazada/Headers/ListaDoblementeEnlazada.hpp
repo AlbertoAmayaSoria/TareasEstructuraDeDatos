@@ -65,7 +65,7 @@ public:
 
 
     // Métodos adicionales
-    void ordenarAscendente(); //*proceso*
+    void ordenarAscendente();
     void intercambiar(ListaDoblementeEnlazada<T>& otra); //*************************************************
     void transferirElementos(ListaDoblementeEnlazada<T>& otra, size_t inicio, size_t fin); //***************
     void transferirDesdeIndice(ListaDoblementeEnlazada<T>& otra, size_t indice); //****
