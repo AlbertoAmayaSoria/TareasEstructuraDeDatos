@@ -30,8 +30,8 @@ public:
     void eliminarPosicion(size_t pos);
     void eliminarValor(T valor);
     void eliminarTodasOcurrencias(T valor); 
-    void eliminarPorCondicion(bool (*condicion)(T)); //***
-    void eliminarElementosRepetidos(); //*****************
+    void eliminarPorCondicion(bool (*condicion)(T));
+    void eliminarElementosRepetidos(); 
 
 
     // Método de búsqueda
@@ -39,19 +39,19 @@ public:
 
 
     // Métodos para obtener datos
-    bool estaVacia() const; //*****************************************************************************
+    bool estaVacia() const;
     T obtenerPrimero() const;
     T obtenerUltimo() const;
     T obtenerEnPosicion(size_t posicion) const;
     int obtenerIndice(const T& valor) const;
 
     // Métodos para modificar
-    void modificarEnPosicion(size_t posicion, T nuevoValor); //**********************************************
+    void modificarEnPosicion(size_t posicion, T nuevoValor);
 
 
     // Métodos para el tamaño de la lista
     size_t obtenerTamaño() const;
-    void vaciar(); //***************************************************************************************
+    void vaciar();
 
 
     // Métodos de impresión
@@ -60,16 +60,16 @@ public:
 
 
     // Operadores sobrecargados
-    T& operator[](size_t index); //*************************************************************************
-    const T& operator[](size_t index) const; //*************************************************************
+    T& operator[](size_t index);
+    const T& operator[](size_t index) const;
 
 
     // Métodos adicionales
-    void ordenarAscendente(); //****************************************************************************
-    void intercambiar(ListaDoblementeEnlazada<T>& otra); //*************************************************
-    void transferirElementos(ListaDoblementeEnlazada<T>& otra, size_t inicio, size_t fin); //***************
-    void transferirDesdeIndice(ListaDoblementeEnlazada<T>& otra, size_t indice); //****
-    void transferirTodos(ListaDoblementeEnlazada<T>& otra); //**********************************************
+    void ordenarAscendente();
+    void intercambiar(ListaDoblementeEnlazada<T>& otra);
+    void transferirElementos(ListaDoblementeEnlazada<T>& otra, size_t inicio, size_t fin);
+    void transferirDesdeIndice(ListaDoblementeEnlazada<T>& otra, size_t indice); 
+    void transferirTodos(ListaDoblementeEnlazada<T>& otra);
 
 private:
     struct Nodo {
