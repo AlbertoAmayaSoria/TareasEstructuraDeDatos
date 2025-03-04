@@ -66,10 +66,10 @@ public:
 
     // Métodos adicionales
     void ordenarAscendente();
-    void intercambiar(ListaDoblementeEnlazada<T>& otra); //*************************************************
-    void transferirElementos(ListaDoblementeEnlazada<T>& otra, size_t inicio, size_t fin); //***************
-    void transferirDesdeIndice(ListaDoblementeEnlazada<T>& otra, size_t indice); //****
-    void transferirTodos(ListaDoblementeEnlazada<T>& otra); //**********************************************
+    void intercambiar(ListaDoblementeEnlazada<T>& otra);
+    void transferirElementos(ListaDoblementeEnlazada<T>& otra, size_t inicio, size_t fin);
+    void transferirDesdeIndice(ListaDoblementeEnlazada<T>& otra, size_t indice); 
+    void transferirTodos(ListaDoblementeEnlazada<T>& otra);
 
 private:
     struct Nodo {

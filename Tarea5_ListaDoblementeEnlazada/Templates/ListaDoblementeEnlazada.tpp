@@ -86,7 +86,7 @@ void ListaDoblementeEnlazada<T>::insertarPosicion(T valor, size_t posicion) {
     }
 
     Nodo* actual = primero;
-    for (size_t i = 0; i < posicion - 1; ++i) {
+    for (size_t i = 0; i < posicion - 2; ++i) {
         actual = actual->siguiente;
     }
 
@@ -356,7 +356,7 @@ void ListaDoblementeEnlazada<T>::modificarEnPosicion(size_t posicion, T nuevoVal
     }
 
     Nodo* temp = primero;
-    for (size_t i = 0; i < posicion; ++i) {
+    for (size_t i = 0; i < posicion - 1; ++i) {
         temp = temp->siguiente;
     }
 
@@ -470,3 +470,175 @@ void ListaDoblementeEnlazada<T>::ordenarAscendente() {
         }
     } while (intercambio);
 }
+
+// Intercambio de listas
+template <typename T>
+void ListaDoblementeEnlazada<T>::intercambiar(ListaDoblementeEnlazada<T>& otra) {
+    // Intercambiamos los punteros 'primero' y 'ultimo' de ambas listas
+    Nodo* tempPrimero = primero;
+    Nodo* tempUltimo = ultimo;
+    primero = otra.primero;
+    ultimo = otra.ultimo;
+    otra.primero = tempPrimero;
+    otra.ultimo = tempUltimo;
+
+    // Intercambiamos los tamaños de ambas listas
+    int tempTamaño = tamaño;
+    tamaño = otra.tamaño;
+    otra.tamaño = tempTamaño;
+
+    // Después de este intercambio, las dos listas deben tener sus elementos intercambiados
+}
+
+
+// Transferir los elementos de una lista a otra dentro de un rango de elementos, considerando los elementos de una manera mas natural comenzando la lista desde 1
+template <typename T>
+void ListaDoblementeEnlazada<T>::transferirElementos(ListaDoblementeEnlazada<T>& otra, size_t inicio, size_t fin) {
+    // Validar que los índices están dentro del rango válido de la lista
+    if (inicio < 1 || fin < 1 || inicio > fin || fin > tamaño) {
+        std::cout << "Índices inválidos." << std::endl;
+        return;
+    }
+
+    // Ajustar los índices de inicio y fin para que sean basados en 0
+    size_t indiceInicio = inicio - 1;  // Convertir el índice a base 0
+    size_t indiceFin = fin - 1;        // Convertir el índice a base 0
+
+    Nodo* nodoActual = primero;
+    size_t indice = 0;
+
+    // Mover el nodo actual al índice de inicio (basado en 0)
+    while (nodoActual && indice < indiceInicio) {
+        nodoActual = nodoActual->siguiente;
+        indice++;
+    }
+
+    // Verificar si se encontró el nodo de inicio
+    if (!nodoActual) {
+        std::cout << "Índice de inicio fuera de rango." << std::endl;
+        return;
+    }
+
+    // Transferir los elementos desde 'inicio' hasta 'fin'
+    while (nodoActual && indice <= indiceFin) {
+        Nodo* siguienteNodo = nodoActual->siguiente;
+
+        // Eliminar el nodo actual de la lista original
+        if (nodoActual->anterior) {
+            nodoActual->anterior->siguiente = nodoActual->siguiente;
+        } else {
+            primero = nodoActual->siguiente;  // Si es el primer nodo
+        }
+
+        if (nodoActual->siguiente) {
+            nodoActual->siguiente->anterior = nodoActual->anterior;
+        } else {
+            ultimo = nodoActual->anterior;  // Si es el último nodo
+        }
+
+        // Insertar el nodo al final de la lista de destino
+        otra.insertarFinal(nodoActual->dato);
+
+        // Avanzar al siguiente nodo
+        nodoActual = siguienteNodo;
+        indice++;
+    }
+
+    // Actualizar los tamaños de las listas
+    tamaño -= (indiceFin - indiceInicio + 1);
+    otra.tamaño += (indiceFin - indiceInicio + 1);
+}
+
+
+// se transfieren los elementos desde un elemento en delante, considerando los elementos de una manera mas natural comenzando la lista desde 1
+template <typename T>
+void ListaDoblementeEnlazada<T>::transferirDesdeIndice(ListaDoblementeEnlazada<T>& otra, size_t indice) {
+    // Validar que el índice esté dentro del rango de la lista original
+    if (indice < 1 || indice > tamaño) {
+        std::cout << "Índice fuera de rango." << std::endl;
+        return;
+    }
+
+    // Convertimos el índice basado en 1 a un índice basado en 0 para la lista
+    size_t indiceInterno = indice - 1;  // Ajustamos el índice para hacerlo basado en 0
+
+    Nodo* nodoActual = primero;
+    size_t contador = 0;
+
+    // Mover al nodo en el índice especificado (ajustado para índice basado en 0)
+    while (nodoActual && contador < indiceInterno) {
+        nodoActual = nodoActual->siguiente;
+        contador++;
+    }
+
+    // Si no encontramos el nodo en el índice (esto no debería ocurrir si el índice es válido)
+    if (!nodoActual) {
+        std::cout << "Índice fuera de rango." << std::endl;
+        return;
+    }
+
+    // Transferir los elementos desde el índice especificado hasta el final de la lista
+    while (nodoActual) {
+        Nodo* siguienteNodo = nodoActual->siguiente;
+
+        // Eliminar el nodo actual de la lista original
+        if (nodoActual->anterior) {
+            nodoActual->anterior->siguiente = nodoActual->siguiente;
+        } else {
+            primero = nodoActual->siguiente;  // Si es el primer nodo
+        }
+
+        if (nodoActual->siguiente) {
+            nodoActual->siguiente->anterior = nodoActual->anterior;
+        } else {
+            ultimo = nodoActual->anterior;  // Si es el último nodo
+        }
+
+        // Insertar el nodo al final de la lista de destino
+        otra.insertarFinal(nodoActual->dato);
+
+        // Avanzar al siguiente nodo
+        nodoActual = siguienteNodo;
+    }
+
+    // Actualizar el tamaño de la lista original y la lista de destino
+    tamaño -= (contador + 1);  // Elementos transferidos
+    otra.tamaño += (contador + 1);  // Elementos agregados
+}
+
+
+// transferimos todos los elementos de una lista a otra
+template <typename T>
+void ListaDoblementeEnlazada<T>::transferirTodos(ListaDoblementeEnlazada<T>& otra) {
+    // Comenzamos con el primer nodo de la lista original
+    Nodo* nodoActual = primero;
+
+    // Mientras haya nodos en la lista original
+    while (nodoActual) {
+        Nodo* siguienteNodo = nodoActual->siguiente;
+
+        // Eliminar el nodo actual de la lista original
+        if (nodoActual->anterior) {
+            nodoActual->anterior->siguiente = nodoActual->siguiente;
+        } else {
+            primero = nodoActual->siguiente;  // Si es el primer nodo
+        }
+
+        if (nodoActual->siguiente) {
+            nodoActual->siguiente->anterior = nodoActual->anterior;
+        } else {
+            ultimo = nodoActual->anterior;  // Si es el último nodo
+        }
+
+        // Insertar el nodo al final de la lista de destino
+        otra.insertarFinal(nodoActual->dato);
+
+        // Avanzar al siguiente nodo
+        nodoActual = siguienteNodo;
+    }
+
+    // Actualizamos el tamaño de la lista original y la lista de destino
+    tamaño = 0;  // La lista original ahora está vacía
+    otra.tamaño += tamaño;  // La lista de destino tiene todos los elementos
+}
+
