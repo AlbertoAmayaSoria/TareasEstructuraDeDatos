@@ -9,6 +9,7 @@ bool condicionEliminar(int valor) {
 
 int main() {
     ListaDoblementeEnlazada<int> lista, lista2;
+    ListaDoblementeEnlazada<std::string> listaNombres;
 
     // Insertar elementos
     std::cout << "Insertando elementos al inicio:" << std::endl;
@@ -168,6 +169,16 @@ int main() {
     lista.imprimir(); 
     std::cout << "Lista 2: " << std::endl;
     lista2.imprimir();
+
+    std::cout << "\nlista de nombres: " << std::endl;
+    listaNombres.insertarFinal("Javier");
+    listaNombres.insertarFinal("Michell");
+    listaNombres.insertarFinal("Alberto");
+    listaNombres.imprimir();
+    listaNombres.ordenarAscendente();
+    std::cout << "Lista de nombres en orden: " << std::endl;
+    listaNombres.imprimir();
+
     
 
 
