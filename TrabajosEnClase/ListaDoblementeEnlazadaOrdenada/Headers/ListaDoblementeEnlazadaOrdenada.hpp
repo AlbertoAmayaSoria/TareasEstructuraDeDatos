@@ -17,28 +17,25 @@ public:
     // Sobrecarga del operador =
     ListaDoblementeEnlazadaOrdenada& operator=(const ListaDoblementeEnlazadaOrdenada& otra);
 
-    // Métodos de inserción
-    void insertarInicio(T valor);
-    void insertarFinal(T valor);
-    void insertarPosicion(T valor, size_t pos);
+    // Método de inserción
+    void insertar(T valor);
 
     // Métodos de eliminación
-    void eliminarInicio();
-    void eliminarFinal();
-    void eliminarPosicion(size_t pos);
-    void eliminarValor(T valor);
+    void eliminarValor(T valor); //primera ocurrencia
 
     // Métodos de búsqueda
     bool buscar(T valor);
 
     // Métodos para obtener datos
-    T obtenerPrimero() const;
-    T obtenerUltimo() const;
-    T obtenerEnPosicion(size_t posicion) const;
-    int obtenerIndice(const T& valor) const;
 
     // Método para obtener el tamaño de la lista
     size_t obtenerTamaño() const;
+
+    // Método para saber si la lista esta vacía
+    bool estaVacia();
+
+    // Método para vaciar la lista
+    void vaciar();
 
     // Métodos para imprimir la lista
     void imprimir() const;
