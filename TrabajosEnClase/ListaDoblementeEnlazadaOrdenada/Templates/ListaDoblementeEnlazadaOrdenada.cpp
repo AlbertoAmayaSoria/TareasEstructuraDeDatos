@@ -65,28 +65,12 @@ ListaDoblementeEnlazadaOrdenada<T>& ListaDoblementeEnlazadaOrdenada<T>::operator
     return *this; // Devolvemos la lista copiada
 }
 
+//*************************************************************************************************
 
-// Insertar al inicio
+
+// Insertar elemento
 template <typename T>
-void ListaDoblementeEnlazadaOrdenada<T>::insertarInicio(T valor) {
-    Nodo* nuevo = new Nodo(valor); // Creamos un nuevo nodo con el valor proporcionado
-    nuevo->siguiente = primero; // El nuevo nodo apunta al primer nodo
-    if (primero) {
-        primero->anterior = nuevo; // Si la lista no está vacía, el primer nodo apunta al nuevo nodo
-    }
-    primero = nuevo; // Actualizamos el puntero 'primero' para que apunte al nuevo nodo
-
-    if (!ultimo) {
-        ultimo = nuevo; // Si la lista estaba vacía, el nuevo nodo es también el último nodo
-    }
-
-    tamaño++; // Incrementamos el tamaño de la lista
-}
-
-
-// Insertar al final
-template <typename T>
-void ListaDoblementeEnlazadaOrdenada<T>::insertarFinal(T valor) {
+void ListaDoblementeEnlazadaOrdenada<T>::insertar(T valor) {
     Nodo* nuevo = new Nodo(valor); // Creamos un nuevo nodo con el valor proporcionado
     if (!primero) {
         primero = nuevo; // Si la lista está vacía, el nuevo nodo es tanto el primero como el último
@@ -100,43 +84,7 @@ void ListaDoblementeEnlazadaOrdenada<T>::insertarFinal(T valor) {
 }
 
 
-// Insertar en una posición específica
-template <typename T>
-void ListaDoblementeEnlazadaOrdenada<T>::insertarPosicion(T valor, size_t pos) {
-    if (pos > tamaño) {  // Verificamos si la posición es válida
-        std::cerr << "Posición inválida\n";
-        return;
-    }
-
-    if (pos == 0) { // Si la posición es 0, insertamos al inicio
-        insertarInicio(valor);
-        return;
-    }
-
-    if (pos == tamaño) { // Si la posición es igual al tamaño, insertamos al final
-        insertarFinal(valor);
-        return;
-    }
-
-    Nodo* nuevo = new Nodo(valor); // Creamos un nuevo nodo
-    Nodo* temp = primero; // Usamos un puntero temporal para recorrer la lista
-
-    // Recorremos la lista hasta la posición deseada
-    for (size_t i = 0; i < pos - 1; ++i) {
-        temp = temp->siguiente;
-    }
-
-    // Insertamos el nuevo nodo
-    nuevo->siguiente = temp->siguiente; // El siguiente del nuevo nodo es el nodo siguiente de la posición
-    if (temp->siguiente) {
-        temp->siguiente->anterior = nuevo; // El nodo siguiente apunta hacia atrás al nuevo nodo
-    }
-    temp->siguiente = nuevo; // El nodo actual apunta hacia adelante al nuevo nodo
-    nuevo->anterior = temp; // El nuevo nodo apunta hacia atrás al nodo actual
-
-    tamaño++; // Incrementamos el tamaño de la lista
-}
-
+//************************************************************************************************
 
 // Eliminar el primer nodo
 template <typename T>
