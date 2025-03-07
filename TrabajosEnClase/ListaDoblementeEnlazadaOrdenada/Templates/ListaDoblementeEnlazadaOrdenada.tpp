@@ -71,21 +71,50 @@ ListaDoblementeEnlazadaOrdenada<T>& ListaDoblementeEnlazadaOrdenada<T>::operator
 // Insertar elemento
 template <typename T>
 void ListaDoblementeEnlazadaOrdenada<T>::insertar(T valor) {
-    Nodo* nuevo = new Nodo(valor); // Creamos un nuevo nodo con el valor proporcionado
-    if (!primero) {
-        primero = nuevo; // Si la lista está vacía, el nuevo nodo es tanto el primero como el último
-        ultimo = nuevo;
-    } else {
-        ultimo->siguiente = nuevo; // El último nodo actual apunta al nuevo nodo
-        nuevo->anterior = ultimo; // El nuevo nodo apunta hacia atrás al último nodo
-        ultimo = nuevo; // Actualizamos el puntero 'ultimo' para que apunte al nuevo nodo
+    Nodo* visitado = primero;
+
+    // Encontrar la posición correcta para insertar
+    while (visitado && valor > visitado->dato) {  
+        visitado = visitado->siguiente;
     }
-    tamaño++; // Incrementamos el tamaño de la lista
+
+    // Crear el nuevo nodo (usando solo el constructor con un valor)
+    Nodo* nuevo = new Nodo(valor);  
+
+    // Caso 1: Lista vacía
+    if (!primero) {
+        primero = ultimo = nuevo;
+    }
+    // Caso 2: Insertar al inicio
+    else if (visitado == primero) {
+        nuevo->siguiente = primero;
+        primero->anterior = nuevo;
+        primero = nuevo;
+    }
+    // Caso 3: Insertar al final
+    else if (!visitado) {
+        nuevo->anterior = ultimo;
+        ultimo->siguiente = nuevo;
+        ultimo = nuevo;
+    }
+    // Caso 4: Insertar en medio
+    else {
+        nuevo->siguiente = visitado;
+        nuevo->anterior = visitado->anterior;
+        visitado->anterior->siguiente = nuevo;
+        visitado->anterior = nuevo;
+    }
+
+    ++tamaño;
 }
+
+
 
 
 //************************************************************************************************
 
+
+/*
 // Eliminar el primer nodo
 template <typename T>
 void ListaDoblementeEnlazadaOrdenada<T>::eliminarInicio() {
@@ -249,7 +278,7 @@ int ListaDoblementeEnlazadaOrdenada<T>::obtenerIndice(const T& valor) const {
     }
 
     return -1; // Si no encontramos el valor, devolvemos -1
-}
+}*/
 
 
 // Obtener tamaño
