@@ -108,9 +108,9 @@ private:
      * @brief Estructura interna para representar un nodo de la lista.
      */
     struct Nodo {
-        T dato; ///< Valor almacenado en el nodo.
-        Nodo* anterior; ///< Puntero al nodo anterior.
-        Nodo* siguiente; ///< Puntero al nodo siguiente.
+        T dato; // Valor almacenado en el nodo.
+        Nodo* anterior; // Puntero al nodo anterior.
+        Nodo* siguiente; // Puntero al nodo siguiente.
         
         /**
          * @brief Constructor del nodo.
@@ -120,13 +120,10 @@ private:
     };
     
     Nodo* cabeza; // Puntero a la cabeza de la lista
-
-    //Nodo* primero; ///< Puntero al primer nodo de la lista.
-    //Nodo* ultimo;  ///< Puntero al último nodo de la lista.
     size_t tamaño; ///< Tamaño de la lista.
 };
 
-// Implementación de métodos en el archivo .tpp
+
 #include "../Templates/ListaDobleCircular.tpp"
 
 #endif // LISTADOBLECIRCULAR_HPP
