@@ -32,7 +32,7 @@ public:
     size_t obtenerTamaño() const;
 
     // Método para saber si la lista esta vacía
-    bool estaVacia();
+    bool estaVacia() const;
 
     // Método para vaciar la lista
     void vaciar();
@@ -58,4 +58,3 @@ private:
 #include "../Templates/ListaDoblementeEnlazadaOrdenada.tpp"
 
 #endif // LINKEDLIST_HPP
-
