@@ -20,7 +20,7 @@ ListaOrdenadaCompuesta<T>::ListaOrdenadaCompuesta(const ListaOrdenadaCompuesta<T
     // Copiamos los elementos de la otra lista a la lista interna
     size_t size = otra.lista.obtenerTamaño();
     for (size_t i = 0; i < size; i++) {
-        this.insertar(otra.lista.obtenerEnPosicion(i));  // Usamos el método insertar para agregar elementos en orden
+        this->insertar(otra.lista.obtenerEnPosicion(i));  // Usamos el método insertar para agregar elementos en orden
     }
 }
 
@@ -33,7 +33,7 @@ ListaOrdenadaCompuesta<T>& ListaOrdenadaCompuesta<T>::operator=(const ListaOrden
         // Luego copiamos los elementos de la otra lista a la lista interna
         size_t size = otra.lista.obtenerTamaño();
         for (size_t i = 0; i < size; i++) {
-            this.insertar(otra.lista.obtenerEnPosicion(i));  // Usamos el método insertar para agregar elementos en orden
+            this->insertar(otra.lista.obtenerEnPosicion(i));  // Usamos el método insertar para agregar elementos en orden
         }
     }
     return *this;  // Devolvemos la referencia al objeto actual

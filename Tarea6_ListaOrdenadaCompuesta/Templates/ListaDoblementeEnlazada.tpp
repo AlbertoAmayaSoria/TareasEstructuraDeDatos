@@ -278,7 +278,7 @@ T ListaDoblementeEnlazada<T>::obtenerEnPosicion(size_t posicion) const {
     }
 
     Nodo* actual = primero; // Usamos un puntero para recorrer la lista
-        for (size_t i = 0; i < posicion - 1 ; ++i) {
+    for (size_t i = 0; i < posicion; ++i) {  // Corregido para que vaya hasta 'posicion' en lugar de 'posicion - 1'
         actual = actual->siguiente; // Avanzamos al siguiente nodo
     }
 

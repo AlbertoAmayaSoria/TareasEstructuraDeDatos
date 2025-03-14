@@ -36,5 +36,3 @@ public:
 #include "../Templates/ListaOrdenadaCompuesta.tpp"
 
 #endif // LISTAORDENADACOMPUESTA_HPP
-
-
