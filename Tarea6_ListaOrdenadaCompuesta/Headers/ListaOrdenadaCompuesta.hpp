@@ -1,53 +1,30 @@
-#ifndef LISTAORDENADACOMPUESTA_HPP_INCLUDED
-#define LISTAORDENADACOMPUESTA_HPP_INCLUDED
+#ifndef LISTAORDENADACOMPUESTA_HPP
+#define LISTAORDENADACOMPUESTA_HPP
+
 #include "../Headers/ListaDoblementeEnlazada.hpp"
-#include <cstddef>
+#include <functional> // Para el comparador de ordenación
 
 template <typename T>
 class ListaOrdenadaCompuesta {
+private:
+    ListaDoblementeEnlazada<T> lista; // La lista interna de la cual hacemos uso
 
-    public:
+public:
     // Constructor
     ListaOrdenadaCompuesta();
-    // Constructor de copias
-    ListaOrdenadaCompuesta(const ListaOrdenadaCompuesta& otra);
-    // Destructor
-    ~ListaOrdenadaCompuesta();
-    // Sobre carga del operador =
-    ListaOrdenadaCompuesta& operator=(const ListaOrdenadaCompuesta& otra);
 
-    // Agregar un elemento de forma ordenada
-    void insertar(T valor);
+    // Métodos requeridos
+    void insertar(T valor); // Insertar de forma ordenada
+    void eliminar(T valor); // Eliminar la primera ocurrencia de un valor
+    bool buscar(T valor); // Buscar un valor
+    void vaciar(); // Vaciar la lista
+    bool estaVacia() const; // Verificar si la lista está vacía
+    size_t tamaño() const; // Obtener el tamaño de la lista
+    void imprimir() const; // Imprimir la lista en orden
+    void imprimirReversa() const; // Imprimir la lista en orden inverso
+};
 
-    // Eliminar un elemento (primera ocurrencia)
-    void eliminar(T valor);
+#include "../Templates/ListaOrdenadaCompuesta.tpp"
 
-    // Buscar un elemento
-    bool buscar(T valor);
+#endif // LISTAORDENADACOMPUESTA_HPP
 
-    // Vaciar la lista
-    void vaciar();
-
-    // Conocer si la lista esta vacía
-    bool estaVacia();
-
-    // Conocer el tamaño de la lista
-    std::size_t tamaño();
-
-    // Imprimir la lista de forma ascendente
-    void imprimir();
-
-    // Imprimir la lista de forma descendente
-    void imprimirReversa();
-
-    // Mezclar dos listas
-    void mezclar();
-
-
-    private:
-    ListaDoblementeEnlazada<T> lista;
-
-
-}
-
-#endif // !LISTAORDENADACOMPUESTA_HPP_INLCUDED

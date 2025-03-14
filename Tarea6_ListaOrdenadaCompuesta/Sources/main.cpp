@@ -1,115 +1,64 @@
 #include <iostream>
-#include <vector>
-#include <cstdlib>
-//#include <ctime>
-//#include <cstdlib>
-#include <ctime>
-#include <thread>
-#include <chrono>
+#include "../Headers/ListaOrdenadaCompuesta.hpp"
 
-#include "../Headers/ListaDoblementeEnlazada.hpp"
+int main() {
+    // Crear una lista ordenada compuesta de enteros
+    ListaOrdenadaCompuesta<int> lista;
 
-// Lista de nombres
-std::vector<std::string> nombres = {"Ana", "Pablo", "Laura", "Javier", "Marta", "Luis", "Sofia", "Juan", "Carlos", "Elena", 
-                                    "Diego", "Isabel", "Sergio", "Maria", "Jose", "Rosa", "David", "Lucia", "Manuel", "Raquel", 
-                                    "Jorge", "Carmen", "Alberto", "Patricia", "Ricardo", "Teresa", "Fernando", "Beatriz", 
-                                    "Francisco", "Gloria", "Eduardo", "Teresa", "Sergio", "Pilar", "Vicente", "Yolanda", "Antonio", 
-                                    "Victoria", "Felipe", "Marta", "Ruben", "Alicia", "Guillermo", "Clara", "Enrique", "Rosa", 
-                                    "Javier", "Andrea", "Guillermo", "Blanca"};
+    // Insertar algunos elementos
+    std::cout << "Insertando elementos en la lista ordenada:" << std::endl;
+    lista.insertar(5);
+    lista.insertar(1);
+    lista.insertar(3);
+    lista.insertar(7);
+    lista.insertar(2);
+    lista.insertar(6);
 
-// Lista de apellidos
-std::vector<std::string> apellidos = {"García", "López", "Martínez", "Pérez", "Sánchez", "Rodríguez", "González", 
-                                      "Fernández", "Gómez", "Díaz", "Álvarez", "Jiménez", "Romero", "Muñoz", "Ruiz", 
-                                      "Hernández", "Moreno", "Martín", "Castro", "López", "Torres", "Navarro", "Díaz", 
-                                      "Vázquez", "Jiménez", "García", "Ortega", "Delgado", "Ramos", "Sánchez", "Moreno", 
-                                      "García", "Pérez", "Gómez", "Molina", "Álvarez", "Ruiz", "Torres", "Fernández", "Romero", 
-                                      "Díaz", "Soto", "Aguilar", "González", "Martín", "Hernández", "Navarro", "Castillo", 
-                                      "Herrera", "Paredes"};
+    // Imprimir la lista en orden
+    std::cout << "Lista en orden: ";
+    lista.imprimir();
 
-std::string generarNombreAleatorio();
-int main()
-{
-    /*ListaDoblementeEnlazada<int> Lista;
-    for(int i = 0; i < 10; ++i)
+    // Imprimir la lista en orden inverso
+    std::cout << "Lista en orden inverso: ";
+    lista.imprimirReversa();
+
+    // Buscar un elemento en la lista
+    int valorBuscar = 3;
+    std::cout << "¿El valor " << valorBuscar << " está en la lista? ";
+    if(lista.buscar(valorBuscar)) 
     {
-        Lista.insertarInicio(i+1);
-    }
-    Lista.imprimir();
-    std::cout << "primero: " << Lista.obtenerPrimero() << std::endl;
-    std::cout << "ultimo: " << Lista.obtenerUltimo() << std::endl;
-    Lista.insertarFinal(4);
-    Lista.insertarPosicion(6, 3);
-    Lista.imprimir();
-    Lista.eliminarInicio();
-    Lista.imprimir();
+        std::cout << "Sí" << std::endl;
+    }else std::cout << "No" << std::endl;
 
-    std::cout << "___________________________________________________" << std::endl;
-    ListaDoblementeEnlazada<int> ListaDos;
-    for(int i = 0; i < 10; ++i)
-    {
-        ListaDos.insertarFinal(i+1);
-    }
-    ListaDos.imprimir();
-    std::cout << "primero: " << ListaDos.obtenerPrimero() << std::endl;
-    std::cout << "ultimo: " << ListaDos.obtenerUltimo() << std::endl;
-    ListaDos.insertarFinal(4);
-    ListaDos.insertarPosicion(6, 0);
-    ListaDos.imprimir();
-    ListaDos.eliminarInicio();
-    ListaDos.imprimir();*/
+    // Eliminar un elemento (primera ocurrencia)
+    int valorEliminar = 3;
+    std::cout << "Eliminando el valor " << valorEliminar << " de la lista." << std::endl;
+    lista.eliminar(valorEliminar);
 
-    ListaDoblementeEnlazada<std::string> listaDePersonas;
-    int tiempoTotal = 5;  // 120 segundos
-    int tiempoTranscurrido = 0;
+    // Imprimir la lista después de eliminar
+    std::cout << "Lista después de eliminar " << valorEliminar << ": ";
+    lista.imprimir();
 
-    while (tiempoTranscurrido < tiempoTotal) {
-        // Generamos una persona aleatoria
-        std::string persona = generarNombreAleatorio();
-        
-        // Insertamos la persona en la lista
-        listaDePersonas.insertarFinal(persona);
+    // Eliminar un valor que no existe en la lista
+    int valorInexistente = 100;
+    std::cout << "Intentando eliminar el valor " << valorInexistente << " (que no está en la lista)." << std::endl;
+    lista.eliminar(valorInexistente);
 
-        // Mostramos la persona que fue añadida a la lista
-        std::cout << "Persona generada y añadida a la lista: " << persona << std::endl;
+    // Verificar si la lista está vacía
+    std::cout << "¿Está la lista vacía? ";
+    std::cout << (lista.estaVacia() ? "Sí" : "No") << std::endl;
 
-        // Esperamos un tiempo aleatorio entre 1 y 3 segundos antes de generar la siguiente persona
-        int tiempoEspera = /*rand() % 3 +*/ 1;  // Aleatorio entre 1 y 3 segundos
-        std::this_thread::sleep_for(std::chrono::seconds(tiempoEspera));
+    // Vaciar la lista
+    std::cout << "Vaciando la lista..." << std::endl;
+    lista.vaciar();
 
-        // Aumentamos el tiempo transcurrido
-        tiempoTranscurrido += tiempoEspera;
-    }
+    // Verificar el tamaño de la lista después de vaciarla
+    std::cout << "Tamaño de la lista después de vaciarla: " << lista.tamaño() << std::endl;
 
-    std::cout << "\nLa generación de personas ha terminado." << std::endl;
-    std::cout << "Total de personas generadas: " << listaDePersonas.obtenerTamaño() << std::endl;
-
-    // Mostrar el contenido de la lista
-    listaDePersonas.imprimir();
-    std::string primeraPersona;
-    primeraPersona = listaDePersonas.obtenerPrimero();
-    std::cout << "la primera persona en la lista fue: " << primeraPersona << std::endl;
-    std::string ultimaPersona;
-    ultimaPersona = listaDePersonas.obtenerUltimo();
-    std::cout << "La ultima persona en la lista fue: " << ultimaPersona << std::endl;
-    std::cout << "La lista al contrario: " << std::endl;
-    listaDePersonas.imprimirReversa();
-    listaDePersonas.insertarFinal("Rosa Godoi");
-    listaDePersonas.imprimir();
-    if(listaDePersonas.buscar("Rosa Godoi")){
-        std::cout << "Si llego Rosa";
-    } else std::cout << "No llego Rosa";
-    std::string persona = listaDePersonas.obtenerEnPosicion(4);
-    std::cout << persona;
+    // Imprimir la lista después de vaciarla
+    std::cout << "Lista vacía: ";
+    lista.imprimir();
 
     return 0;
 }
 
-
-std::string generarNombreAleatorio() {
-    srand(time(0));  // Inicializamos la semilla aleatoria
-
-    int indiceNombre = rand() % nombres.size();     // Generamos un índice aleatorio para el nombre
-    int indiceApellido = rand() % apellidos.size(); // Generamos un índice aleatorio para el apellido
-
-    return nombres[indiceNombre] + " " + apellidos[indiceApellido];  // Combinamos nombre y apellido
-}
