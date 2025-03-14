@@ -8,7 +8,7 @@ int main() {
     std::cout << prueba.tamaño() << std::endl;
 
     // Insertar algunos elementos
-    std::cout << "Insertando elementos en la prueba ordenada:" << std::endl;
+    std::cout << "Insertando elementos en la lista ordenada:" << std::endl;
     prueba.insertar(5);
     prueba.insertar(1);
     prueba.insertar(3);
@@ -26,7 +26,7 @@ int main() {
 
     // Buscar un elemento en la prueba
     int valorBuscar = 3;
-    std::cout << "¿El valor " << valorBuscar << " está en la prueba? ";
+    std::cout << "¿El valor " << valorBuscar << " está en la lista? ";
     if(prueba.buscar(valorBuscar)) 
     {
         std::cout << "Sí" << std::endl;
@@ -34,7 +34,7 @@ int main() {
 
     // Eliminar un elemento (primera ocurrencia)
     int valorEliminar = 3;
-    std::cout << "Eliminando el valor " << valorEliminar << " de la prueba." << std::endl;
+    std::cout << "Eliminando el valor " << valorEliminar << " de la lista." << std::endl;
     prueba.eliminar(valorEliminar);
 
     // Imprimir la prueba después de eliminar
@@ -43,15 +43,15 @@ int main() {
 
     // Eliminar un valor que no existe en la prueba
     int valorInexistente = 100;
-    std::cout << "Intentando eliminar el valor " << valorInexistente << " (que no está en la prueba)." << std::endl;
+    std::cout << "Intentando eliminar el valor " << valorInexistente << " (que no está en la lista)." << std::endl;
     prueba.eliminar(valorInexistente);
 
     // Verificar si la prueba está vacía
-    std::cout << "¿Está la prueba vacía? ";
+    std::cout << "¿Está la lista vacía? ";
     std::cout << (prueba.estaVacia() ? "Sí" : "No") << std::endl;
 
     // Vaciar la prueba
-    std::cout << "Vaciando la prueba..." << std::endl;
+    std::cout << "Vaciando la lista..." << std::endl;
     prueba.vaciar();
 
     // Verificar el tamaño de la prueba después de vaciarla
