@@ -7,7 +7,7 @@ Sources = $(wildcard $(SourcesDirectory)/*.cpp)
 Objects = $(patsubst $(SourcesDirectory)/%.cpp, $(ObjectsDirectory)/%.o, $(Sources))
 
 # Compiler and Flags
-CXX = g++
+CXX = g++ 
 CXXFLAGS = -std=c++17 -Wall -Wextra
 
 # Default Target

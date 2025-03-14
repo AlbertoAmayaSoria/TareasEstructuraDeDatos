@@ -10,8 +10,17 @@ private:
     ListaDoblementeEnlazada<T> lista; // La lista interna de la cual hacemos uso
 
 public:
-    // Constructor
+    // Constructor por defecto
     ListaOrdenadaCompuesta();
+
+    // Destructor
+    ~ListaOrdenadaCompuesta();
+
+    // Constructor de copia
+    ListaOrdenadaCompuesta(const ListaOrdenadaCompuesta<T>& otra);
+
+    // Sobrecarga del operador =
+    ListaOrdenadaCompuesta<T>& operator=(const ListaOrdenadaCompuesta<T>& otra);
 
     // Métodos requeridos
     void insertar(T valor); // Insertar de forma ordenada
@@ -27,4 +36,5 @@ public:
 #include "../Templates/ListaOrdenadaCompuesta.tpp"
 
 #endif // LISTAORDENADACOMPUESTA_HPP
+
 

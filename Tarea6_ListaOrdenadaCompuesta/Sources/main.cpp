@@ -2,62 +2,64 @@
 #include "../Headers/ListaOrdenadaCompuesta.hpp"
 
 int main() {
-    // Crear una lista ordenada compuesta de enteros
-    ListaOrdenadaCompuesta<int> lista;
+    // Crear una prueba ordenada compuesta de enteros
+    ListaOrdenadaCompuesta<int> prueba;
+
+    std::cout << prueba.tamaño() << std::endl;
 
     // Insertar algunos elementos
-    std::cout << "Insertando elementos en la lista ordenada:" << std::endl;
-    lista.insertar(5);
-    lista.insertar(1);
-    lista.insertar(3);
-    lista.insertar(7);
-    lista.insertar(2);
-    lista.insertar(6);
+    std::cout << "Insertando elementos en la prueba ordenada:" << std::endl;
+    prueba.insertar(5);
+    prueba.insertar(1);
+    prueba.insertar(3);
+    prueba.insertar(7);
+    prueba.insertar(2);
+    prueba.insertar(6);
 
-    // Imprimir la lista en orden
+    // Imprimir la prueba en orden
     std::cout << "Lista en orden: ";
-    lista.imprimir();
+    prueba.imprimir();
 
-    // Imprimir la lista en orden inverso
+    // Imprimir la prueba en orden inverso
     std::cout << "Lista en orden inverso: ";
-    lista.imprimirReversa();
+    prueba.imprimirReversa();
 
-    // Buscar un elemento en la lista
+    // Buscar un elemento en la prueba
     int valorBuscar = 3;
-    std::cout << "¿El valor " << valorBuscar << " está en la lista? ";
-    if(lista.buscar(valorBuscar)) 
+    std::cout << "¿El valor " << valorBuscar << " está en la prueba? ";
+    if(prueba.buscar(valorBuscar)) 
     {
         std::cout << "Sí" << std::endl;
     }else std::cout << "No" << std::endl;
 
     // Eliminar un elemento (primera ocurrencia)
     int valorEliminar = 3;
-    std::cout << "Eliminando el valor " << valorEliminar << " de la lista." << std::endl;
-    lista.eliminar(valorEliminar);
+    std::cout << "Eliminando el valor " << valorEliminar << " de la prueba." << std::endl;
+    prueba.eliminar(valorEliminar);
 
-    // Imprimir la lista después de eliminar
+    // Imprimir la prueba después de eliminar
     std::cout << "Lista después de eliminar " << valorEliminar << ": ";
-    lista.imprimir();
+    prueba.imprimir();
 
-    // Eliminar un valor que no existe en la lista
+    // Eliminar un valor que no existe en la prueba
     int valorInexistente = 100;
-    std::cout << "Intentando eliminar el valor " << valorInexistente << " (que no está en la lista)." << std::endl;
-    lista.eliminar(valorInexistente);
+    std::cout << "Intentando eliminar el valor " << valorInexistente << " (que no está en la prueba)." << std::endl;
+    prueba.eliminar(valorInexistente);
 
-    // Verificar si la lista está vacía
-    std::cout << "¿Está la lista vacía? ";
-    std::cout << (lista.estaVacia() ? "Sí" : "No") << std::endl;
+    // Verificar si la prueba está vacía
+    std::cout << "¿Está la prueba vacía? ";
+    std::cout << (prueba.estaVacia() ? "Sí" : "No") << std::endl;
 
-    // Vaciar la lista
-    std::cout << "Vaciando la lista..." << std::endl;
-    lista.vaciar();
+    // Vaciar la prueba
+    std::cout << "Vaciando la prueba..." << std::endl;
+    prueba.vaciar();
 
-    // Verificar el tamaño de la lista después de vaciarla
-    std::cout << "Tamaño de la lista después de vaciarla: " << lista.tamaño() << std::endl;
+    // Verificar el tamaño de la prueba después de vaciarla
+    std::cout << "Tamaño de la prueba después de vaciarla: " << prueba.tamaño() << std::endl;
 
-    // Imprimir la lista después de vaciarla
+    // Imprimir la prueba después de vaciarla
     std::cout << "Lista vacía: ";
-    lista.imprimir();
+    prueba.imprimir();
 
     return 0;
 }

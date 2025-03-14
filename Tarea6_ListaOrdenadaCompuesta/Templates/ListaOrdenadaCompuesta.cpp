@@ -1,9 +1,43 @@
 #include "../Headers/ListaOrdenadaCompuesta.hpp"
 #include <iostream>
 
-// Constructor
+// Constructor por defecto
 template <typename T>
-ListaOrdenadaCompuesta<T>::ListaOrdenadaCompuesta() {}
+ListaOrdenadaCompuesta<T>::ListaOrdenadaCompuesta() {
+    // Inicialización de la lista interna
+}
+
+// Destructor
+template <typename T>
+ListaOrdenadaCompuesta<T>::~ListaOrdenadaCompuesta() {
+    // Vaciamos la lista para liberar la memoria
+    vaciar();
+}
+
+// Constructor de copias
+template <typename T>
+ListaOrdenadaCompuesta<T>::ListaOrdenadaCompuesta(const ListaOrdenadaCompuesta<T>& otra) {
+    // Copiamos los elementos de la otra lista a la lista interna
+    size_t size = otra.lista.obtenerTamaño();
+    for (size_t i = 0; i < size; i++) {
+        this.insertar(otra.lista.obtenerEnPosicion(i));  // Usamos el método insertar para agregar elementos en orden
+    }
+}
+
+// Sobrecarga del operador =
+template <typename T>
+ListaOrdenadaCompuesta<T>& ListaOrdenadaCompuesta<T>::operator=(const ListaOrdenadaCompuesta<T>& otra) {
+    if (this != &otra) {  // Evitar la autoasignación
+        // Primero vaciamos la lista actual
+        vaciar();
+        // Luego copiamos los elementos de la otra lista a la lista interna
+        size_t size = otra.lista.obtenerTamaño();
+        for (size_t i = 0; i < size; i++) {
+            this.insertar(otra.lista.obtenerEnPosicion(i));  // Usamos el método insertar para agregar elementos en orden
+        }
+    }
+    return *this;  // Devolvemos la referencia al objeto actual
+}
 
 // Método para insertar un valor de forma ordenada
 template <typename T>
