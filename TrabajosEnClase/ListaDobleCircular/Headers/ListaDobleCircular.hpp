@@ -124,6 +124,6 @@ private:
 };
 
 
-#include "../Templates/ListaDobleCircular.tpp"
+#include "../Templates/ListaDobleCircular.cpp"
 
 #endif // LISTADOBLECIRCULAR_HPP
