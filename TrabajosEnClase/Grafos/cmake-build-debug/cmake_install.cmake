@@ -1,8 +1,8 @@
-# Install script for directory: C:/Users/Michell O/Cuarto Semestre/Estructura de datos/clase11marzo
+# Install script for directory: C:/Users/Michell O/Cuarto Semestre/Estructura de datos/grafos
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "C:/Program Files (x86)/clase11marzo")
+  set(CMAKE_INSTALL_PREFIX "C:/Program Files (x86)/grafos")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -45,5 +45,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "C:/Users/Michell O/Cuarto Semestre/Estructura de datos/clase11marzo/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "C:/Users/Michell O/Cuarto Semestre/Estructura de datos/grafos/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

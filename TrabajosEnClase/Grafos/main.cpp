@@ -1,0 +1,2 @@
+//estructura de la arista
+
