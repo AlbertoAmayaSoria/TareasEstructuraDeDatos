@@ -5,7 +5,7 @@
 #ifndef NODO_HPP_INCLUDED
 #define NODO_HPP_INCLUDED
 
-#include "Arista.hpp"
+#include "../Headers/Arista.hpp"
 
 struct Nodo{
     char nombre;

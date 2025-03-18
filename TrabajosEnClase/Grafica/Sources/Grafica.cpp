@@ -70,6 +70,7 @@ void Grafica::Eliminar(char nom)
     if(porBorrar == NULL) return;
     numAristas -= porBorrar->Vaciar();
     if(ant == NULL) primero = primero->siguiente;
+    else ant->siguiente =porBorrar->siguiente;
     if(primero == NULL) ultimo = NULL;
     delete porBorrar;
     --numNodos;
