@@ -101,3 +101,33 @@ void ListaOrdenadaCompuesta<T>::imprimirReversa() const {
     lista.imprimirReversa(); // Usamos el método de impresión en reversa de la lista interna
 }
 
+// Método para mezclar dos listas ordenadas
+template <typename T>
+ListaOrdenadaCompuesta<T> ListaOrdenadaCompuesta<T>::mezclar(const ListaOrdenadaCompuesta<T>& otra) {
+    ListaOrdenadaCompuesta<T> resultado;
+    size_t i = 0, j = 0;
+    size_t size1 = this->lista.obtenerTamaño();
+    size_t size2 = otra.lista.obtenerTamaño();
+    
+    while (i < size1 && j < size2) {
+        if (this->lista.obtenerEnPosicion(i) < otra.lista.obtenerEnPosicion(j)) {
+            resultado.insertar(this->lista.obtenerEnPosicion(i));
+            i++;
+        } else {
+            resultado.insertar(otra.lista.obtenerEnPosicion(j));
+            j++;
+        }
+    }
+    
+    while (i < size1) {
+        resultado.insertar(this->lista.obtenerEnPosicion(i));
+        i++;
+    }
+    
+    while (j < size2) {
+        resultado.insertar(otra.lista.obtenerEnPosicion(j));
+        j++;
+    }
+    
+    return resultado;
+}

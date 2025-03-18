@@ -31,6 +31,7 @@ public:
     size_t tamaño() const; // Obtener el tamaño de la lista
     void imprimir() const; // Imprimir la lista en orden
     void imprimirReversa() const; // Imprimir la lista en orden inverso
+    ListaOrdenadaCompuesta<T> mezclar(const ListaOrdenadaCompuesta<T>& otra); // Método para mezclar listas ordenadas
 };
 
 #include "../Templates/ListaOrdenadaCompuesta.tpp"

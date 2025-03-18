@@ -61,6 +61,19 @@ int main() {
     std::cout << "Lista vacía: ";
     prueba.imprimir();
 
+    ListaOrdenadaCompuesta<int> lista1;
+    lista1.insertar(1);
+    lista1.insertar(3);
+    lista1.insertar(5);
+
+    ListaOrdenadaCompuesta<int> lista2;
+    lista2.insertar(2);
+    lista2.insertar(4);
+    lista2.insertar(6);
+
+    ListaOrdenadaCompuesta<int> listaMezclada = lista1.mezclar(lista2);
+    listaMezclada.imprimir();  // Salida esperada: 1 2 3 4 5 6
+
     return 0;
 }
 
