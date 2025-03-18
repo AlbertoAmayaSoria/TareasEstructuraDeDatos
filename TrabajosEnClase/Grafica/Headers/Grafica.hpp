@@ -1,7 +1,7 @@
 #ifndef GRAFICA_HPP_INCLUDED
 #define GRAFICA_HPP_INCLUDED
 
-#include "../Headers/Nodo.hpp"
+#include "Nodo.hpp"
 
 class Grafica{
 public:
@@ -44,6 +44,5 @@ private:
     ;
 };
 
-#include "../Templates/Grafica.tpp"
 
 #endif // GRAFICA_HPP_INCLUDED

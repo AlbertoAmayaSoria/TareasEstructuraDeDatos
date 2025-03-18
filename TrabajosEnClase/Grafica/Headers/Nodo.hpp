@@ -5,7 +5,7 @@
 #ifndef NODO_HPP_INCLUDED
 #define NODO_HPP_INCLUDED
 
-#include "../Headers/Arista.hpp"
+#include "Arista.hpp"
 
 struct Nodo{
     char nombre;
@@ -33,7 +33,5 @@ struct Nodo{
     Arista * BuscarDireccion(Nodo *ady, Arista **ant = NULL) const;
 
 };
-
-#include "../Templates/Nodo.tpp"
 
 #endif // NODO_HPP_INCLUDED
