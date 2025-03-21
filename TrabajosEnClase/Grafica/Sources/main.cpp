@@ -43,6 +43,7 @@ int main()
 
     std::cout << m.ObtenerNumNodos() << std::endl;
 
+    std::cout << m.ObtenerGrado('a');
     //Grafica m;
 
     //m = g;
