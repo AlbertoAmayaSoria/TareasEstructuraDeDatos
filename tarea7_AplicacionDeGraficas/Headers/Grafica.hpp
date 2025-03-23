@@ -2,6 +2,8 @@
 #define GRAFICA_HPP_INCLUDED
 
 #include "Nodo.hpp"
+#include "Pila.hpp"  // Para usar Pila
+#include "Cola.hpp"  // Para usar Cola
 
 class Grafica{
 public:
@@ -10,47 +12,49 @@ public:
     ~Grafica();
     Grafica & operator=(const Grafica &g);
 
-    //Agregar nodo
+    // Agregar nodo
     void Agregar(char nom);
-    //AgregarArista
+    // Agregar arista
     void Agregar(char nomInicial, char nomFinal);
-
-    //Eliminar nodo
+    
+    // Eliminar nodo
     void Eliminar(char nom);
-    //Eliminar arista
+    // Eliminar arista
     void Eliminar(char nomInicial, char nomFinal);
 
+    // Obtener el número de nodos
     int ObtenerNumNodos() const;
+    // Obtener el número de aristas
     int ObtenerNumAristas() const;
+    // Obtener el grado de un nodo
     int ObtenerGrado(char nom) const;
 
-    //Buscar nodo
+    // Verificar existencia de nodo
     bool Buscar(char nom) const;
-    //Buscar arista
+    // Verificar existencia de arista
     bool Buscar(char nomInicial, char nomFinal) const;
 
+    // Imprimir la gráfica
     void Imprimir() const;
 
-    //Vaciar nodo
+    // Vaciar un nodo
     void Vaciar(char nom);
-    //Vaciar toda la gráfica
+    // Vaciar toda la gráfica
     void Vaciar();
 
-    // Función amiga para recorrer los nodos
-    //friend void RecorrerNodos(const Grafica& g);
-    
-    // Métodos para la verificación de conexidad
+    // Métodos para la verificación de conectividad y euleriano
     bool EsConexa() const;  // Verificar si la gráfica es conexa
-    //void DFS(Nodo* nodo, bool* visitado) const;  // DFS
-    void BFS(Nodo* nodo, bool* visitado) const;  // BFS
+    bool TieneGradoPar() const;  // Verificar si todos los nodos tienen grado par
+    void CaminoEuleriano();  // Buscar el camino euleriano
 
 private:
     Nodo *primero, *ultimo;
     int numNodos, numAristas;
 
-    Nodo *BuscarDireccion(char nom, Nodo **ant = NULL) const
-    ;
+    Nodo *BuscarDireccion(char nom, Nodo **ant = NULL) const;
+    void DFS(Nodo* nodo, bool* visitado) const;  // DFS
+    void BFS(Nodo* nodo, bool* visitado) const;  // BFS
 };
 
-
 #endif // GRAFICA_HPP_INCLUDED
+

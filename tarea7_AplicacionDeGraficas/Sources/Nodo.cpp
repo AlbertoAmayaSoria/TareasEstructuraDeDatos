@@ -4,8 +4,9 @@ Nombre del archivo: Nodo.cpp
 #include <iostream>
 #include "../Headers/Nodo.hpp"
 //******************************************************
-Nodo::Nodo(char nom, Nodo *sig /*=NULL*/):nombre(nom), grado(0),
-    primera(NULL), ultima(NULL), siguiente(sig){}
+
+Nodo::Nodo(char nom, Nodo *sig /*=NULL*/) : nombre(nom), grado(0), primera(NULL), ultima(NULL), siguiente(sig), visitado(false) {}
+
 //******************************************************
 void Nodo::Agregar(Nodo *ady)
 {
@@ -67,3 +68,7 @@ Arista * Nodo::BuscarDireccion(Nodo *ady, Arista **ant /*=NULL*/)const
     }
     return aux;
 }
+
+//******************************************************
+
+

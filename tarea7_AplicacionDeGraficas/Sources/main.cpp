@@ -36,14 +36,7 @@ int main()
     std::cout << "Grado del nodo 4: " << m.ObtenerGrado('4') << std::endl;
     //std::cout << "Grado del nodo 5: " << m.ObtenerGrado('5') << std::endl;
 
-    // Verificar si la gráfica es conexa usando BFS o DFS
-    if (g.EsConexa()) {
-        std::cout << "La gráfica es conexa." << std::endl;
-    } else {
-        std::cout << "La gráfica no es conexa." << std::endl;
-    }
-  
-    
+    g.CaminoEuleriano(); 
 
     return 0;
 }

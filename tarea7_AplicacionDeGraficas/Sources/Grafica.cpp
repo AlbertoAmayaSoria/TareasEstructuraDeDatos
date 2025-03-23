@@ -173,21 +173,22 @@ Nodo * Grafica::BuscarDireccion(char nom, Nodo **ant /*=NULL*/)const
 
 //*************************************************
 
-// Función para verificar si la gráfica es conexa
+// Verificar si la gráfica es conexa (usando DFS)
 bool Grafica::EsConexa() const {
-    bool* visitado = new bool[numNodos]{false}; // Marcamos todos los nodos como no visitados
-    if (primero == nullptr) { // Si la gráfica está vacía
+    bool* visitado = new bool[numNodos]{false};
+    if (primero == nullptr) {
         delete[] visitado;
         return true;
     }
 
-    BFS(primero, visitado); // Comenzamos BFS desde el primer nodo
+    // Usamos DFS para recorrer la gráfica
+    DFS(primero, visitado);
 
-    // Verificamos si todos los nodos fueron visitados
+    // Comprobamos si todos los nodos fueron visitados
     for (int i = 0; i < numNodos; ++i) {
-        if (!visitado[i]) { // Si algún nodo no fue visitado, la gráfica no es conexa
+        if (!visitado[i]) {
             delete[] visitado;
-            return false;
+            return false;  // Si algún nodo no fue visitado, la gráfica no es conexa
         }
     }
 
@@ -195,10 +196,100 @@ bool Grafica::EsConexa() const {
     return true;
 }
 
+//**************************************************
+
+// Verificar si todos los nodos tienen grado par
+bool Grafica::TieneGradoPar() const {
+    Nodo* nodoActual = primero;
+    while (nodoActual != nullptr) {
+        if (nodoActual->grado % 2 != 0) {
+            return false;  // Si encontramos un nodo con grado impar, retornamos false
+        }
+        nodoActual = nodoActual->siguiente;
+    }
+    return true;  // Todos los nodos tienen grado par
+}
+
 //***************************************************
 
+// DFS auxiliar para verificar si la gráfica es conexa
+void Grafica::DFS(Nodo* inicio, bool *visitado) const {
+    Pila<Nodo*> pila;  // Usamos la Pila proporcionada para hacer DFS
+    pila.Apilar(inicio);
+
+    while (!pila.EstaVacia()) {
+        Nodo* nodoActual = pila.ObtenerTope();
+        pila.Desapilar();
+
+        if (!visitado[nodoActual->nombre - '0']) {
+            visitado[nodoActual->nombre - '0'] = true;
+            Arista* arista = nodoActual->primera;
+            while (arista != nullptr) {
+                Nodo* adyacente = arista->adyacente;
+                if (!visitado[adyacente->nombre - '0']) {
+                    pila.Apilar(adyacente);
+                }
+                arista = arista->siguiente;
+            }
+        }
+    }
+}
+
+//****************************************************************
+
+void Grafica::CaminoEuleriano() {
+    if (!EsConexa() || !TieneGradoPar()) {
+        std::cout << "La gráfica no tiene un camino euleriano." << std::endl;
+        return;
+    }
+    
+    Cola<Nodo*> cola;
+    Pila<Nodo*> pila;
+    Nodo* v_c = primero;
+    Nodo* v_p = v_c;
+    
+    cola.Encolar(v_c);
+    pila.Apilar(v_p);
+    
+    while (v_c->grado > 0 || v_p->grado > 0) {
+        if (v_c->grado > 0) {
+            Arista* arista = v_c->primera;
+            Nodo* w = arista->adyacente;
+            
+            // Verificar si eliminar {v_c, w} desconectaría el grafo
+            if (ObtenerGrado(w) != 1 || v_c->grado == 1) {
+                Eliminar(v_c->nombre, w->nombre);
+                cola.Encolar(w);
+                v_c = w;
+            }
+        } else if (v_p->grado == 1) {
+            Arista* arista = v_p->primera;
+            Nodo* k = arista->adyacente;
+            
+            Eliminar(v_p->nombre, k->nombre);
+            pila.Apilar(k);
+            v_p = k;
+        }
+    }
+    
+    // Imprimir el camino euleriano
+    std::cout << "Camino Euleriano: ";
+    while (!cola.EstaVacia()) {
+        std::cout << cola.ObtenerFrente()->nombre << " -> ";
+        cola.Desencolar();
+    }
+    while (!pila.EstaVacia()) {
+        std::cout << pila.ObtenerTope()->nombre << " -> ";
+        pila.Desapilar();
+    }
+    std::cout << "Fin" << std::endl;
+}
+
+
+
+/*
 // Función DFS (Depth First Search)
-/*void Grafica::DFS(Nodo* nodo, bool* visitado) const {
+void Grafica::DFS(Nodo* nodo, bool* visitado) const {
     Pila<Nodo*> pila;
     pila.Apilar(nodo);
 
@@ -221,7 +312,7 @@ bool Grafica::EsConexa() const {
             }
         }
     }
-}*/
+}
 
 // Función BFS (Breadth First Search)
 void Grafica::BFS(Nodo* nodo, bool* visitado) const {
@@ -244,4 +335,4 @@ void Grafica::BFS(Nodo* nodo, bool* visitado) const {
             arista = arista->siguiente;
         }
     }
-}
+}*/

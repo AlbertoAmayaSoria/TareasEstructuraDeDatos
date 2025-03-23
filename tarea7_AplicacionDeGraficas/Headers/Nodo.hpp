@@ -32,6 +32,8 @@ struct Nodo{
 
     Arista * BuscarDireccion(Nodo *ady, Arista **ant = NULL) const;
 
+    bool visitado;  // Campo para marcar si el nodo ha sido visitado
+
 };
 
 #endif // NODO_HPP_INCLUDED
