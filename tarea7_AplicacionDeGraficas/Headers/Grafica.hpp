@@ -5,7 +5,7 @@
 #include "Pila.hpp"  // Para usar Pila
 #include "Cola.hpp"  // Para usar Cola
 
-class Grafica{
+class Grafica {
 public:
     Grafica();
     Grafica(const Grafica &g);
@@ -16,7 +16,7 @@ public:
     void Agregar(char nom);
     // Agregar arista
     void Agregar(char nomInicial, char nomFinal);
-    
+
     // Eliminar nodo
     void Eliminar(char nom);
     // Eliminar arista
@@ -42,18 +42,24 @@ public:
     // Vaciar toda la gráfica
     void Vaciar();
 
-    // Métodos para la verificación de conectividad y euleriano
-    bool EsConexa() const;  // Verificar si la gráfica es conexa
-    bool TieneGradoPar() const;  // Verificar si todos los nodos tienen grado par
-    void CaminoEuleriano();  // Buscar el camino euleriano
+    // Funciones de Fleury
+    void CaminoEuleriano();
+    bool EsConexa() const;
+    bool TieneGradoPar() const;
+    void DFS(Nodo* inicio, bool *visitado) const;
+
+    // Funciones de búsqueda con contenedores genéricos
+    template <typename T>
+    void DFS(Nodo* nodo, bool* visitado, T& estructura) const;  // DFS usando estructura genérica
+
+    template <typename T>
+    void BFS(Nodo* nodo, bool* visitado, T& estructura) const;  // BFS usando estructura genérica
 
 private:
     Nodo *primero, *ultimo;
     int numNodos, numAristas;
 
     Nodo *BuscarDireccion(char nom, Nodo **ant = NULL) const;
-    void DFS(Nodo* nodo, bool* visitado) const;  // DFS
-    void BFS(Nodo* nodo, bool* visitado) const;  // BFS
 };
 
 #endif // GRAFICA_HPP_INCLUDED

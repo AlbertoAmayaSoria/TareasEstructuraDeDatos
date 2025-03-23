@@ -5,38 +5,34 @@ using namespace std;
 
 int main()
 {
-    Grafica g, m;
-
+    Grafica g;
+    
+    // Agregar nodos y aristas
     g.Agregar('1');
     g.Agregar('2');
     g.Agregar('3');
     g.Agregar('4');
-    //g.Agregar('5');
-    //g.Agregar('5');
-
-    //std::cout << "";
-    g.Agregar('1','2');
-    //g.Agregar('1','1');
-    g.Agregar('1','3');
-    //g.Agregar('1','5');
-    //g.Agregar('2','3');
-    g.Agregar('2','4');
-    g.Agregar('3','4');
-    //g.Agregar('4','5');
-
-    g.Imprimir();  
-
-    std::cout << "Número de Nodos: " << g.ObtenerNumNodos() << std::endl;
-
-    m = g;
- 
-    std::cout << "Grado del nodo 1: " << m.ObtenerGrado('1') << std::endl;
-    std::cout << "Grado del nodo 2: " << m.ObtenerGrado('2') << std::endl;
-    std::cout << "Grado del nodo 3: " << m.ObtenerGrado('3') << std::endl;
-    std::cout << "Grado del nodo 4: " << m.ObtenerGrado('4') << std::endl;
-    //std::cout << "Grado del nodo 5: " << m.ObtenerGrado('5') << std::endl;
-
-    g.CaminoEuleriano(); 
-
+    
+    g.Agregar('1', '2');
+    g.Agregar('2', '3');
+    g.Agregar('3', '4');
+    g.Agregar('4', '1');
+    
+    // Imprimir la gráfica original
+    cout << "Gráfica original:" << endl;
+    g.Imprimir();
+    
+    // Crear una copia del grafo
+    Grafica copia_grafo = g;
+    
+    // Verificar y encontrar el camino Euleriano en la copia
+    cout << "Camino Euleriano en la copia:" << endl;
+    copia_grafo.CaminoEuleriano();
+    
+    // Imprimir la gráfica original para verificar que no fue modificada
+    cout << "\nGráfica original después del cálculo del camino Euleriano:" << endl;
+    g.Imprimir();
+    
     return 0;
 }
+
