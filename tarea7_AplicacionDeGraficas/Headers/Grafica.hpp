@@ -2,8 +2,7 @@
 #define GRAFICA_HPP_INCLUDED
 
 #include "Nodo.hpp"
-#include "Pila.hpp"  // Para usar Pila
-#include "Cola.hpp"  // Para usar Cola
+#include <map>
 
 class Grafica {
 public:
@@ -46,15 +45,8 @@ public:
     void CaminoEuleriano();
     bool EsConexa() const;
     bool TieneGradoPar() const;
-    void DFS(Nodo* inicio, bool *visitado) const;
-
-    // Funciones de búsqueda con contenedores genéricos
-    template <typename T>
-    void DFS(Nodo* nodo, bool* visitado, T& estructura) const;  // DFS usando estructura genérica
-
-    /*template <typename T>
-    void BFS(Nodo* nodo, bool* visitado, T& estructura) const;  // BFS usando estructura genérica
-    */
+    //void DFS(Nodo* inicio, bool *visitado) const;
+    void DFS(Nodo* nodo, std::map<char, bool>& visitado) const; 
 
 private:
     Nodo *primero, *ultimo;

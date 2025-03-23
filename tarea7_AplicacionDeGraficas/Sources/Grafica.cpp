@@ -1,7 +1,6 @@
 #include <iostream>
 #include "../Headers/Grafica.hpp"
 #include "../Headers/Pila.hpp"
-#include "../Headers/Cola.hpp"
 
 //*************************************************
 Grafica::Grafica(): primero(NULL), ultimo(NULL), numNodos(0), numAristas(0) {}
@@ -136,9 +135,9 @@ Nodo *Grafica::BuscarDireccion(char nom, Nodo **ant /*=NULL*/) const {
 
 // Función para verificar si la gráfica es conexa
 bool Grafica::EsConexa() const {
-    bool* visitado = new bool[numNodos]{false};
+    std::map<char, bool> visitado;  // Usamos un map para marcar los nodos visitados
     if (primero == nullptr) {
-        delete[] visitado;
+        std::cout << "La gráfica es vacía." << std::endl;
         return true;
     }
 
@@ -146,15 +145,15 @@ bool Grafica::EsConexa() const {
     DFS(primero, visitado);
 
     // Comprobamos si todos los nodos fueron visitados
-    for (int i = 0; i < numNodos; ++i) {
-        if (!visitado[i]) {
-            delete[] visitado;
+    Nodo* nodoActual = primero;
+    while (nodoActual != nullptr) {
+        if (visitado.find(nodoActual->nombre) == visitado.end()) {
             std::cout << "La gráfica NO es conexa." << std::endl;
             return false;  // Si algún nodo no fue visitado, la gráfica no es conexa
         }
+        nodoActual = nodoActual->siguiente;
     }
 
-    delete[] visitado;
     std::cout << "La gráfica es conexa." << std::endl;
     return true;
 }
@@ -174,50 +173,27 @@ bool Grafica::TieneGradoPar() const {
 
 
 // Función DFS (Depth First Search)
-void Grafica::DFS(Nodo* nodo, bool* visitado) const {
+void Grafica::DFS(Nodo* nodo, std::map<char, bool>& visitado) const {
     Pila<Nodo*> pila;  // Usamos la Pila proporcionada para hacer DFS
     pila.Apilar(nodo);
+    visitado[nodo->nombre] = true;  // Marcamos el nodo como visitado
 
     while (!pila.EstaVacia()) {
         Nodo* nodoActual = pila.ObtenerTope();
         pila.Desapilar();
 
-        if (!visitado[nodoActual->nombre - '1']) {
-            visitado[nodoActual->nombre - '1'] = true;
-            Arista* arista = nodoActual->primera;
-            while (arista != nullptr) {
-                Nodo* adyacente = arista->adyacente;
-                if (!visitado[adyacente->nombre - '1']) {
-                    pila.Apilar(adyacente);
-                }
-                arista = arista->siguiente;
-            }
-        }
-    }
-}
-
-
-// Implementación del BFS (Breadth First Search) usando estructuras genéricas (Pila o Cola)
-/*template <typename T>
-void Grafica::BFS(Nodo* nodo, bool* visitado, T& estructura) const {
-    estructura.Encolar(nodo);  // Usamos Encolar de forma genérica
-    visitado[nodo->nombre - '1'] = true;
-
-    while (!estructura.EstaVacia()) {
-        Nodo* actual = estructura.ConocerPrim();  // ConocerPrim para Cola
-        estructura.Desencolar();  // Desencolamos de forma genérica
-
-        Arista* arista = actual->primera;
+        Arista* arista = nodoActual->primera;
         while (arista != nullptr) {
             Nodo* adyacente = arista->adyacente;
-            if (!visitado[adyacente->nombre - '1']) {
-                visitado[adyacente->nombre - '1'] = true;
-                estructura.Encolar(adyacente);  // Encolamos el nodo adyacente no visitado
+            if (visitado.find(adyacente->nombre) == visitado.end()) {
+                visitado[adyacente->nombre] = true;
+                pila.Apilar(adyacente);
             }
             arista = arista->siguiente;
         }
     }
-}*/
+}
+
 
 // Función adaptada para encontrar el camino euleriano
 void Grafica::CaminoEuleriano() {
