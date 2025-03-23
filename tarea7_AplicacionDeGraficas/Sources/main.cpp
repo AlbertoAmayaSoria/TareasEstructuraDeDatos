@@ -7,51 +7,43 @@ int main()
 {
     Grafica g, m;
 
-    g.Agregar('a');
-    g.Agregar('b');
-    g.Agregar('c');
-    g.Agregar('d');
+    g.Agregar('1');
+    g.Agregar('2');
+    g.Agregar('3');
+    g.Agregar('4');
+    //g.Agregar('5');
+    //g.Agregar('5');
 
     //std::cout << "";
-    g.Agregar('a','b');
-    g.Agregar('a','c');
-    g.Agregar('b','c');
-    g.Agregar('b','d');
-    g.Agregar('c','d');
+    g.Agregar('1','2');
+    //g.Agregar('1','1');
+    g.Agregar('1','3');
+    //g.Agregar('1','5');
+    //g.Agregar('2','3');
+    g.Agregar('2','4');
+    g.Agregar('3','4');
+    //g.Agregar('4','5');
 
-    g.Imprimir();
-
-    std::cout << "Copia de la grafica: " << std::endl;
-
-    m = g;
-
-    m.Imprimir();
+    g.Imprimir();  
 
     std::cout << "Número de Nodos: " << g.ObtenerNumNodos() << std::endl;
+
+    m = g;
+ 
+    std::cout << "Grado del nodo 1: " << m.ObtenerGrado('1') << std::endl;
+    std::cout << "Grado del nodo 2: " << m.ObtenerGrado('2') << std::endl;
+    std::cout << "Grado del nodo 3: " << m.ObtenerGrado('3') << std::endl;
+    std::cout << "Grado del nodo 4: " << m.ObtenerGrado('4') << std::endl;
+    //std::cout << "Grado del nodo 5: " << m.ObtenerGrado('5') << std::endl;
+
+    // Verificar si la gráfica es conexa usando BFS o DFS
+    if (g.EsConexa()) {
+        std::cout << "La gráfica es conexa." << std::endl;
+    } else {
+        std::cout << "La gráfica no es conexa." << std::endl;
+    }
+  
     
-    std::cout << "Eliminar el nodo b: " << std::endl;
-
-    g.Eliminar('b');
-    
-    g.Imprimir();
-
-    std::cout << "Número de aristas: " << std::endl;
-
-    std::cout << m.ObtenerNumAristas() << std::endl;
-
-    std::cout << "Número de nodos: " << std::endl;
-
-    std::cout << m.ObtenerNumNodos() << std::endl;
-
-    std::cout << m.ObtenerGrado('a');
-    //Grafica m;
-
-    //m = g;
-
-    //std::cout << "Copia de la grafica: " << std::endl;
-
-    //m.Imprimir();
-
 
     return 0;
 }

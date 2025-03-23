@@ -1,5 +1,7 @@
 #include <iostream>
 #include "../Headers/Grafica.hpp"
+#include "../Headers/Pila.hpp"
+#include "../Headers/Cola.hpp"
 
 //*************************************************
 Grafica::Grafica():primero(NULL),ultimo(NULL),numNodos(0),
@@ -156,4 +158,90 @@ Nodo * Grafica::BuscarDireccion(char nom, Nodo **ant /*=NULL*/)const
         aux = aux->siguiente;
     }
     return aux;
+}
+
+//*************************************************
+/*void RecorrerNodos(const Grafica& g) {
+    Nodo* actual = g.primero;  // Comienza desde el primer nodo
+
+    // Recorre la lista hasta llegar al final
+    while (actual != nullptr) {
+        std::cout << "Nodo: " << actual->nombre << std::endl;  // Imprimir el nombre del nodo
+        actual = actual->siguiente;  // Avanzamos al siguiente nodo
+    }
+}*/
+
+//*************************************************
+
+// Función para verificar si la gráfica es conexa
+bool Grafica::EsConexa() const {
+    bool* visitado = new bool[numNodos]{false}; // Marcamos todos los nodos como no visitados
+    if (primero == nullptr) { // Si la gráfica está vacía
+        delete[] visitado;
+        return true;
+    }
+
+    BFS(primero, visitado); // Comenzamos BFS desde el primer nodo
+
+    // Verificamos si todos los nodos fueron visitados
+    for (int i = 0; i < numNodos; ++i) {
+        if (!visitado[i]) { // Si algún nodo no fue visitado, la gráfica no es conexa
+            delete[] visitado;
+            return false;
+        }
+    }
+
+    delete[] visitado;
+    return true;
+}
+
+//***************************************************
+
+// Función DFS (Depth First Search)
+/*void Grafica::DFS(Nodo* nodo, bool* visitado) const {
+    Pila<Nodo*> pila;
+    pila.Apilar(nodo);
+
+    while (!pila.EstaVacia()) {
+        Nodo* actual = pila.ObtenerTope();
+        pila.Desapilar();
+
+        // Si no se ha visitado este nodo
+        if (!visitado[actual->nombre - '1']) {
+            visitado[actual->nombre - '1'] = true;
+
+            // Recorremos las aristas del nodo
+            Arista* arista = actual->primera;
+            while (arista != nullptr) {
+                Nodo* adyacente = arista->adyacente;
+                if (!visitado[adyacente->nombre - '1']) {
+                    pila.Apilar(adyacente);  // Apilamos el nodo adyacente no visitado
+                }
+                arista = arista->siguiente;
+            }
+        }
+    }
+}*/
+
+// Función BFS (Breadth First Search)
+void Grafica::BFS(Nodo* nodo, bool* visitado) const {
+    Cola<Nodo*> cola;
+    cola.Encolar(nodo);
+    visitado[nodo->nombre - '1'] = true;
+
+    while (!cola.EstaVacia()) {
+        Nodo* actual = cola.ConocerPrim();
+        cola.Desencolar();
+
+        // Recorremos las aristas del nodo
+        Arista* arista = actual->primera;
+        while (arista != nullptr) {
+            Nodo* adyacente = arista->adyacente;
+            if (!visitado[adyacente->nombre - '1']) {
+                visitado[adyacente->nombre - '1'] = true;
+                cola.Encolar(adyacente); // Encolamos el nodo adyacente no visitado
+            }
+            arista = arista->siguiente;
+        }
+    }
 }

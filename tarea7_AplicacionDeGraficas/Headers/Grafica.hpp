@@ -36,6 +36,14 @@ public:
     //Vaciar toda la gráfica
     void Vaciar();
 
+    // Función amiga para recorrer los nodos
+    //friend void RecorrerNodos(const Grafica& g);
+    
+    // Métodos para la verificación de conexidad
+    bool EsConexa() const;  // Verificar si la gráfica es conexa
+    //void DFS(Nodo* nodo, bool* visitado) const;  // DFS
+    void BFS(Nodo* nodo, bool* visitado) const;  // BFS
+
 private:
     Nodo *primero, *ultimo;
     int numNodos, numAristas;
