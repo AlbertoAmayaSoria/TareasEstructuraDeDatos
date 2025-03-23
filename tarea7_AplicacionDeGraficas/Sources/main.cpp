@@ -5,7 +5,7 @@ using namespace std;
 
 int main()
 {
-    Grafica g;
+    Grafica g, f;
     
     // Agregar nodos y aristas
     g.Agregar('1');
@@ -14,24 +14,34 @@ int main()
     g.Agregar('4');
     
     g.Agregar('1', '2');
-    g.Agregar('2', '3');
-    g.Agregar('3', '4');
-    g.Agregar('4', '1');
+    g.Agregar('2', '4');
+    g.Agregar('4', '3');
+    g.Agregar('3', '1');
     
     // Imprimir la gráfica original
-    cout << "Gráfica original:" << endl;
+    cout << "Gráfica 1 original:" << endl;
     g.Imprimir();
+
+    g.CaminoEuleriano();
+
+    // Agregar nodos y aristas
+    f.Agregar('a');
+    f.Agregar('b');
+    f.Agregar('c');
+    f.Agregar('d');
+    //f.Agregar('e');
     
-    // Crear una copia del grafo
-    Grafica copia_grafo = g;
+    f.Agregar('a', 'b');
+    f.Agregar('b', 'd');
+    f.Agregar('d', 'c');
+    f.Agregar('c', 'a');
     
-    // Verificar y encontrar el camino Euleriano en la copia
-    cout << "Camino Euleriano en la copia:" << endl;
-    copia_grafo.CaminoEuleriano();
-    
-    // Imprimir la gráfica original para verificar que no fue modificada
-    cout << "\nGráfica original después del cálculo del camino Euleriano:" << endl;
-    g.Imprimir();
+    // Imprimir la gráfica original
+    cout << "\nGráfica 2 original:" << endl;
+    f.Imprimir();
+
+    f.CaminoEuleriano();
+     
     
     return 0;
 }

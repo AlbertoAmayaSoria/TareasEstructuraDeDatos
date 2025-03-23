@@ -52,8 +52,9 @@ public:
     template <typename T>
     void DFS(Nodo* nodo, bool* visitado, T& estructura) const;  // DFS usando estructura genérica
 
-    template <typename T>
+    /*template <typename T>
     void BFS(Nodo* nodo, bool* visitado, T& estructura) const;  // BFS usando estructura genérica
+    */
 
 private:
     Nodo *primero, *ultimo;

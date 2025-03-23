@@ -198,7 +198,7 @@ void Grafica::DFS(Nodo* nodo, bool* visitado) const {
 
 
 // Implementación del BFS (Breadth First Search) usando estructuras genéricas (Pila o Cola)
-template <typename T>
+/*template <typename T>
 void Grafica::BFS(Nodo* nodo, bool* visitado, T& estructura) const {
     estructura.Encolar(nodo);  // Usamos Encolar de forma genérica
     visitado[nodo->nombre - '1'] = true;
@@ -217,7 +217,7 @@ void Grafica::BFS(Nodo* nodo, bool* visitado, T& estructura) const {
             arista = arista->siguiente;
         }
     }
-}
+}*/
 
 // Función adaptada para encontrar el camino euleriano
 void Grafica::CaminoEuleriano() {
@@ -227,69 +227,37 @@ void Grafica::CaminoEuleriano() {
         return;
     }
 
-    // Usamos una cola para recorrer los nodos en BFS
-    Cola<Nodo*> cola;
-    Pila<Nodo*> pila;  // Usamos la pila como indica el algoritmo de Fleury
+    Pila<Nodo*> pila;
+    Pila<Nodo*> camino;
 
     Nodo* v_c = primero;  // Nodo inicial (cualquier vértice)
-    Nodo* v_p = v_c;      // El mismo vértice es v_p en el primer paso
-
-    cola.Encolar(v_c);
     pila.Apilar(v_c);
 
-    // Mientras haya nodos en la cola
-    while (!cola.EstaVacia()) {
-        v_c = cola.ConocerPrim();  // Obtenemos el nodo al frente de la cola
-        cola.Desencolar();         // Desencolamos el nodo
+    while (!pila.EstaVacia()) {
+        v_c = pila.ObtenerTope();
 
-        // Mientras haya aristas, seguimos buscando el camino Euleriano
-        while (v_c->grado > 0) {
+        if (v_c->grado > 0) {
             Arista* arista = v_c->primera;
-            Nodo* w = nullptr;
+            Nodo* w = arista->adyacente;
 
-            // Buscamos una arista donde el grado de w no sea 1
-            while (arista != nullptr) {
-                w = arista->adyacente;
-                if (w->grado != 1) {
-                    break;
-                }
-                arista = arista->siguiente;
-            }
+            // Eliminamos la arista de la gráfica
+            Eliminar(v_c->nombre, w->nombre);
+            std::cout << "Eliminando arista: " << v_c->nombre << " - " << w->nombre << std::endl;
 
-            // Si encontramos una arista adecuada
-            if (w != nullptr) {
-                // Eliminamos la arista de la gráfica
-                Eliminar(v_c->nombre, w->nombre);
-                std::cout << "Eliminando arista: " << v_c->nombre << " - " << w->nombre << std::endl;
-
-                // Agregamos w a la cola
-                cola.Encolar(w);
-                v_c = w;  // Movemos a v_c
-            } 
-            // Si no encontramos una arista adecuada, usamos el vértice anterior (v_p)
-            else {
-                // Elegimos la única arista de v_p
-                Nodo* k = v_p->primera->adyacente;
-                Eliminar(v_p->nombre, k->nombre);
-                std::cout << "Eliminando arista: " << v_p->nombre << " - " << k->nombre << std::endl;
-
-                // Agregamos k a la pila
-                pila.Apilar(k);
-                v_p = k;  // Movemos a v_p
-            }
+            pila.Apilar(w);
+        } else {
+            camino.Apilar(pila.ObtenerTope());
+            pila.Desapilar();
         }
     }
 
     // Ahora imprimimos el camino euleriano
     std::cout << "Camino Euleriano: ";
 
-    // Primero, imprimimos los nodos de la pila
-    // La pila contiene el recorrido de nodos en el camino Euleriano
-    while (!pila.EstaVacia()) {
-        std::cout << pila.ObtenerTope()->nombre << " -> ";
-        pila.Desapilar();
+    while (!camino.EstaVacia()) {
+        std::cout << camino.ObtenerTope()->nombre << " -> ";
+        camino.Desapilar();
     }
 
     std::cout << "Fin" << std::endl;
 }
-
