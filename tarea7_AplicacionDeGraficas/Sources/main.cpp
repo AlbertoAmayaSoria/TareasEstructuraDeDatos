@@ -5,7 +5,7 @@ using namespace std;
 
 int main()
 {
-    Grafica g, f;
+    Grafica g, f, i, j;
     
     // Agregar nodos y aristas
     g.Agregar('1');
@@ -41,6 +41,44 @@ int main()
     f.Imprimir();
 
     f.CaminoEuleriano();
+
+    // Agregar nodos y aristas
+    i.Agregar('a');
+    i.Agregar('b');
+    i.Agregar('c');
+    i.Agregar('d');
+    i.Agregar('e');
+    
+    i.Agregar('a', 'b');
+    i.Agregar('a', 'c');
+    i.Agregar('b', 'd');
+    i.Agregar('d', 'c');
+    i.Agregar('c', 'a');
+    
+    // Imprimir la gráfica original
+    cout << "\nGráfica 3 original:" << endl;
+    i.Imprimir();
+
+    i.CaminoEuleriano();
+
+    // Agregar nodos y aristas
+    j.Agregar('a');
+    j.Agregar('b');
+    j.Agregar('c');
+    j.Agregar('d');
+    j.Agregar('e');
+    
+    j.Agregar('a', 'b');
+    j.Agregar('b', 'd');
+    j.Agregar('d', 'c');
+    j.Agregar('c', 'a');
+    
+    // Imprimir la gráfica original
+    cout << "\nGráfica 4 original:" << endl;
+    j.Imprimir();
+
+    j.CaminoEuleriano();
+
      
     
     return 0;
