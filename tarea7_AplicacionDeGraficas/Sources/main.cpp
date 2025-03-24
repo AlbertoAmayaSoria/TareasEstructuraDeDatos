@@ -45,7 +45,7 @@ int main()
     f.Agregar('d', 'c');
     f.Agregar('c', 'a');
     
-    cout << "\nGráfica 2 original (camino Euleriano):" << endl;
+    cout << "Gráfica 2 original (camino Euleriano):" << endl;
     f.Imprimir();
     f.CaminoEuleriano();  // Este grafo debe tener un camino Euleriano
     
@@ -64,7 +64,7 @@ int main()
     i.Agregar('c', 'd');
     i.Agregar('d', 'a');
     
-    cout << "\nGráfica 3 original (camino Euleriano):" << endl;
+    cout << "Gráfica 3 original (camino Euleriano):" << endl;
     i.Imprimir();
     i.CaminoEuleriano();  // Este grafo también tiene un camino Euleriano
     
@@ -80,7 +80,7 @@ int main()
     k.Agregar('1', '2');
     k.Agregar('2', '3');
     
-    cout << "\nGráfica 4 (sin camino Euleriano, tiene vértices con grado impar):" << endl;
+    cout << "Gráfica 4 (sin camino Euleriano, tiene vértices con grado impar):" << endl;
     k.Imprimir();
     k.CaminoEuleriano();  // Este grafo no tiene un camino Euleriano
 
