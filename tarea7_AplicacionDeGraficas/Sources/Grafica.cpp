@@ -1,6 +1,7 @@
 #include <iostream>
 #include "../Headers/Grafica.hpp"
 #include "../Headers/Pila.hpp"
+#include "../Headers/Cola.hpp"
 
 //*************************************************
 Grafica::Grafica(): primero(NULL), ultimo(NULL), numNodos(0), numAristas(0) {}
@@ -204,25 +205,30 @@ void Grafica::CaminoEuleriano() {
     }
 
     Pila<Nodo*> pila;
-    Pila<Nodo*> camino;
+    Cola<Nodo*> cola;
 
     Nodo* v_c = primero;  // Nodo inicial (cualquier vértice)
-    pila.Apilar(v_c);
+    pila.Apilar(v_c);      // Agregar a la pila
+    cola.Encolar(v_c);     // Agregar a la cola
 
     while (!pila.EstaVacia()) {
         v_c = pila.ObtenerTope();
 
         if (v_c->grado > 0) {
+            // Elegir cualquier arista {v_c, w} (puedes elegir la primera arista que encuentres)
             Arista* arista = v_c->primera;
             Nodo* w = arista->adyacente;
 
-            // Eliminamos la arista de la gráfica
+            // Eliminar la arista de la gráfica
             Eliminar(v_c->nombre, w->nombre);
             std::cout << "Eliminando arista: " << v_c->nombre << " - " << w->nombre << std::endl;
 
+            // Agregar w a la cola y a la pila
+            cola.Encolar(w);
             pila.Apilar(w);
+
         } else {
-            camino.Apilar(pila.ObtenerTope());
+            // Si v_c no tiene aristas (grado 0), movemos el vértice de la pila a la cola
             pila.Desapilar();
         }
     }
@@ -230,10 +236,18 @@ void Grafica::CaminoEuleriano() {
     // Ahora imprimimos el camino euleriano
     std::cout << "Camino Euleriano: ";
 
-    while (!camino.EstaVacia()) {
-        std::cout << camino.ObtenerTope()->nombre << " -> ";
-        camino.Desapilar();
+    // Primero imprimimos los vértices de la cola
+    while (!cola.EstaVacia()) {
+        std::cout << cola.ConocerPrim()->nombre << " -> ";
+        cola.Desencolar();
+    }
+
+    // Luego imprimimos los vértices de la pila
+    while (!pila.EstaVacia()) {
+        std::cout << pila.ObtenerTope()->nombre << " -> ";
+        pila.Desapilar();
     }
 
     std::cout << "Fin" << std::endl;
 }
+
