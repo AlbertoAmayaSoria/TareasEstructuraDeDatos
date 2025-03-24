@@ -96,5 +96,5 @@ void LimpiarPantalla() {
 }
 
 void DetenerImpresion(int milisegundos) {
-    std::this_thread::sleep_for(std::chrono::milliseconds(milisegundos));  // Pausa en milisegundos
+    std::this_thread::sleep_for(std::chrono::milliseconds(milisegundos));
 }
