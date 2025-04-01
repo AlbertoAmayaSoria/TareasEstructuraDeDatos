@@ -46,7 +46,8 @@ private:
 
     void ImprimirDec(Nodo *subraiz) const;
 
-
+    // Función auxiliar para copiar un árbol recursivamente
+    Nodo* CopiarArbol(Nodo* subraiz);
 
 
 };

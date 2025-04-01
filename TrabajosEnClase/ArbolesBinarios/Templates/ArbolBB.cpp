@@ -21,16 +21,37 @@ void ArbolBB<Type>::Vaciar(){
     Podar(raiz);
 }
 
-//Hacer en preorden
-
+// Implementación del operador de asignación
 template <typename Type>
-void ArbolBB<Type>& ArbolBB<Type>::operator=(const ArbolBB<Type> &ab)
-{
-    if(this == &ab) return *this;
+ArbolBB<Type>& ArbolBB<Type>::operator=(const ArbolBB<Type> &ab) {
+    // Verificamos si estamos intentando asignar el mismo objeto
+    if (this == &ab) return *this;
 
+    // Liberamos los nodos del árbol actual
     Vaciar();
 
-    
+    // Copiamos el árbol de 'ab' en este objeto
+    if (ab.raiz != nullptr) {
+        raiz = CopiarArbol(ab.raiz);
+        numNodos = ab.numNodos;
+    }
+
+    return *this;
+}
+
+// Función auxiliar para copiar un árbol recursivamente
+template <typename Type>
+typename ArbolBB<Type>::Nodo* ArbolBB<Type>::CopiarArbol(Nodo* subraiz) {
+    if (subraiz == nullptr) return nullptr;
+
+    // Creamos un nuevo nodo para el valor del nodo actual
+    Nodo* nuevoNodo = new Nodo(subraiz->valor);
+
+    // Copiamos recursivamente los subárboles izquierdo y derecho
+    nuevoNodo->hijoIzq = CopiarArbol(subraiz->hijoIzq);
+    nuevoNodo->hijoDer = CopiarArbol(subraiz->hijoDer);
+
+    return nuevoNodo;
 }
 
 template <typename Type>
@@ -127,7 +148,4 @@ void ArbolBB<Type>::ImprimirNiveles() const{
 
 
 }
-
-
-
 

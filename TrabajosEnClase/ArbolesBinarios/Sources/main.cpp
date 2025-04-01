@@ -5,7 +5,7 @@ using namespace std;
 
 int main()
 {
-    ArbolBB<int> Arbol;
+    ArbolBB<int> Arbol, arbol;
 
     Arbol.Agregar(35);
     Arbol.Agregar(20);
@@ -15,6 +15,8 @@ int main()
     Arbol.Agregar(41);
     Arbol.Agregar(115);
     Arbol.Agregar(95);
+
+    arbol = Arbol;
     
     Arbol.ImprimirNiveles();
 
@@ -31,5 +33,8 @@ int main()
     Arbol.Podar(52);
     Arbol.ImprimirNiveles();
 
+    cout << "\nCopia del primer arbol: " << endl;
+
+    arbol.ImprimirNiveles();
 
 }
