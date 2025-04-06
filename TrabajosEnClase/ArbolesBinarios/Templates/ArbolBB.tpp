@@ -98,6 +98,62 @@ void ArbolBB<Type>::Agregar(Type valor, Nodo *&subraiz){
 }
 
 template <typename Type>
+void ArbolBB<Type>::Eliminar(Type valor){
+    Eliminar(valor, raiz);
+}
+
+template <typename Type>
+void ArbolBB<Type>::Eliminar(Type valor, Nodo *&subraiz){
+    if(subraiz == nullptr) return;  // El valor no se encuentra en el árbol
+
+    // Si el valor a eliminar es menor que el valor del nodo actual, va al subárbol izquierdo
+    if(valor < subraiz->valor){
+        Eliminar(valor, subraiz->hijoIzq);
+    }
+    // Si el valor a eliminar es mayor que el valor del nodo actual, va al subárbol derecho
+    else if(valor > subraiz->valor){
+        Eliminar(valor, subraiz->hijoDer);
+    }
+    else {
+        // Caso 1: El nodo a eliminar es una hoja (sin hijos)
+        if(subraiz->hijoIzq == nullptr && subraiz->hijoDer == nullptr){
+            delete subraiz;
+            subraiz = nullptr;
+            --numNodos;
+        }
+        // Caso 2: El nodo a eliminar tiene un solo hijo
+        else if(subraiz->hijoIzq == nullptr){
+            Nodo* temp = subraiz;
+            subraiz = subraiz->hijoDer;
+            delete temp;
+            --numNodos;
+        }
+        else if(subraiz->hijoDer == nullptr){
+            Nodo* temp = subraiz;
+            subraiz = subraiz->hijoIzq;
+            delete temp;
+            --numNodos;
+        }
+        // Caso 3: El nodo a eliminar tiene dos hijos
+        else {
+            // Buscamos el sucesor in-order (el nodo más pequeño del subárbol derecho)
+            Nodo* sucesor = BuscarSucesor(subraiz->hijoDer);
+            subraiz->valor = sucesor->valor;  // Reemplazamos el valor del nodo a eliminar por el sucesor
+            Eliminar(sucesor->valor, subraiz->hijoDer);  // Eliminamos el sucesor
+        }
+    }
+}
+
+// Método auxiliar para encontrar el sucesor in-order (el nodo más pequeño en el subárbol derecho)
+template <typename Type>
+typename ArbolBB<Type>::Nodo* ArbolBB<Type>::BuscarSucesor(Nodo* subraiz) const{
+    while(subraiz != nullptr && subraiz->hijoIzq != nullptr){
+        subraiz = subraiz->hijoIzq;
+    }
+    return subraiz;
+}
+
+template <typename Type>
 void ArbolBB<Type>::ImprimirAsc() const{
     ImprimirAsc(raiz);
 }
