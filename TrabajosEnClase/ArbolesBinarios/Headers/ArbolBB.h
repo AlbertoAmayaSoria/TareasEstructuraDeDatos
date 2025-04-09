@@ -21,6 +21,7 @@ public:
     void ImprimirDec() const;
     void Vaciar();
     void ImprimirNiveles() const;
+    void BalancearArbol();
 
 private:
     int numNodos;
@@ -43,6 +44,8 @@ private:
 
     // Función auxiliar para encontrar el sucesor in-order
     Nodo* BuscarSucesor(Nodo* subraiz) const;
+
+
 };
 
 #include "../Templates/ArbolBB.tpp"

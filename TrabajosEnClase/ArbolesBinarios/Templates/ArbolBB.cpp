@@ -95,6 +95,8 @@ void ArbolBB<Type>::Agregar(Type valor, Nodo *&subraiz){
     else if(valor < subraiz->valor) Agregar(valor, subraiz->hijoIzq);
     else Agregar(valor,subraiz->hijoDer);
 
+    //BalancearArbol
+
 }
 
 template <typename Type>
@@ -142,6 +144,8 @@ void ArbolBB<Type>::Eliminar(Type valor, Nodo *&subraiz){
             Eliminar(sucesor->valor, subraiz->hijoDer);  // Eliminamos el sucesor
         }
     }
+
+    //BalancearArbol();
 }
 
 // Método auxiliar para encontrar el sucesor in-order (el nodo más pequeño en el subárbol derecho)
@@ -204,4 +208,11 @@ void ArbolBB<Type>::ImprimirNiveles() const{
 
 
 }
+
+/*template <typename Type>
+void ArbolBB<Type>::BalancearArbol();
+{
+
+}*/
+
 
