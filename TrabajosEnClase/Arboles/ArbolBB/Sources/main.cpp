@@ -70,6 +70,8 @@ int main() {
     cout << "\nCopia del primer árbol (sin cambios): " << endl;
     arbol.ImprimirNiveles();
 
+    // Podar en la copia del arbol original 
+
     return 0;
 }
 
