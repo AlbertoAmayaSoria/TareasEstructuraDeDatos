@@ -94,9 +94,6 @@ void ArbolBB<Type>::Agregar(Type valor, Nodo *&subraiz){
     }else if(valor == subraiz->valor) return;
     else if(valor < subraiz->valor) Agregar(valor, subraiz->hijoIzq);
     else Agregar(valor,subraiz->hijoDer);
-
-    //BalancearArbol
-
 }
 
 template <typename Type>
@@ -144,8 +141,6 @@ void ArbolBB<Type>::Eliminar(Type valor, Nodo *&subraiz){
             Eliminar(sucesor->valor, subraiz->hijoDer);  // Eliminamos el sucesor
         }
     }
-
-    //BalancearArbol();
 }
 
 // Método auxiliar para encontrar el sucesor in-order (el nodo más pequeño en el subárbol derecho)
@@ -156,6 +151,56 @@ typename ArbolBB<Type>::Nodo* ArbolBB<Type>::BuscarSucesor(Nodo* subraiz) const{
     }
     return subraiz;
 }
+
+template <typename Type>
+bool ArbolBB<Type>::Buscar(Type valor)const {
+    Nodo* actual = raiz;
+    while (actual != nullptr) {
+        if (valor == actual->valor) return true;
+        else if (valor < actual->valor) actual = actual->hijoIzq;
+        else actual = actual->hijoDer;
+    }
+    return false;
+}
+
+template <typename Type>
+int ArbolBB<Type>::NumeroNodos() {
+    return numNodos;
+}
+
+template <typename Type>
+Type ArbolBB<Type>::ObtenerMayor() {
+    Nodo* actual = raiz;
+    if (!actual) throw std::runtime_error("Árbol vacío");
+    while (actual->hijoDer) actual = actual->hijoDer;
+    return actual->valor;
+}
+
+template <typename Type>
+Type ArbolBB<Type>::ObtenerMenor() {
+    Nodo* actual = raiz;
+    if (!actual) throw std::runtime_error("Árbol vacío");
+    while (actual->hijoIzq) actual = actual->hijoIzq;
+    return actual->valor;
+}
+
+// Función pública
+template <typename Type>
+int ArbolBB<Type>::AlturaArbol() const {
+    return AlturaArbol(raiz);
+}
+
+// Función auxiliar recursiva
+template <typename Type>
+int ArbolBB<Type>::AlturaArbol(Nodo* subraiz) const {
+    if (subraiz == nullptr) return 0;
+
+    int alturaIzq = AlturaArbol(subraiz->hijoIzq);
+    int alturaDer = AlturaArbol(subraiz->hijoDer);
+
+    return 1 + std::max(alturaIzq, alturaDer);
+}
+
 
 template <typename Type>
 void ArbolBB<Type>::ImprimirAsc() const{
@@ -208,11 +253,3 @@ void ArbolBB<Type>::ImprimirNiveles() const{
 
 
 }
-
-/*template <typename Type>
-void ArbolBB<Type>::BalancearArbol();
-{
-
-}*/
-
-

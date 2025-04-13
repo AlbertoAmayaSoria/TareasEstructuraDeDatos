@@ -16,12 +16,21 @@ public:
     // Métodos públicos
     void Agregar(Type valor);
     void Eliminar(Type valor);
-    void ImprimirAsc() const;
+
+    bool Buscar(Type valor)const;
+    
+    int NumeroNodos();
+    Type ObtenerMayor();
+    Type ObtenerMenor();
+    
+    int AlturaArbol() const;
+
     void Podar(Type valor);
-    void ImprimirDec() const;
     void Vaciar();
+
+    void ImprimirAsc() const;
+    void ImprimirDec() const;
     void ImprimirNiveles() const;
-    void BalancearArbol();
 
 private:
     int numNodos;
@@ -38,6 +47,8 @@ private:
     Nodo *& BuscarDir(Type valor, Nodo *&subraiz) const;
     void Podar(Nodo *&subraiz);
     void ImprimirDec(Nodo *subraiz) const;
+
+    int AlturaArbol(Nodo* subraiz) const;
 
     // Función auxiliar para copiar un árbol recursivamente
     Nodo* CopiarArbol(Nodo* subraiz);
