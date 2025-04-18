@@ -1,10 +1,10 @@
 #include <iostream>
-#include "../Headers/ArbolBB.h"
+#include "../Headers/ArbolAVL.hpp"
 
 using namespace std;
 
 int main() {
-    ArbolBB<int> Arbol, arbol;
+    ArbolAVL<int> Arbol, arbol;
 
     // Agregamos algunos valores al árbol
     Arbol.Agregar(35);
@@ -20,7 +20,7 @@ int main() {
     arbol = Arbol;
 
     // Impresión de órdenes
-    cout << "Árbol en niveles: ";
+    /*cout << "Árbol en niveles: ";
     Arbol.ImprimirNiveles();  
     cout << endl;
 
@@ -78,7 +78,7 @@ int main() {
     // Mostramos la copia del árbol original (debería conservar su estado original)
     cout << "\nCopia del árbol original (sin cambios): ";
     arbol.ImprimirNiveles();
-    cout << endl;
+    cout << endl;*/
 
     return 0;
 }

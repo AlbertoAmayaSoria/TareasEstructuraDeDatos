@@ -61,9 +61,9 @@ int main() {
     cout << endl;
 
     // Podar un subárbol
-    cout << "\nPodando subárbol con raíz 20..." << endl;
-    Arbol.Podar(20);
-    cout << "Árbol en niveles después de podar 20: ";
+    cout << "\nPodando subárbol con raíz 95..." << endl;
+    Arbol.Podar(95);
+    cout << "Árbol en niveles después de podar 95: ";
     Arbol.ImprimirNiveles();
     cout << endl;
 

@@ -13,6 +13,7 @@ public:
     ~ArbolBB();
     // Operador =
     ArbolBB & operator=(const ArbolBB &ab);
+    
     // Métodos públicos
     void Agregar(Type valor);
     void Eliminar(Type valor);
