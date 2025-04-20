@@ -4,82 +4,48 @@
 using namespace std;
 
 int main() {
-    ArbolAVL<int> Arbol, arbol;
+    ArbolAVL<int> arbol;
 
-    // Agregamos algunos valores al árbol
-    Arbol.Agregar(35);
-    Arbol.Agregar(20);
-    Arbol.Agregar(10);
-    Arbol.Agregar(29);
-    Arbol.Agregar(52);
-    Arbol.Agregar(41);
-    Arbol.Agregar(115);
-    Arbol.Agregar(95);
+    cout << "=== Agregando nodos al Arbol AVL ===\n";
+    arbol.Agregar(30);
+    arbol.Agregar(20);
+    arbol.Agregar(40);
+    arbol.Agregar(10);
+    arbol.Agregar(25);
+    arbol.Agregar(35);
+    arbol.Agregar(50);
+    arbol.Agregar(5);
+    arbol.Agregar(15);
+    cout << "30, 20, 40, 10, 25, 35, 50, 5, 15" << endl;
 
-    // Realizamos una copia del árbol
-    arbol = Arbol;
+    cout << "\n=== Imprimir Ascendente (In-Orden) ===\n";
+    arbol.ImprimirAsc();
 
-    // Impresión de órdenes
-    /*cout << "Árbol en niveles: ";
-    Arbol.ImprimirNiveles();  
-    cout << endl;
+    cout << "\n=== Imprimir Descendente ===\n";
+    arbol.ImprimirDec();
 
-    cout << "Árbol en orden ascendente: ";
-    Arbol.ImprimirAsc();      
-    cout << endl;
-
-    cout << "Árbol en orden descendente: ";
-    Arbol.ImprimirDec();      
-    cout << endl;
-
-    // Buscar elementos
-    cout << "\nBuscando valores en el árbol:" << endl;
-    cout << "¿Existe 29? " << (Arbol.Buscar(29) ? "Sí" : "No") << endl;
-    cout << "¿Existe 100? " << (Arbol.Buscar(100) ? "Sí" : "No") << endl;
-
-    // Número de nodos
-    cout << "Número de nodos en el árbol: " << Arbol.NumeroNodos() << endl;
-
-    // Obtener el valor mayor y menor
-    cout << "Valor mayor en el árbol: " << Arbol.ObtenerMayor() << endl;
-    cout << "Valor menor en el árbol: " << Arbol.ObtenerMenor() << endl;
-
-    // Altura del árbol
-    cout << "Altura del árbol: " << Arbol.AlturaArbol() << endl;
-
-    // Eliminación de nodos
-    cout << "\nEliminando 52..." << endl;
-    Arbol.Eliminar(52);
-    cout << "Árbol en niveles después de eliminar 52: ";
-    Arbol.ImprimirNiveles();
-    cout << endl;
-
-    cout << "\nEliminando 10..." << endl;
-    Arbol.Eliminar(10);
-    cout << "Árbol en niveles después de eliminar 10: ";
-    Arbol.ImprimirNiveles();
-    cout << endl;
-
-    // Podar un subárbol
-    cout << "\nPodando subárbol con raíz 20..." << endl;
-    Arbol.Podar(20);
-    cout << "Árbol en niveles después de podar 20: ";
-    Arbol.ImprimirNiveles();
-    cout << endl;
-
-    // Vaciar el árbol
-    cout << "\nVaciando el árbol completo..." << endl;
-    Arbol.Vaciar();
-    cout << "Árbol en niveles después de vaciar: ";
-    Arbol.ImprimirNiveles();
-    cout << endl;
-    cout << "¿Está vacío? " << (Arbol.NumeroNodos() == 0 ? "Sí" : "No") << endl;
-
-    // Mostramos la copia del árbol original (debería conservar su estado original)
-    cout << "\nCopia del árbol original (sin cambios): ";
+    cout << "\n=== Imprimir por Niveles ===\n";
     arbol.ImprimirNiveles();
-    cout << endl;*/
 
-    return 0;
-}
+    cout << "\n=== Buscar ===\n";
+    cout << "¿Está el 25? " << (arbol.Buscar(25) ? "Sí" : "No") << endl;
+    cout << "¿Está el 99? " << (arbol.Buscar(99) ? "Sí" : "No") << endl;
+
+    cout << "\n=== Número de nodos: " << arbol.NumNodos() << endl;
+    cout << "Altura del árbol: " << arbol.AlturaArbol() << endl;
+
+    cout << "\n=== Eliminar nodos ===\n";
+    arbol.Eliminar(10);
+    arbol.Eliminar(30); // Raíz
+    arbol.Eliminar(5);
+    cout << "10, 30, 5" << endl;
+
+    cout << "\n=== Imprimir Ascendente después de eliminar ===\n";
+    arbol.ImprimirAsc();
+
+    cout << "\n=== Vaciar el árbol ===\n";
+    arbol.Vaciar();
+    cout << "Número de nodos después de vaciar: " << arbol.NumNodos() << std::endl;
+
+    return 0;}
 

@@ -92,7 +92,9 @@ void ArbolAVL<Type>::Agregar(Type valor, Nodo *&subraiz) {
     else if(valor < subraiz->valor) Agregar(valor, subraiz->hijoIzq);
     else Agregar(valor, subraiz->hijoDer);
 
-    //Balancear();
+    if(subraiz != nullptr){
+        subraiz = Balancear(subraiz);
+    }
 }
 
 template <typename Type>
@@ -134,13 +136,15 @@ void ArbolAVL<Type>::Eliminar(Type valor, Nodo *&subraiz) {
             // Buscamos el sucesor in-orden (el nodo más pequeño en el subárbolderecho)
             Nodo* sucesor = BuscarSucesor(subraiz->hijoDer);
             // Remplazamos el valor del nodo a eliminar por el sucesor
-            subraiz->valor = sucesor->hijoDer;
+            subraiz->valor = sucesor->valor;
             // Eliminamos el sucesor
             Eliminar(sucesor->valor, subraiz->hijoDer);
         }
     }
 
-    //Balancear();
+    if(subraiz != nullptr) {
+        subraiz = Balancear(subraiz);
+    }
 }
 
 // Método auxiliar para encontrar el sucesor in-order (el nodo más pequeño en el subárbol derecho)
@@ -252,21 +256,55 @@ void ArbolAVL<Type>::ImprimirNiveles() const {
     }
 }
 
+template <typename Type>
+typename ArbolAVL<Type>::Nodo *& ArbolAVL<Type>::Balancear(Nodo *&subraiz) {
+    if(FactorBalance(subraiz) == 2 && FactorBalance(subraiz->hijoDer) == 1) return RSI(subraiz);
+    if(FactorBalance(subraiz) == 2 && FactorBalance(subraiz->hijoDer) == 0) return RSI(subraiz);
+    if(FactorBalance(subraiz) == 2 && FactorBalance(subraiz->hijoDer) == -1) return RDI(subraiz);
+    if(FactorBalance(subraiz) == -2 && FactorBalance(subraiz->hijoIzq) == -1) return RSD(subraiz);
+    if(FactorBalance(subraiz) == -2 && FactorBalance(subraiz->hijoIzq) == 0) return RSD(subraiz);
+    if(FactorBalance(subraiz) == -2 && FactorBalance(subraiz->hijoIzq) == 1) return RDD(subraiz); 
 
+    return subraiz;
+}
 
+template <typename Type>
+int ArbolAVL<Type>::FactorBalance(Nodo *subraiz) {
+    if(subraiz == nullptr) return 0;
+    return AlturaArbol(subraiz->hijoDer)-AlturaArbol(subraiz->hijoIzq);
+}
 
+template <typename Type>
+typename ArbolAVL<Type>::Nodo *& ArbolAVL<Type>::RSI(Nodo *&x) {
+    Nodo *y = x->hijoDer;
+    Nodo *b = y->hijoIzq;
+    x->hijoDer = b;
+    y->hijoIzq = x;
+    x = y;
 
+    return x;
+}
 
+template <typename Type>
+typename ArbolAVL<Type>::Nodo *& ArbolAVL<Type>::RSD(Nodo *&x) {
+    Nodo *y = x->hijoIzq;
+    Nodo *b = y->hijoDer;
+    x->hijoIzq = b;
+    y->hijoDer = x;
+    x = y;
 
+    return x;
+}
 
+template <typename Type>
+typename ArbolAVL<Type>::Nodo *& ArbolAVL<Type>::RDI(Nodo *&x) {
+    RSD(x->hijoDer);
+    return RSI(x);
+}
 
-
-
-
-
-
-
-
-
-
+template <typename Type>
+typename ArbolAVL<Type>::Nodo *& ArbolAVL<Type>::RDD(Nodo *&x) {
+    RSI(x->hijoIzq);
+    return RSD(x);
+}
 

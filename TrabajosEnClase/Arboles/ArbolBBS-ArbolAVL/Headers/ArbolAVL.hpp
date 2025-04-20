@@ -22,16 +22,21 @@ public:
 
     int NumNodos() const;
 
+    void Vaciar();
+
+    int AlturaArbol() const;
+
     Type ObtenerMayor() const; //no necesario
     Type ObtenerMenor() const; //no necesario
-    int AlturaArbol() const;
+    //int AlturaArbol() const;
 
     void ImprimirAsc() const;
     void ImprimirDec() const;
-
-    void Vaciar();
-
     void ImprimirNiveles() const;
+
+    //void Vaciar();
+
+    //void ImprimirNiveles() const;
 
 private:
     int numNodos;
@@ -39,7 +44,7 @@ private:
     struct Nodo{
         Type valor;
         Nodo *hijoIzq, *hijoDer;
-        Nodo(Type v, Nodo *hijIzq = nullptr, Nodo *hijDer = nullptr): valor(v), hijoIzq(hijIzq), hijoDer(hijoDer){}
+        Nodo(Type v, Nodo *hijIzq = nullptr, Nodo *hijDer = nullptr): valor(v), hijoIzq(hijIzq), hijoDer(hijDer){}
     } *raiz;
 
     void Agregar(Type valor, Nodo *&subraiz);
@@ -63,6 +68,19 @@ private:
     // Función auxiliar para encontrar el sucesor in-order
     Nodo* BuscarSucesor(Nodo* subraiz) const;
 
+    Nodo *&Balancear(Nodo *&subraiz);
+
+    int FactorBalance(Nodo *subraiz);
+
+    Nodo *&RSI(Nodo *&x);
+
+    Nodo *&RSD(Nodo *&x);
+    
+    Nodo *&RDI(Nodo *&x);
+    
+    Nodo *&RDD(Nodo *&x);
+
+    //int FactrorBalance(Nodo *subraiz);
 };
 
 #include "../Templates/ArbolAVL.tpp"
