@@ -1,19 +1,19 @@
 #ifndef HEAP_HPP_INCLUDED
 #define HEAP_HPP_INCLUDED
 
-template <typename Type, char MaxOMin>
+template <typename Type, bool MaxOMin>
 class Heap{
 public:
 
     explicit Heap();
 
-    Heap(const Heap &H);
+    Heap(const Heap &c);
 
     ~Heap();
 
-    Heap & operator=(const Heap &&H);
+    Heap & operator=(const Heap &c);
 
-    void Agregar();
+    void Agregar(Type valor);
 
     void Eliminar();
     
@@ -31,18 +31,19 @@ public:
 
 private:
 
+    Type *elemento;
+
     int cantElem;
     int capacidad;
+    int tope;
 
     int Redimensionar();
 
-    void EmpujarAbajo();
+    void EmpujarArriba(int indice);
 
-    void EmpujarArriba();
+    void EmpujarAbajo(int indice);
 
-    //Type *elementos[capacidad];
-
-}
+};
 
 #include "../Templates/Heap.tpp"
 
