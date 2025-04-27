@@ -1,50 +1,52 @@
 #ifndef HEAP_HPP_INCLUDED
 #define HEAP_HPP_INCLUDED
 
+// Plantilla de Heap: puede ser Max-Heap (MaxOMin=true) o Min-Heap (MaxOMin=false)
 template <typename Type, bool MaxOMin>
-class Heap{
+class Heap {
 public:
 
-    explicit Heap();
+    explicit Heap(); // Constructor por defecto
 
-    Heap(const Heap &c);
+    Heap(const Heap &c); // Constructor copia
 
-    ~Heap();
+    ~Heap(); // Destructor
 
-    Heap & operator=(const Heap &c);
+    Heap& operator=(const Heap &c); // Operador asignación
 
-    void Agregar(Type valor);
+    void Agregar(Type valor); // Agrega un nuevo elemento
 
-    void Eliminar();
-    
-    Type ObtenerFrente() const;
+    void Eliminar(); // Elimina el frente (raíz)
 
-    bool EstaVacia() const;
+    Type ObtenerFrente() const; // Devuelve el elemento raíz
 
-    void Vaciar();
+    bool EstaVacia() const; // Revisa si no hay elementos
 
-    int CantElem() const;
+    void Vaciar(); // Libera toda la memoria usada
 
-    int CapMont() const; // Para pruebas
-    
-    void ImprimirElem() const; // Para pruebas
+    int CantElem() const; // Devuelve la cantidad de elementos actuales
+
+    int CapMont() const; // Devuelve la capacidad actual (lo uso para pruebas)
+
+    void ImprimirElem() const; // Imprime el contenido del heap (también para pruebas)
 
 private:
 
-    Type *elemento;
+    Type* elemento; // Arreglo dinámico donde guardo los elementos
 
-    int cantElem;
-    int capacidad;
-    int tope;
+    int cantElem; // Cantidad actual de elementos
+    int capacidad; // Capacidad máxima actual
+    int tope; // No lo uso mucho en esta implementación, pero lo dejo por si amplío
 
-    int Redimensionar();
+    int Redimensionar(); // Duplica el tamaño del arreglo si hace falta
 
-    void EmpujarArriba(int indice);
+    void EmpujarArriba(int indice); // Sube un elemento para mantener la propiedad de heap
 
-    void EmpujarAbajo(int indice);
-
+    void EmpujarAbajo(int indice); // Baja un elemento para mantener la propiedad de heap
 };
 
+// Incluyo la implementación del template (por temas de templates en C++)
 #include "../Templates/Heap.tpp"
 
-#endif //HEAP_HPP_INCLUDED
+#endif // HEAP_HPP_INCLUDED
+

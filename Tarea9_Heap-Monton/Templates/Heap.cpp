@@ -1,49 +1,79 @@
 #include <iostream>
 
+/**
+ * @brief Constructor por defecto de la clase Heap.
+ * 
+ * Crea un heap con una capacidad inicial de 31 elementos.
+ */
 template <typename Type, bool MaxOMin>
 Heap<Type, MaxOMin>::Heap() : cantElem(0), capacidad(31), tope(-1) {
-    elemento = new Type[capacidad]; // Creamos un arreglo dinámico
+    elemento = new Type[capacidad];
 }
 
+/**
+ * @brief Constructor de copia de la clase Heap.
+ * 
+ * @param c Heap a copiar.
+ */
 template <typename Type, bool MaxOMin>
 Heap<Type, MaxOMin>::Heap(const Heap<Type, MaxOMin>& c) {
-    *this = c; //falta el operador =
+    *this = c;
 }
 
+/**
+ * @brief Destructor de la clase Heap.
+ * 
+ * Libera la memoria utilizada por el heap.
+ */
 template <typename Type, bool MaxOMin>
 Heap<Type, MaxOMin>::~Heap() {
-    Vaciar(); //Falta el metodo vaciar
+    Vaciar();
 }
 
+/**
+ * @brief Sobrecarga del operador de asignación.
+ * 
+ * @param c Heap a asignar.
+ * @return Referencia al objeto actual.
+ */
 template <typename Type, bool MaxOMin>
 Heap<Type, MaxOMin>& Heap<Type, MaxOMin>::operator=(const Heap<Type, MaxOMin>& c) {
-    if (this == &c) return *this; // 1. Evitar autoasignación
+    if (this == &c) return *this; // Evitar autoasignación
 
-    Vaciar(); // 2. Liberar la memoria actual (suponiendo que Vaciar() hace delete[] y pone cantElem = 0)
+    Vaciar();
 
-    capacidad = c.capacidad; // 3. Copiar capacidad
-    cantElem = c.cantElem;   // 4. Copiar cantidad de elementos
-    
-    elemento = new Type[capacidad]; // 5. Crear nuevo arreglo dinámico
+    capacidad = c.capacidad;
+    cantElem = c.cantElem;
+    elemento = new Type[capacidad];
 
-    for (int i = 0; i < cantElem; ++i) { // 6. Copiar los elementos
+    for (int i = 0; i < cantElem; ++i) {
         elemento[i] = c.elemento[i];
     }
 
-    return *this; // 7. Devolver *this
+    return *this;
 }
 
+/**
+ * @brief Agrega un elemento al heap.
+ * 
+ * @param valor Valor a agregar.
+ */
 template <typename Type, bool MaxOMin>
 void Heap<Type, MaxOMin>::Agregar(Type valor) {
-    if (cantElem == capacidad) { // Si está lleno
-        Redimensionar(); // Aumentar capacidad
+    if (cantElem >= capacidad) {
+        Redimensionar();
     }
 
-    elemento[cantElem] = valor; // Agregar el nuevo valor al final
-    EmpujarArriba(cantElem);    // Reordenar hacia arriba
-    cantElem++;                 // Aumentar el contador de elementos
+    elemento[cantElem] = valor;
+    cantElem++;
+
+    int i = cantElem - 1;
+    EmpujarArriba(i);
 }
 
+/**
+ * @brief Elimina el elemento raíz del heap.
+ */
 template <typename Type, bool MaxOMin>
 void Heap<Type, MaxOMin>::Eliminar() {
     if (EstaVacia()) {
@@ -51,16 +81,17 @@ void Heap<Type, MaxOMin>::Eliminar() {
         return;
     }
 
-    // Paso 1: Mover el último elemento a la raíz
     elemento[0] = elemento[cantElem - 1];
-
-    // Paso 2: Disminuir la cantidad de elementos
     cantElem--;
-
-    // Paso 3: Llamar a EmpujarAbajo(0) para restaurar el orden del heap
     EmpujarAbajo(0);
 }
 
+/**
+ * @brief Obtiene el elemento raíz del heap.
+ * 
+ * @return Elemento en la raíz del heap.
+ * @throws std::out_of_range si el heap está vacío.
+ */
 template <typename Type, bool MaxOMin>
 Type Heap<Type, MaxOMin>::ObtenerFrente() const {
     if (EstaVacia()) {
@@ -70,29 +101,50 @@ Type Heap<Type, MaxOMin>::ObtenerFrente() const {
     return elemento[0];
 }
 
+/**
+ * @brief Verifica si el heap está vacío.
+ * 
+ * @return true si el heap no tiene elementos, false en caso contrario.
+ */
 template <typename Type, bool MaxOMin>
 bool Heap<Type, MaxOMin>::EstaVacia() const {
     return cantElem == 0;
 }
 
+/**
+ * @brief Vacía el heap, liberando la memoria.
+ */
 template <typename Type, bool MaxOMin>
 void Heap<Type, MaxOMin>::Vaciar() {
-    delete[] elemento;   // Liberar la memoria que ocupaba el arreglo
-    elemento = nullptr;   // Poner el puntero a nullptr para evitar acceso a memoria liberada
-    cantElem = 0;         // No hay elementos en el heap
-    capacidad = 0;        // Opcional, dependiendo de cómo prefieras manejar la capacidad
+    delete[] elemento;
+    elemento = nullptr;
+    cantElem = 0;
+    capacidad = 0;
 }
 
+/**
+ * @brief Devuelve la cantidad de elementos en el heap.
+ * 
+ * @return Cantidad de elementos.
+ */
 template <typename Type, bool MaxOMin>
 int Heap<Type, MaxOMin>::CantElem() const {
     return cantElem;
 }
 
+/**
+ * @brief Devuelve la capacidad máxima del heap.
+ * 
+ * @return Capacidad actual del arreglo interno.
+ */
 template <typename Type, bool MaxOMin>
 int Heap<Type, MaxOMin>::CapMont() const {
     return capacidad;
 }
 
+/**
+ * @brief Imprime todos los elementos actuales del heap.
+ */
 template <typename Type, bool MaxOMin>
 void Heap<Type, MaxOMin>::ImprimirElem() const {
     if (EstaVacia()) {
@@ -107,7 +159,11 @@ void Heap<Type, MaxOMin>::ImprimirElem() const {
     std::cout << std::endl;
 }
 
-
+/**
+ * @brief Duplica la capacidad del heap cuando se llena.
+ * 
+ * @return Nueva capacidad del heap.
+ */
 template <typename Type, bool MaxOMin>
 int Heap<Type, MaxOMin>::Redimensionar() {
     int nuevaCapacidad = capacidad * 2;
@@ -124,20 +180,24 @@ int Heap<Type, MaxOMin>::Redimensionar() {
     return capacidad;
 }
 
-
+/**
+ * @brief Ajusta el heap moviendo un elemento hacia arriba para mantener la propiedad del heap.
+ * 
+ * @param indice Índice del elemento que se debe mover hacia arriba.
+ */
 template <typename Type, bool MaxOMin>
 void Heap<Type, MaxOMin>::EmpujarArriba(int indice) {
     while (indice > 0) {
         int padre = (indice - 1) / 2;
 
-        if constexpr (MaxOMin) { // Si es Max-Heap
+        if constexpr (MaxOMin) { // Max-Heap
             if (elemento[indice] > elemento[padre]) {
                 std::swap(elemento[indice], elemento[padre]);
                 indice = padre;
             } else {
                 break;
             }
-        } else { // Si es Min-Heap
+        } else { // Min-Heap
             if (elemento[indice] < elemento[padre]) {
                 std::swap(elemento[indice], elemento[padre]);
                 indice = padre;
@@ -148,6 +208,11 @@ void Heap<Type, MaxOMin>::EmpujarArriba(int indice) {
     }
 }
 
+/**
+ * @brief Ajusta el heap moviendo un elemento hacia abajo para mantener la propiedad del heap.
+ * 
+ * @param indice Índice del elemento que se debe mover hacia abajo.
+ */
 template <typename Type, bool MaxOMin>
 void Heap<Type, MaxOMin>::EmpujarAbajo(int indice) {
     while (true) {

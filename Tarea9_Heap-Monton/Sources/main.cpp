@@ -4,7 +4,6 @@
 int main() {
     // Crear un Max-Heap de enteros
     Heap<int, true> maxHeap;
-    Heap<int, false> minHeap;
 
     std::cout << "Probando Max-Heap:" << std::endl;
 
@@ -19,6 +18,18 @@ int main() {
 
     maxHeap.ImprimirElem();
 
+    std::cout << "Extrayendo Max-Heap en orden descendente:" << std::endl;
+    while (!maxHeap.EstaVacia()) {
+        std::cout << maxHeap.ObtenerFrente() << " ";
+        maxHeap.Eliminar();
+    }
+    std::cout << "Intentando eliminar un elemento extra de Max-Heap:" << std::endl;
+    maxHeap.Eliminar();
+    std::cout << std::endl << std::endl;
+
+    // Crear un Min-Heap de enteros
+    Heap<int, false> minHeap;
+
     std::cout << "Probando Min-Heap:" << std::endl;
 
     // Agregar elementos al heap
@@ -31,6 +42,15 @@ int main() {
     minHeap.Agregar(0);
 
     minHeap.ImprimirElem();
+
+    std::cout << "Extrayendo Min-Heap en orden ascendente:" << std::endl;
+    while (!minHeap.EstaVacia()) {
+        std::cout << minHeap.ObtenerFrente() << " ";
+        minHeap.Eliminar();
+    }
+    std::cout << "Intentando eliminar un elemento extra de Min-Heap:" << std::endl;
+    minHeap.Eliminar();
+    std::cout << std::endl;
 
     return 0;
 }
