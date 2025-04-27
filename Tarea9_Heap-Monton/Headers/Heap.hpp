@@ -32,11 +32,11 @@ public:
 
 private:
 
-    Type* elemento; // Arreglo dinámico donde guardo los elementos
+    Type* elemento; // Arreglo dinámico donde guarda los elementos
 
     int cantElem; // Cantidad actual de elementos
     int capacidad; // Capacidad máxima actual
-    int tope; // No lo uso mucho en esta implementación, pero lo dejo por si amplío
+    int tope; // implementar que al eliminar mueva el tope y no elimine los elementos
 
     int Redimensionar(); // Duplica el tamaño del arreglo si hace falta
 
@@ -45,7 +45,7 @@ private:
     void EmpujarAbajo(int indice); // Baja un elemento para mantener la propiedad de heap
 };
 
-// Incluyo la implementación del template (por temas de templates en C++)
+
 #include "../Templates/Heap.tpp"
 
 #endif // HEAP_HPP_INCLUDED
