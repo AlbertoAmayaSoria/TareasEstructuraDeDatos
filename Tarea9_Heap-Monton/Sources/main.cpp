@@ -4,6 +4,7 @@
 int main() {
     // Crear un Max-Heap de enteros
     Heap<int, true> maxHeap;
+    Heap<int, false> minHeap;
 
     std::cout << "Probando Max-Heap:" << std::endl;
 
@@ -13,44 +14,23 @@ int main() {
     maxHeap.Agregar(5);
     maxHeap.Agregar(3);
     maxHeap.Agregar(2);
+    maxHeap.Agregar(1);
     maxHeap.Agregar(0);
 
     maxHeap.ImprimirElem();
 
+    std::cout << "Probando Min-Heap:" << std::endl;
 
+    // Agregar elementos al heap
+    minHeap.Agregar(8);
+    minHeap.Agregar(3);
+    minHeap.Agregar(5);
+    minHeap.Agregar(3);
+    minHeap.Agregar(2);
+    minHeap.Agregar(1);
+    minHeap.Agregar(0);
 
-    // Imprimir elementos del heap
-    /*maxHeap.ImprimirElem();  // Deberías ver: 30 20 10 5 15
-
-    // Obtener el frente (el valor más grande)
-    std::cout << "El valor en el frente es: " << maxHeap.ObtenerFrente() << std::endl;
-
-    // Eliminar el elemento en el frente (el más grande)
-    maxHeap.Eliminar();
-    std::cout << "Después de eliminar el frente (30):" << std::endl;
-    maxHeap.ImprimirElem();  // Deberías ver: 20 15 10 5
-
-    // Obtener el nuevo frente
-    std::cout << "El nuevo valor en el frente es: " << maxHeap.ObtenerFrente() << std::endl;
-
-    // Agregar más elementos
-    maxHeap.Agregar(25);
-    maxHeap.Agregar(35);
-
-    // Imprimir después de agregar más elementos
-    std::cout << "Después de agregar más elementos:" << std::endl;
-    maxHeap.ImprimirElem();  // Deberías ver: 35 25 20 5 15 10
-
-    // Eliminar hasta que el heap esté vacío
-    while (!maxHeap.EstaVacia()) {
-        std::cout << "Eliminando el frente: " << maxHeap.ObtenerFrente() << std::endl;
-        maxHeap.Eliminar();
-    }
-
-    // Verificar que el heap está vacío
-    if (maxHeap.EstaVacia()) {
-        std::cout << "El heap está vacío." << std::endl;
-    }*/
+    minHeap.ImprimirElem();
 
     return 0;
 }
