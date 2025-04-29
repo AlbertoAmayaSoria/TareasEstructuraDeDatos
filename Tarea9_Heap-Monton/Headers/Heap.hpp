@@ -1,52 +1,51 @@
 #ifndef HEAP_HPP_INCLUDED
 #define HEAP_HPP_INCLUDED
 
-// Plantilla de Heap: puede ser Max-Heap (MaxOMin=true) o Min-Heap (MaxOMin=false)
-template <typename Type, bool MaxOMin>
+#include <iostream>
+
+// Funciones de comparación
+
+// Mínimo (por default)
+template <typename T>
+bool minimo(const T& a, const T& b) {
+    return a <= b;
+}
+
+// Máximo
+template <typename T>
+bool maximo(const T& a, const T& b) {
+    return a >= b;
+}
+
+// Clase plantilla Heap
+template <typename Type>
 class Heap {
 public:
-
-    explicit Heap(); // Constructor por defecto
-
-    Heap(const Heap &c); // Constructor copia
-
+    explicit Heap(bool (*cmp)(const Type&, const Type&) = minimo<Type>); // Constructor por default
+    Heap(const Heap& c); // Constructor copia
     ~Heap(); // Destructor
+    Heap& operator=(const Heap& c); // Operador asignación
 
-    Heap& operator=(const Heap &c); // Operador asignación
-
-    void Agregar(Type valor); // Agrega un nuevo elemento
-
-    void Eliminar(); // Elimina el frente (raíz)
-
-    Type ObtenerFrente() const; // Devuelve el elemento raíz
-
-    bool EstaVacia() const; // Revisa si no hay elementos
-
-    void Vaciar(); // Libera toda la memoria usada
-
-    int CantElem() const; // Devuelve la cantidad de elementos actuales
-
-    int CapMont() const; // Devuelve la capacidad actual (lo uso para pruebas)
-
-    void ImprimirElem() const; // Imprime el contenido del heap (también para pruebas)
+    void Agregar(Type valor);
+    void Eliminar();
+    Type ObtenerFrente() const;
+    bool EstaVacio() const;
+    void Vaciar();
+    int NumElem() const;
+    int CapacidadHeap() const;
+    void Imprimir() const;
 
 private:
+    Type* elementos;
+    int capacidad;
+    int ultimo;
+    bool (*comparador)(const Type&, const Type&);
 
-    Type* elemento; // Arreglo dinámico donde guarda los elementos
-
-    int cantElem; // Cantidad actual de elementos
-    int capacidad; // Capacidad máxima actual
-    int tope; // implementar que al eliminar mueva el tope y no elimine los elementos
-
-    int Redimensionar(); // Duplica el tamaño del arreglo si hace falta
-
-    void EmpujarArriba(int indice); // Sube un elemento para mantener la propiedad de heap
-
-    void EmpujarAbajo(int indice); // Baja un elemento para mantener la propiedad de heap
+    void Redimensionar();
+    void EmpujarArriba(int indice);
+    void EmpujarAbajo(int indice);
 };
-
 
 #include "../Templates/Heap.tpp"
 
 #endif // HEAP_HPP_INCLUDED
-

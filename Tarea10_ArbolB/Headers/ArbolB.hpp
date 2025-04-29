@@ -1,8 +1,47 @@
 #ifndef ARBOLB_HPP_INCLUDED
 #define ARBOLB_HPP_INCLUDED
 
-template <typename Type>
-class ArbolB {
+template<typename T, int grado=5>
+class ArbolB{
+private:
+
+    struct Nodo{
+        T clave[grado];
+        Nodo* hijo[grado+1];
+        int cuenta;//cuantas claves hay
+        bool esHoja
+
+        Nodo(){
+            cuenta=0;
+            esHoja=true;
+            for (int i=0; i< grado + 1;++1)
+                hijo[i]=NULL;
+        }
+    };
+    Nodo* raiz;
+    int totalClaves;
+
+    //metodos auxiliares
+    void InsertarEnNodo(Nodo*& nodo, T clave);
+    void ImprimirAscedente(Nodo* nodo) const;
+    void Liberar (Nodo* nodo);
+
+public:
+    ArbolB();
+    ~ArbolB();
+
+    void Agregar(T clave);
+    void ImprimirAscedente() const;
+    int NumClaves() const;
+    void Vaciar();
+};
+
+
+
+
+
+/****
+
 public:
 
     explicit ArbolB(); // Constructor por defecto
@@ -11,7 +50,7 @@ public:
 
     ~ArbolB(); // Destructor
 
-    ArbolB& operator=(const Arbol &c); // Operador asignación
+    ArbolB& operator=(const ArbolB &c); // Operador asignación
 
    void Agregar(Type valor); // Agrega un nuevo elemento
 
@@ -33,51 +72,11 @@ public:
 
 private:
 
-    
-
-
-}
+};
 
 //#include 
 
 #endif // !ARBOLB_HPP_INCLUDED
-#define ARBOLB_HPP_INCLUDED
 
-template <typename Type>
-class ArbolB {
-public:
+*/
 
-    explicit ArbolB(); // Constructor por defecto
-    
-    ArbolB(const ArbolB &c); // Constrctor de copia
-
-    ~ArbolB(); // Destructor
-
-    ArbolB& operator=(const Arbol &c); // Operador asignación
-
-   void Agregar(Type valor); // Agrega un nuevo elemento
-
-    void Eliminar(Type valor); // Elimina el frente (raíz)
-
-    void BuscarElem(); // Busca un elemento en el arbol
-
-    int CantElem() const; // Devuelve la cantidad de elementos actuales
-
-    void Vaciar(); // Vacia el arbol
-
-    // Imprimir
-    void ImprimirAsc() const;
-
-    void ImprimirDes() const;
-
-    void ImprimirNiveles() const;
-
-
-private:
-
-    
-
-
-}
-
-//#include 
