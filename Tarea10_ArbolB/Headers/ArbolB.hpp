@@ -1,27 +1,22 @@
 #ifndef ARBOLB_HPP_INCLUDED
 #define ARBOLB_HPP_INCLUDED
 
-template <typename Type>
+template <typename Type, int grado = 5>
 class ArbolB {
 public:
 
     explicit ArbolB(); // Constructor por defecto
-    
     ArbolB(const ArbolB &c); // Constrctor de copia
-
     ~ArbolB(); // Destructor
-
     ArbolB& operator=(const ArbolB &c); // Operador asignación
 
-   void Agregar(Type valor); // Agrega un nuevo elemento
+    void Agregar(Type valor); // Agrega un nuevo elemento
+    void Eliminar(Type valor); // Elimina el primer elemento con este valor
 
-    void Eliminar(Type valor); // Elimina el frente (raíz)
-
-    void BuscarElem(); // Busca un elemento en el arbol
-
+    void BuscarElem(); // Busca un elemento en el árbol
     int CantElem() const; // Devuelve la cantidad de elementos actuales
 
-    void Vaciar(); // Vacia el arbol
+    void Vaciar(); // Vacía el árbol
 
     // Imprimir
     void ImprimirAsc() const;
@@ -33,11 +28,19 @@ public:
 
 private:
 
-    
+    int cantElem;
 
+    struct Nodo{
+        Type claves[grado];
 
+        Nodo * hijo[grado + 1];
+    } *raiz;
+
+    Nodo* CopiarArbol(Nodo* subraiz);
+
+    void Agregar(Type valor, Nodo*subraiz);
 };
 
-//#include 
+#include "../Templates/ArbolB.tpp"
 
 #endif // ARBOLB_HPP_INCLUDED
