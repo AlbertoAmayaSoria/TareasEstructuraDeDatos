@@ -31,6 +31,8 @@ private:
     int cantElem;
 
     struct Nodo{
+        int elemNodo;
+
         Type claves[grado];
 
         Nodo * hijo[grado + 1];
@@ -39,6 +41,13 @@ private:
     Nodo* CopiarArbol(Nodo* subraiz);
 
     void Agregar(Type valor, Nodo*subraiz);
+
+    bool EsHoja(Nodo* nodo);
+
+    // Método para dividir un nodo
+    void dividirNodo(Nodo* padre, int i);
+
+    void ImprimirAsc(Nodo* nodo, int nivel);
 };
 
 #include "../Templates/ArbolB.tpp"
