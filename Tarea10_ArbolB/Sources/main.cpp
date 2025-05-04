@@ -4,12 +4,15 @@
 int main() {
     
     ArbolB<int, 5> arbol;
-    arbol.Agregar(10);
-    arbol.Agregar(20);
-    arbol.Agregar(5);
-    arbol.Agregar(6);
-    arbol.Agregar(30);
-
+    arbol.Agregar(100);
+    arbol.Agregar(200);
+    arbol.Agregar(300);
+    arbol.Agregar(400);
+    arbol.Agregar(500);
+    //arbol.Agregar(600);
+    //arbol.Agregar(700);
+    //arbol.Agregar(600);
+    std::cout << "La cantidad de elementos en el arbol es: " << arbol.CantElem() << std::endl;
     arbol.ImprimirAsc();
 
     return 0;
