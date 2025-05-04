@@ -6,7 +6,7 @@ class ArbolB {
 public:
 
     explicit ArbolB(); // Constructor por defecto
-    ArbolB(const ArbolB &c); // Constrctor de copia
+    ArbolB(const ArbolB &c); // Constructor de copia
     ~ArbolB(); // Destructor
     ArbolB& operator=(const ArbolB &c); // Operador asignación
 
@@ -25,16 +25,13 @@ public:
 
     void ImprimirNiveles() const;
 
-
 private:
 
     int cantElem;
 
     struct Nodo{
         int elemNodo;
-
         Type claves[grado];
-
         Nodo * hijo[grado + 1];
     } *raiz;
 
@@ -47,7 +44,9 @@ private:
     // Método para dividir un nodo
     void dividirNodo(Nodo* padre, int i);
 
-    void ImprimirAsc(Nodo* nodo, int nivel);
+    void Vaciar(Nodo* nodo);
+
+    void ImprimirAsc(Nodo* nodo, int nivel) const;
 };
 
 #include "../Templates/ArbolB.tpp"
