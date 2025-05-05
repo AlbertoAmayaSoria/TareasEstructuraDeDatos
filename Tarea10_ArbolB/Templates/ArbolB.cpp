@@ -64,8 +64,10 @@ void ArbolB<Type, grado>::Agregar(Type valor) {
         raiz->claves[0] = valor;
         raiz->elemNodo = 1;
         ++cantElem;
+        std::cout << " insertando elemento raiz" << std::endl;
         for (int i = 0; i < grado; ++i) {
             raiz->hijo[i] = nullptr; // Asegurarnos de que los hijos se inicialicen correctamente
+            std::cout << "Hijo nulo" << std::endl;
         }
     } else {
         Agregar(valor, raiz); // Llamada recursiva para agregar el valor en la raíz
