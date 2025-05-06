@@ -85,14 +85,14 @@ void ArbolB<Type, grado>::Agregar(Type valor, Nodo* subraiz) {
         subraiz->elemNodo++; // Aumenta el número de elementos en el nodo
         ++cantElem; // Aumenta el contador de elementos
     } else {
-        // Si no es hoja, encuentra el hijo adecuado donde insertar el valor
+        // Si no es hoja, encontramos el hijo adecuado para insertar el valor
         while(i >= 0 && valor < subraiz->claves[i]) {
             --i;
         }
         ++i;
         
         if(subraiz->hijo[i] == nullptr) {
-            subraiz->hijo[i] = new Nodo(); // Si no existe el hijo, lo crea
+            subraiz->hijo[i] = new Nodo(); // Si no existe el hijo, lo creamos
         }
         
         Agregar(valor, subraiz->hijo[i]); // Llama recursivamente para agregar el valor al hijo
