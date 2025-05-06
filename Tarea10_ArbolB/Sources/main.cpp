@@ -9,15 +9,18 @@ int main() {
     arbol.Agregar(3);
     arbol.Agregar(4);
     arbol.Agregar(5);
-    /*arbol.Agregar(6);
+    arbol.Agregar(6);
     arbol.Agregar(7);
     arbol.Agregar(8);
     arbol.Agregar(9);
     arbol.Agregar(10);
-    arbol.Agregar(11);*/
+    arbol.Agregar(11);
     std::cout << "La cantidad de elementos en el arbol es: " << arbol.CantElem() << std::endl;
     arbol.ImprimirAsc();
     arbol.ImprimirNiveles(); 
+    std::cout << "Hay 11 en el arbol? ";
+    arbol.Buscar(11) ? std::cout << "Si" : std::cout << "No";
+
 
     return 0;
 }
