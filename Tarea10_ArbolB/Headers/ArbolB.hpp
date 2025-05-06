@@ -1,6 +1,9 @@
 #ifndef ARBOLB_HPP_INCLUDED
 #define ARBOLB_HPP_INCLUDED
 
+#include <iostream>
+#include <queue>
+
 template <typename Type, int grado = 5>
 class ArbolB {
 public:
@@ -23,19 +26,21 @@ public:
     void ImprimirNiveles() const;
 
 private:
-    int cantElem;
 
     struct Nodo {
         int elemNodo;
-        Type claves[grado];
-        Nodo* hijo[grado + 1];
+        Type claves[grado-1];  // Máximo grado-1 claves
+        Nodo* hijo[grado];     // Máximo grado hijos
         
         Nodo() : elemNodo(0) {
-            for(int i = 0; i <= grado; ++i) {
-                hijo[i] = nullptr;
-            }
+            std::fill_n(claves, grado-1, Type());
+            std::fill_n(hijo, grado, nullptr);
         }
-    } *raiz;
+    };
+
+    Nodo* raiz;
+    int cantElem;
+
 
     // Métodos auxiliares privados
     Nodo* CopiarArbol(Nodo* subraiz);
@@ -43,6 +48,7 @@ private:
     bool EsHoja(Nodo* nodo) const;
     void dividirNodo(Nodo* padre, int indiceHijo);
     void Vaciar(Nodo* nodo);
+    void LimpiarClave(Nodo* nodo, int index);
     
     // Métodos para búsqueda
     bool Buscar(Type valor, Nodo* subraiz) const;
@@ -50,7 +56,6 @@ private:
     // Métodos para impresión
     void ImprimirAsc(Nodo* nodo) const;
     void ImprimirDes(Nodo* nodo) const;
-    void ImprimirNiveles(Nodo* nodo, int nivel) const;
     
     // Métodos para eliminación
     void Eliminar(Type valor, Nodo* subraiz);
