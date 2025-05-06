@@ -138,48 +138,100 @@ bool ArbolB<Type, grado>::EsHoja(Nodo* nodo) {
 // Generalizar el metodo 
 template <typename Type, int grado>
 void ArbolB<Type, grado>::dividirNodo(Nodo* subraiz, int indiceHijo) {
-    // Verificar si el hijo a dividir existe
+    std::cout << "Dividiendo nodo..." << std::endl;
+
+    // Caso: la raíz se está dividiendo
+    if (subraiz == raiz) {
+        std::cout << "Dividiendo la raíz, creando nueva raíz..." << std::endl;
+
+        // Crear una nueva raíz
+        Nodo* nuevaRaiz = new Nodo();
+        nuevaRaiz->elemNodo = 1;  // La nueva raíz tendrá una clave
+        nuevaRaiz->claves[0] = subraiz->claves[grado / 2];  // Subir la clave del medio de la raíz
+        subraiz->claves[grado / 2] = Type();  // Limpiar la clave en la raíz
+
+        // Crear el nuevo nodo hijo derecho
+        Nodo* nuevoNodo = new Nodo();
+        nuevoNodo->elemNodo = grado / 2;
+
+        // Mover las claves del nodo original al nuevo nodo
+        for (int i = grado / 2 + 1; i < grado; ++i) {
+            nuevoNodo->claves[i - (grado / 2 + 1)] = subraiz->claves[i];
+            subraiz->claves[i] = Type();  // Limpiar las claves
+        }
+
+        // Mover los hijos del nodo original al nuevo nodo (si no es hoja)
+        if (!EsHoja(subraiz)) {
+            for (int i = grado / 2 + 1; i <= grado; ++i) {
+                nuevoNodo->hijo[i - (grado / 2 + 1)] = subraiz->hijo[i];
+                subraiz->hijo[i] = nullptr;  // Limpiar los punteros a los hijos
+            }
+        }
+
+        // Asignar los punteros a los hijos de la nueva raíz
+        nuevaRaiz->hijo[0] = subraiz;  // El nodo original es el hijo izquierdo
+        nuevaRaiz->hijo[1] = nuevoNodo;  // El nuevo nodo es el hijo derecho
+
+        // Asignar la nueva raíz al árbol
+        raiz = nuevaRaiz;
+
+        // Limpiar el nodo original
+        subraiz->elemNodo = grado / 2;
+        subraiz->claves[grado / 2] = Type();  // Limpiar la clave
+
+        std::cout << "Nueva raíz creada con clave: " << nuevaRaiz->claves[0] << std::endl;
+        return;
+    }
+
+    // Si no es la raíz, estamos dividiendo un nodo hijo
+    std::cout << "Dividiendo un nodo hijo de la raíz..." << std::endl;
+
+    // Verificar si el nodo hijo realmente existe
     if (subraiz->hijo[indiceHijo] == nullptr) {
         std::cerr << "Error: El hijo " << indiceHijo << " es nulo" << std::endl;
         return;
     }
 
-    // Crear un nuevo nodo para el hermano derecho
+    // Crear un nuevo nodo derecho para el hijo
     Nodo* nuevoNodo = new Nodo();
     nuevoNodo->elemNodo = grado / 2;  // El nuevo nodo tendrá la mitad de las claves
 
-    // Mover las claves al nuevo nodo
-    for (int i = 0; i < grado / 2; ++i) {
-        nuevoNodo->claves[i] = subraiz->hijo[indiceHijo]->claves[i + grado / 2 + 1];
+    // Mover las claves del nodo hijo hacia el nuevo nodo
+    for (int i = grado / 2 + 1; i < grado; ++i) {
+        nuevoNodo->claves[i - (grado / 2 + 1)] = subraiz->hijo[indiceHijo]->claves[i];
+        subraiz->hijo[indiceHijo]->claves[i] = Type();  // Limpiar las claves
     }
 
-    // Mover los hijos al nuevo nodo
+    // Mover los hijos del nodo hijo hacia el nuevo nodo (si no es hoja)
     if (!EsHoja(subraiz->hijo[indiceHijo])) {
-        for (int i = 0; i <= grado / 2; ++i) {
-            nuevoNodo->hijo[i] = subraiz->hijo[indiceHijo]->hijo[i + grado / 2 + 1];
+        for (int i = grado / 2 + 1; i <= grado; ++i) {
+            nuevoNodo->hijo[i - (grado / 2 + 1)] = subraiz->hijo[indiceHijo]->hijo[i];
+            subraiz->hijo[indiceHijo]->hijo[i] = nullptr;  // Limpiar los punteros
         }
     }
 
-    // Ajustar el número de elementos en el nodo original
+    // Ajustar el número de elementos en el nodo hijo
     subraiz->hijo[indiceHijo]->elemNodo = grado / 2;
 
-    // Subir la clave del medio al nodo padre
-    Type valorPromovido = subraiz->hijo[indiceHijo]->claves[grado / 2];
+    // Subir la clave del medio al nodo padre (la raíz)
+    Type clavePromovida = subraiz->hijo[indiceHijo]->claves[grado / 2];
     
-    // Mover las claves en el nodo padre para hacer espacio
-    for (int j = subraiz->elemNodo; j > indiceHijo; --j) {
-        subraiz->claves[j] = subraiz->claves[j - 1];
-        subraiz->hijo[j + 1] = subraiz->hijo[j];
+    // Mover las claves en la raíz para hacer espacio
+    for (int i = subraiz->elemNodo; i > indiceHijo; --i) {
+        subraiz->claves[i] = subraiz->claves[i - 1];
+        subraiz->hijo[i + 1] = subraiz->hijo[i];
     }
 
-    // Insertar la clave promovida y el nuevo nodo hijo
-    subraiz->claves[indiceHijo] = valorPromovido;
+    // Insertar la clave promovida en la raíz
+    subraiz->claves[indiceHijo] = clavePromovida;
+
+    // Asignar el nuevo hijo en la raíz
     subraiz->hijo[indiceHijo + 1] = nuevoNodo;
 
-    // Incrementar el número de elementos en el nodo padre
+    // Incrementar el número de elementos en la raíz
     subraiz->elemNodo++;
 
-    std::cout << "Nodo dividido: clave promovida " << valorPromovido << std::endl;
+    std::cout << "Nodo hijo de la raíz dividido, clave promovida: " << clavePromovida << std::endl;
 }
 
 
