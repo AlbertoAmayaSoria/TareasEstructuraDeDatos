@@ -4,7 +4,6 @@
 template <typename Type, int grado = 5>
 class ArbolB {
 public:
-
     explicit ArbolB(); // Constructor por defecto
     ArbolB(const ArbolB &c); // Constructor de copia
     ~ArbolB(); // Destructor
@@ -13,40 +12,53 @@ public:
     void Agregar(Type valor); // Agrega un nuevo elemento
     void Eliminar(Type valor); // Elimina el primer elemento con este valor
 
-    void BuscarElem(); // Busca un elemento en el árbol
+    bool Buscar(Type valor) const; // Busca un elemento en el árbol
     int CantElem() const; // Devuelve la cantidad de elementos actuales
 
     void Vaciar(); // Vacía el árbol
 
-    // Imprimir
+    // Métodos de impresión
     void ImprimirAsc() const;
-
     void ImprimirDes() const;
-
     void ImprimirNiveles() const;
 
 private:
-
     int cantElem;
 
-    struct Nodo{
+    struct Nodo {
         int elemNodo;
         Type claves[grado];
-        Nodo * hijo[grado + 1];
+        Nodo* hijo[grado + 1];
+        
+        Nodo() : elemNodo(0) {
+            for(int i = 0; i <= grado; ++i) {
+                hijo[i] = nullptr;
+            }
+        }
     } *raiz;
 
+    // Métodos auxiliares privados
     Nodo* CopiarArbol(Nodo* subraiz);
-
-    void Agregar(Type valor, Nodo*subraiz);
-
-    bool EsHoja(Nodo* nodo);
-
-    // Método para dividir un nodo
-    void dividirNodo(Nodo* padre, int i);
-
+    void Agregar(Type valor, Nodo* subraiz);
+    bool EsHoja(Nodo* nodo) const;
+    void dividirNodo(Nodo* padre, int indiceHijo);
     void Vaciar(Nodo* nodo);
-
-    void ImprimirAsc(Nodo* nodo, int nivel) const;
+    
+    // Métodos para búsqueda
+    bool Buscar(Type valor, Nodo* subraiz) const;
+    
+    // Métodos para impresión
+    void ImprimirAsc(Nodo* nodo) const;
+    void ImprimirDes(Nodo* nodo) const;
+    void ImprimirNiveles(Nodo* nodo, int nivel) const;
+    
+    // Métodos para eliminación
+    void Eliminar(Type valor, Nodo* subraiz);
+    void PrestarseDeHermanoIzq(Nodo* padre, int indiceHijo);
+    void PrestarseDeHermanoDer(Nodo* padre, int indiceHijo);
+    void FusionarHijos(Nodo* padre, int indiceHijo);
+    Type ObtenerPredecesor(Nodo* subraiz);
+    Type ObtenerSucesor(Nodo* subraiz);
 };
 
 #include "../Templates/ArbolB.tpp"
