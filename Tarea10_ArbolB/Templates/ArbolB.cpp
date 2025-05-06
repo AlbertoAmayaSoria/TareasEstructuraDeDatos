@@ -3,7 +3,7 @@
 
 // Constructor por defecto: inicializa la raíz como nula y la cantidad de elementos en cero
 template <typename Type, int grado>
-ArbolB<Type, grado>::ArbolB() : raiz(nullptr), cantElem(0) {}
+ArbolB<Type, grado>::ArbolB() : cantElem(0), raiz(nullptr) /*, cantElem(0)*/ {}
 
 // Constructor de copia: copia el árbol de otro objeto ArbolB
 template <typename Type, int grado>
@@ -154,13 +154,24 @@ bool ArbolB<Type, grado>::EsHoja(Nodo* nodo) const {
 // Método para buscar un elemento en el árbol
 template <typename Type, int grado>
 bool ArbolB<Type, grado>::Buscar(Type valor) const {
-    
+    return Buscar(valor, raiz);
 }
 
 // Método privado recursivo para buscar un elemento en un subárbol
 template <typename Type, int grado>
 bool ArbolB<Type, grado>::Buscar(Type valor, Nodo* subraiz) const {
+    if(subraiz == nullptr) return false;
     
+    int i = 0;
+    while(i < subraiz->elemNodo && valor > subraiz->claves[i]) {
+        ++i;
+    }
+    
+    if(i < subraiz->elemNodo && valor == subraiz->claves[i]) {
+        return true;
+    }
+    
+    return Buscar(valor, subraiz->hijo[i]);
 }
 
 // Métodos de eliminación (aún no implementados)
