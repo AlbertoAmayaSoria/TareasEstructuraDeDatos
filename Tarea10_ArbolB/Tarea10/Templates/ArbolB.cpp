@@ -2,15 +2,31 @@
 #include <queue>
 #include <stdexcept>
 
-// Constructor por defecto
+/**
+ * @file ArbolB.hpp
+ * @brief Implementación de un Árbol B genérico con operaciones básicas.
+ * @tparam Type Tipo de datos almacenados.
+ * @tparam grado Grado máximo del árbol (máximo de claves por nodo).
+ */
+
+/**
+ * @brief Constructor por defecto del Árbol B.
+ */
 template <typename Type, int grado>
 ArbolB<Type, grado>::ArbolB() : cantElem(0), raiz(nullptr) {}
 
-// Constructor de copia
+/**
+ * @brief Constructor por copia.
+ * @param c Árbol B a copiar.
+ */
 template <typename Type, int grado>
 ArbolB<Type, grado>::ArbolB(const ArbolB &c) : raiz(CopiarArbol(c.raiz)), cantElem(c.cantElem) {}
 
-// Operador asignación
+/**
+ * @brief Operador de asignación.
+ * @param c Árbol B a asignar.
+ * @return Referencia al árbol actual.
+ */
 template <typename Type, int grado>
 ArbolB<Type, grado>& ArbolB<Type, grado>::operator=(const ArbolB &c) {
     if(this != &c) {
@@ -21,13 +37,19 @@ ArbolB<Type, grado>& ArbolB<Type, grado>::operator=(const ArbolB &c) {
     return *this;
 }
 
-// Destructor
+/**
+ * @brief Destructor del Árbol B.
+ */
 template <typename Type, int grado>
 ArbolB<Type, grado>::~ArbolB() {
     Vaciar();
 }
 
-// Método para copiar árbol
+/**
+ * @brief Copia un subárbol.
+ * @param subraiz Puntero al nodo raíz del subárbol a copiar.
+ * @return Puntero al nuevo subárbol copiado.
+ */
 template <typename Type, int grado>
 typename ArbolB<Type, grado>::Nodo* ArbolB<Type, grado>::CopiarArbol(Nodo* subraiz) {
     if(subraiz == nullptr) return nullptr;
@@ -46,7 +68,10 @@ typename ArbolB<Type, grado>::Nodo* ArbolB<Type, grado>::CopiarArbol(Nodo* subra
     return nuevoNodo;
 }
 
-// Método público para agregar elemento
+/**
+ * @brief Agrega un elemento al árbol.
+ * @param valor Valor a insertar.
+ */
 template <typename Type, int grado>
 void ArbolB<Type, grado>::Agregar(Type valor) {
     if(raiz == nullptr) {
@@ -66,7 +91,11 @@ void ArbolB<Type, grado>::Agregar(Type valor) {
     }
 }
 
-// Método privado para agregar elemento
+/**
+ * @brief Inserta recursivamente un valor en un subárbol.
+ * @param valor Valor a insertar.
+ * @param subraiz Nodo raíz del subárbol.
+ */
 template <typename Type, int grado>
 void ArbolB<Type, grado>::Agregar(Type valor, Nodo* subraiz) {
     int i = subraiz->elemNodo - 1;
@@ -98,7 +127,11 @@ void ArbolB<Type, grado>::Agregar(Type valor, Nodo* subraiz) {
     }
 }
 
-// Método para dividir nodo interno
+/**
+ * @brief Divide un nodo hijo de un nodo padre.
+ * @param padre Nodo padre.
+ * @param indiceHijo Índice del hijo que se va a dividir.
+ */
 template <typename Type, int grado>
 void ArbolB<Type, grado>::dividirNodo(Nodo* padre, int indiceHijo) {
     Nodo* hijo = padre->hijo[indiceHijo];
@@ -129,7 +162,11 @@ void ArbolB<Type, grado>::dividirNodo(Nodo* padre, int indiceHijo) {
     padre->elemNodo++;
 }
 
-// Método para verificar si es hoja
+/**
+ * @brief Verifica si un nodo es hoja.
+ * @param nodo Nodo a verificar.
+ * @return true si es hoja, false en caso contrario.
+ */
 template <typename Type, int grado>
 bool ArbolB<Type, grado>::EsHoja(Nodo* nodo) const {
     if(nodo == nullptr) return true;
@@ -141,7 +178,11 @@ bool ArbolB<Type, grado>::EsHoja(Nodo* nodo) const {
     return true;
 }
 
-// Método para buscar elemento
+/**
+ * @brief Busca un elemento en el árbol.
+ * @param valor Valor a buscar.
+ * @return true si se encuentra, false en caso contrario.
+ */
 template <typename Type, int grado>
 bool ArbolB<Type, grado>::Buscar(Type valor) const {
     return Buscar(valor, raiz);
@@ -163,7 +204,10 @@ bool ArbolB<Type, grado>::Buscar(Type valor, Nodo* subraiz) const {
     return Buscar(valor, subraiz->hijo[i]);
 }
 
-// Métodos para eliminar
+/**
+ * @brief Elimina un valor del árbol.
+ * @param valor Valor a eliminar.
+ */
 template <typename Type, int grado>
 void ArbolB<Type, grado>::Eliminar(Type valor) {
     if(raiz == nullptr) return;
@@ -177,6 +221,11 @@ void ArbolB<Type, grado>::Eliminar(Type valor) {
     }
 }
 
+/**
+ * @brief Elimina un valor recursivamente desde un nodo dado.
+ * @param valor Valor a eliminar.
+ * @param subraiz Nodo desde donde se inicia la eliminación.
+ */
 template <typename Type, int grado>
 void ArbolB<Type, grado>::Eliminar(Type valor, Nodo* subraiz) {
     int i = 0;
@@ -209,6 +258,11 @@ void ArbolB<Type, grado>::Eliminar(Type valor, Nodo* subraiz) {
     }
 }
 
+/**
+ * @brief Elimina una clave de un nodo hoja.
+ * @param nodo Nodo hoja.
+ * @param indice Índice de la clave a eliminar.
+ */
 template <typename Type, int grado>
 void ArbolB<Type, grado>::EliminarDeHoja(Nodo* nodo, int indice) {
     for(int j = indice+1; j < nodo->elemNodo; ++j) {
@@ -217,6 +271,11 @@ void ArbolB<Type, grado>::EliminarDeHoja(Nodo* nodo, int indice) {
     nodo->elemNodo--;
 }
 
+/**
+ * @brief Elimina una clave de un nodo interno.
+ * @param nodo Nodo interno.
+ * @param indice Índice de la clave.
+ */
 template <typename Type, int grado>
 void ArbolB<Type, grado>::EliminarDeNodoInterno(Nodo* nodo, int indice) {
     Type clave = nodo->claves[indice];
@@ -235,6 +294,11 @@ void ArbolB<Type, grado>::EliminarDeNodoInterno(Nodo* nodo, int indice) {
     }
 }
 
+/**
+ * @brief Maneja el underflow en un hijo de un nodo padre.
+ * @param padre Nodo padre.
+ * @param indiceHijo Índice del hijo con underflow.
+ */
 template <typename Type, int grado>
 void ArbolB<Type, grado>::ManejarUnderflow(Nodo* padre, int indiceHijo) {
     Nodo* hijo = padre->hijo[indiceHijo];
@@ -260,6 +324,12 @@ void ArbolB<Type, grado>::ManejarUnderflow(Nodo* padre, int indiceHijo) {
         FusionarHijos(padre, indiceHijo);
     }
 }
+
+/**
+ * @brief Redistribuye claves desde el hermano izquierdo.
+ * @param padre Nodo padre.
+ * @param indiceHijo Índice del hijo que recibe la clave.
+ */
 
 template <typename Type, int grado>
 void ArbolB<Type, grado>::PrestarseDeHermanoIzq(Nodo* padre, int indiceHijo) {
@@ -287,6 +357,11 @@ void ArbolB<Type, grado>::PrestarseDeHermanoIzq(Nodo* padre, int indiceHijo) {
     hermano->elemNodo--;
 }
 
+/**
+ * @brief Redistribuye claves desde el hermano derecho.
+ * @param padre Nodo padre.
+ * @param indiceHijo Índice del hijo que recibe la clave.
+ */
 template <typename Type, int grado>
 void ArbolB<Type, grado>::PrestarseDeHermanoDer(Nodo* padre, int indiceHijo) {
     Nodo* hijo = padre->hijo[indiceHijo];
@@ -313,6 +388,11 @@ void ArbolB<Type, grado>::PrestarseDeHermanoDer(Nodo* padre, int indiceHijo) {
     hermano->elemNodo--;
 }
 
+/**
+ * @brief Fusiona dos hijos de un nodo padre.
+ * @param padre Nodo padre.
+ * @param indiceHijo Índice del hijo izquierdo.
+ */
 template <typename Type, int grado>
 void ArbolB<Type, grado>::FusionarHijos(Nodo* padre, int indiceHijo) {
     Nodo* hijoIzq = padre->hijo[indiceHijo];
@@ -339,6 +419,11 @@ void ArbolB<Type, grado>::FusionarHijos(Nodo* padre, int indiceHijo) {
     delete hijoDer;
 }
 
+/**
+ * @brief Obtiene el predecesor de una clave.
+ * @param subraiz Subárbol desde el que buscar.
+ * @return Clave predecesora.
+ */
 template <typename Type, int grado>
 Type ArbolB<Type, grado>::ObtenerPredecesor(Nodo* subraiz) {
     while(!EsHoja(subraiz)) {
@@ -347,6 +432,11 @@ Type ArbolB<Type, grado>::ObtenerPredecesor(Nodo* subraiz) {
     return subraiz->claves[subraiz->elemNodo-1];
 }
 
+/**
+ * @brief Obtiene el sucesor de una clave.
+ * @param subraiz Subárbol desde el que buscar.
+ * @return Clave sucesora.
+ */
 template <typename Type, int grado>
 Type ArbolB<Type, grado>::ObtenerSucesor(Nodo* subraiz) {
     while(!EsHoja(subraiz)) {
@@ -355,6 +445,13 @@ Type ArbolB<Type, grado>::ObtenerSucesor(Nodo* subraiz) {
     return subraiz->claves[0];
 }
 
+/**
+ * @brief Encuentra el padre de un nodo dado.
+ * @param actual Nodo actual.
+ * @param padre Nodo padre del actual.
+ * @param buscado Nodo a encontrar.
+ * @return Nodo padre del buscado, o nullptr si no se encuentra.
+ */
 template <typename Type, int grado>
 typename ArbolB<Type, grado>::Nodo* ArbolB<Type, grado>::EncontrarPadre(Nodo* actual, Nodo* padre, Nodo* buscado) {
     if(actual == buscado) return padre;
@@ -367,6 +464,12 @@ typename ArbolB<Type, grado>::Nodo* ArbolB<Type, grado>::EncontrarPadre(Nodo* ac
     return nullptr;
 }
 
+/**
+ * @brief Obtiene el índice de un hijo en su nodo padre.
+ * @param padre Nodo padre.
+ * @param hijo Nodo hijo a localizar.
+ * @return Índice del hijo en el arreglo del padre.
+ */
 template <typename Type, int grado>
 int ArbolB<Type, grado>::ObtenerIndiceHijo(Nodo* padre, Nodo* hijo) {
     for(int i = 0; i <= padre->elemNodo; i++) {
@@ -375,7 +478,9 @@ int ArbolB<Type, grado>::ObtenerIndiceHijo(Nodo* padre, Nodo* hijo) {
     return -1;
 }
 
-// Métodos para vaciar el árbol
+/**
+ * @brief Elimina todos los elementos del árbol.
+ */
 template <typename Type, int grado>
 void ArbolB<Type, grado>::Vaciar() {
     Vaciar(raiz);
@@ -383,6 +488,11 @@ void ArbolB<Type, grado>::Vaciar() {
     cantElem = 0;
 }
 
+
+/**
+ * @brief Elimina recursivamente los nodos desde uno dado.
+ * @param nodo Nodo raíz del subárbol a eliminar.
+ */
 template <typename Type, int grado>
 void ArbolB<Type, grado>::Vaciar(Nodo* nodo) {
     if(nodo == nullptr) return;
@@ -396,13 +506,19 @@ void ArbolB<Type, grado>::Vaciar(Nodo* nodo) {
     delete nodo;
 }
 
-// Métodos para imprimir
+/**
+ * @brief Imprime los elementos del árbol en orden ascendente.
+ */
 template <typename Type, int grado>
 void ArbolB<Type, grado>::ImprimirAsc() const {
     ImprimirAsc(raiz);
     std::cout << std::endl;
 }
 
+/**
+ * @brief Imprime recursivamente en orden ascendente.
+ * @param nodo Nodo desde donde imprimir.
+ */
 template <typename Type, int grado>
 void ArbolB<Type, grado>::ImprimirAsc(Nodo* nodo) const {
     if(nodo == nullptr) return;
@@ -414,12 +530,19 @@ void ArbolB<Type, grado>::ImprimirAsc(Nodo* nodo) const {
     ImprimirAsc(nodo->hijo[nodo->elemNodo]);
 }
 
+/**
+ * @brief Imprime los elementos del árbol en orden descendente.
+ */
 template <typename Type, int grado>
 void ArbolB<Type, grado>::ImprimirDes() const {
     ImprimirDes(raiz);
     std::cout << std::endl;
 }
 
+/**
+ * @brief Imprime recursivamente en orden descendente.
+ * @param nodo Nodo desde donde imprimir.
+ */
 template <typename Type, int grado>
 void ArbolB<Type, grado>::ImprimirDes(Nodo* nodo) const {
     if(nodo == nullptr) return;
@@ -431,6 +554,9 @@ void ArbolB<Type, grado>::ImprimirDes(Nodo* nodo) const {
     }
 }
 
+/**
+ * @brief Imprime el árbol por niveles (recorrido por amplitud).
+ */
 template <typename Type, int grado>
 void ArbolB<Type, grado>::ImprimirNiveles() const {
     if(raiz == nullptr) return;
