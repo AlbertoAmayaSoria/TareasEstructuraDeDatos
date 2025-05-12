@@ -1,3 +1,4 @@
+#include <cmath>
 #include <iostream>
 #include <queue>
 #include <stdexcept>
@@ -49,7 +50,11 @@ typename ArbolB<Type, grado>::Nodo* ArbolB<Type, grado>::CopiarArbol(Nodo* subra
 // Método público para agregar elemento
 template <typename Type, int grado>
 void ArbolB<Type, grado>::Agregar(Type valor) {
-    if(raiz == nullptr) {
+    if(raiz == nullptr) raiz == new Nodo();
+
+    Agregar(valor, raiz);
+
+    /*if(raiz == nullptr) {
         raiz = new Nodo();
         raiz->claves[0] = valor;
         raiz->elemNodo = 1;
@@ -60,320 +65,107 @@ void ArbolB<Type, grado>::Agregar(Type valor) {
         if(raiz->elemNodo == grado) {
             Nodo* nuevaRaiz = new Nodo();
             nuevaRaiz->hijo[0] = raiz;
-            dividirNodo(nuevaRaiz, 0);
-            raiz = nuevaRaiz;
+            //dividirNodo(nuevaRaiz, 0);
+            //raiz = nuevaRaiz;
         }
-    }
+    }*/
 }
+
+//***************************************************************************************************
 
 // Método privado para agregar elemento
 template <typename Type, int grado>
-void ArbolB<Type, grado>::Agregar(Type valor, Nodo* subraiz) {
-    int i = subraiz->elemNodo - 1;
+void ArbolB<Type, grado>::Agregar(Type valor, Nodo* subraiz){
     
-    if(EsHoja(subraiz)) {
-        while(i >= 0 && valor < subraiz->claves[i]) {
-            subraiz->claves[i+1] = subraiz->claves[i];
-            --i;
-        }
-        
-        subraiz->claves[i+1] = valor;
+    // Si es el primer elemento del nodo se agrega en la primera posición 
+    if(subraiz->elemNodo == 0){
+        subraiz->clave[0] = valor;
         subraiz->elemNodo++;
         ++cantElem;
-    } else {
-        while(i >= 0 && valor < subraiz->claves[i]) {
+    } else int i = subraiz->elemNodo - 1;
+
+    // Preguntamos si el nodo es hoja
+    if(EsHoja(subraiz)){
+        // Si es hoja y la cantida de elementos es menor al grado
+        if(subraiz->elemNodo < grado) {
+            // Insertamos el elemento en su posición
+            while (i >= 0 && subraiz->claves[i]) {
+                subraiz->claves[i + 1] = subraiz->claves[i];
+                --i;
+            }
+            
+            subraiz->claves[i + 1] = valor;
+            subraiz->elemNodo++;
+            ++cantElem;
+        }
+
+    // Si despues de agregar el nodo se llena, mandamos a ordenar el árbol recursivamente desde la raiz
+    if(subraiz->elemNodo == grado) OrdenarArbol(raiz);
+
+    } else { // Si el nodo no es hoja, buscamos el hijo correcto para agregar
+        while (i >= 0 && valor < subraiz->claves[i]) {
             --i;
         }
         ++i;
-        
-        if(subraiz->hijo[i] == nullptr) {
+
+        if (subraiz->hijo[i] == nullptr) { // Si el hijo es nulo creamos un nuevo nodo para agregar la clave
             subraiz->hijo[i] = new Nodo();
+            Agregar(valor, subraiz->hijo[i]) // Mandamos agregar el valor y la subraiz para agregar
         }
-        
-        Agregar(valor, subraiz->hijo[i]);
-        
-        if(subraiz->hijo[i]->elemNodo == grado) {
-            dividirNodo(subraiz, i);
-        }
+
     }
 }
 
-// Método para dividir nodo interno
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 template <typename Type, int grado>
-void ArbolB<Type, grado>::dividirNodo(Nodo* padre, int indiceHijo) {
-    Nodo* hijo = padre->hijo[indiceHijo];
-    Nodo* nuevoNodo = new Nodo();
-    
-    int medio = (grado % 2 == 0) ? grado/2 - 1 : grado/2;
-    nuevoNodo->elemNodo = grado - medio - 1;
-    
-    for(int i = 0; i < nuevoNodo->elemNodo; ++i) {
-        nuevoNodo->claves[i] = hijo->claves[medio + 1 + i];
-    }
-    
-    if(!EsHoja(hijo)) {
-        for(int i = 0; i <= nuevoNodo->elemNodo; ++i) {
-            nuevoNodo->hijo[i] = hijo->hijo[medio + 1 + i];
-        }
-    }
-    
-    hijo->elemNodo = medio;
-    
-    for(int i = padre->elemNodo; i > indiceHijo; --i) {
-        padre->claves[i] = padre->claves[i-1];
-        padre->hijo[i+1] = padre->hijo[i];
-    }
-    
-    padre->claves[indiceHijo] = hijo->claves[medio];
-    padre->hijo[indiceHijo+1] = nuevoNodo;
-    padre->elemNodo++;
+void ArbolB<Type, grado>::OrdenarArbol(Nodo* subraiz){
+    std::cout << "El árbol se lleno!!" std::endl; 
 }
 
-// Método para verificar si es hoja
 template <typename Type, int grado>
-bool ArbolB<Type, grado>::EsHoja(Nodo* nodo) const {
-    if(nodo == nullptr) return true;
-    for(int i = 0; i <= nodo->elemNodo; ++i) {
-        if(nodo->hijo[i] != nullptr) {
+bool ArbolB<Type, grado>::EsHoja(Nodo* subraiz) const{
+    for(int i = 0 ; i < grado ; ++i){
+        if(subraiz->hijo[i] != nullptr)
             return false;
-        }
     }
     return true;
 }
 
-// Método para buscar elemento
-template <typename Type, int grado>
-bool ArbolB<Type, grado>::Buscar(Type valor) const {
-    return Buscar(valor, raiz);
-}
 
-template <typename Type, int grado>
-bool ArbolB<Type, grado>::Buscar(Type valor, Nodo* subraiz) const {
-    if(subraiz == nullptr) return false;
-    
-    int i = 0;
-    while(i < subraiz->elemNodo && valor > subraiz->claves[i]) {
-        ++i;
-    }
-    
-    if(i < subraiz->elemNodo && valor == subraiz->claves[i]) {
-        return true;
-    }
-    
-    return Buscar(valor, subraiz->hijo[i]);
-}
 
-// Métodos para eliminar
-template <typename Type, int grado>
-void ArbolB<Type, grado>::Eliminar(Type valor) {
-    if(raiz == nullptr) return;
-    
-    Eliminar(valor, raiz);
-    
-    if(raiz != nullptr && raiz->elemNodo == 0) {
-        Nodo* temp = raiz;
-        raiz = EsHoja(raiz) ? nullptr : raiz->hijo[0];
-        delete temp;
-    }
-}
 
-template <typename Type, int grado>
-void ArbolB<Type, grado>::Eliminar(Type valor, Nodo* subraiz) {
-    int i = 0;
-    while(i < subraiz->elemNodo && valor > subraiz->claves[i]) {
-        ++i;
-    }
 
-    if(i < subraiz->elemNodo && valor == subraiz->claves[i]) {
-        cantElem--;
-        
-        if(EsHoja(subraiz)) {
-            EliminarDeHoja(subraiz, i);
-            if(subraiz != raiz && subraiz->elemNodo < (grado-1)/2) {
-                Nodo* padre = EncontrarPadre(raiz, nullptr, subraiz);
-                int indice = ObtenerIndiceHijo(padre, subraiz);
-                ManejarUnderflow(padre, indice);
-            }
-        } else {
-            EliminarDeNodoInterno(subraiz, i);
-        }
-    } else {
-        if(EsHoja(subraiz)) return;
-        
-        bool necesitaRebalanceo = (subraiz->hijo[i]->elemNodo <= (grado-1)/2);
-        Eliminar(valor, subraiz->hijo[i]);
-        
-        if(necesitaRebalanceo && subraiz->hijo[i]->elemNodo < (grado-1)/2) {
-            ManejarUnderflow(subraiz, i);
-        }
-    }
-}
 
-template <typename Type, int grado>
-void ArbolB<Type, grado>::EliminarDeHoja(Nodo* nodo, int indice) {
-    for(int j = indice+1; j < nodo->elemNodo; ++j) {
-        nodo->claves[j-1] = nodo->claves[j];
-    }
-    nodo->elemNodo--;
-}
 
-template <typename Type, int grado>
-void ArbolB<Type, grado>::EliminarDeNodoInterno(Nodo* nodo, int indice) {
-    Type clave = nodo->claves[indice];
-    
-    if(nodo->hijo[indice]->elemNodo > (grado-1)/2) {
-        Type pred = ObtenerPredecesor(nodo->hijo[indice]);
-        nodo->claves[indice] = pred;
-        Eliminar(pred, nodo->hijo[indice]);
-    } else if(nodo->hijo[indice+1]->elemNodo > (grado-1)/2) {
-        Type succ = ObtenerSucesor(nodo->hijo[indice+1]);
-        nodo->claves[indice] = succ;
-        Eliminar(succ, nodo->hijo[indice+1]);
-    } else {
-        FusionarHijos(nodo, indice);
-        Eliminar(clave, nodo->hijo[indice]);
-    }
-}
 
-template <typename Type, int grado>
-void ArbolB<Type, grado>::ManejarUnderflow(Nodo* padre, int indiceHijo) {
-    Nodo* hijo = padre->hijo[indiceHijo];
-    
-    if(hijo->elemNodo >= (grado-1)/2) return;
-    
-    // Intentar redistribución con hermano izquierdo
-    if(indiceHijo > 0 && padre->hijo[indiceHijo-1]->elemNodo > (grado-1)/2) {
-        PrestarseDeHermanoIzq(padre, indiceHijo);
-        return;
-    }
-    
-    // Intentar redistribución con hermano derecho
-    if(indiceHijo < padre->elemNodo && padre->hijo[indiceHijo+1]->elemNodo > (grado-1)/2) {
-        PrestarseDeHermanoDer(padre, indiceHijo);
-        return;
-    }
-    
-    // Si no se puede redistribuir, fusionar
-    if(indiceHijo > 0) {
-        FusionarHijos(padre, indiceHijo-1);
-    } else {
-        FusionarHijos(padre, indiceHijo);
-    }
-}
 
-template <typename Type, int grado>
-void ArbolB<Type, grado>::PrestarseDeHermanoIzq(Nodo* padre, int indiceHijo) {
-    Nodo* hijo = padre->hijo[indiceHijo];
-    Nodo* hermano = padre->hijo[indiceHijo-1];
-    
-    for(int i = hijo->elemNodo; i > 0; i--) {
-        hijo->claves[i] = hijo->claves[i-1];
-    }
-    
-    if(!EsHoja(hijo)) {
-        for(int i = hijo->elemNodo+1; i > 0; i--) {
-            hijo->hijo[i] = hijo->hijo[i-1];
-        }
-    }
-    
-    hijo->claves[0] = padre->claves[indiceHijo-1];
-    padre->claves[indiceHijo-1] = hermano->claves[hermano->elemNodo-1];
-    
-    if(!EsHoja(hermano)) {
-        hijo->hijo[0] = hermano->hijo[hermano->elemNodo];
-    }
-    
-    hijo->elemNodo++;
-    hermano->elemNodo--;
-}
 
-template <typename Type, int grado>
-void ArbolB<Type, grado>::PrestarseDeHermanoDer(Nodo* padre, int indiceHijo) {
-    Nodo* hijo = padre->hijo[indiceHijo];
-    Nodo* hermano = padre->hijo[indiceHijo+1];
-    
-    hijo->claves[hijo->elemNodo] = padre->claves[indiceHijo];
-    padre->claves[indiceHijo] = hermano->claves[0];
-    
-    if(!EsHoja(hermano)) {
-        hijo->hijo[hijo->elemNodo+1] = hermano->hijo[0];
-    }
-    
-    for(int i = 1; i < hermano->elemNodo; i++) {
-        hermano->claves[i-1] = hermano->claves[i];
-    }
-    
-    if(!EsHoja(hermano)) {
-        for(int i = 1; i <= hermano->elemNodo; i++) {
-            hermano->hijo[i-1] = hermano->hijo[i];
-        }
-    }
-    
-    hijo->elemNodo++;
-    hermano->elemNodo--;
-}
 
-template <typename Type, int grado>
-void ArbolB<Type, grado>::FusionarHijos(Nodo* padre, int indiceHijo) {
-    Nodo* hijoIzq = padre->hijo[indiceHijo];
-    Nodo* hijoDer = padre->hijo[indiceHijo+1];
-    
-    hijoIzq->claves[hijoIzq->elemNodo++] = padre->claves[indiceHijo];
-    
-    for(int i = 0; i < hijoDer->elemNodo; ++i) {
-        hijoIzq->claves[hijoIzq->elemNodo++] = hijoDer->claves[i];
-    }
-    
-    if(!EsHoja(hijoDer)) {
-        for(int i = 0; i <= hijoDer->elemNodo; ++i) {
-            hijoIzq->hijo[hijoIzq->elemNodo + i] = hijoDer->hijo[i];
-        }
-    }
-    
-    for(int i = indiceHijo+1; i < padre->elemNodo; ++i) {
-        padre->claves[i-1] = padre->claves[i];
-        padre->hijo[i] = padre->hijo[i+1];
-    }
-    padre->elemNodo--;
-    
-    delete hijoDer;
-}
 
-template <typename Type, int grado>
-Type ArbolB<Type, grado>::ObtenerPredecesor(Nodo* subraiz) {
-    while(!EsHoja(subraiz)) {
-        subraiz = subraiz->hijo[subraiz->elemNodo];
-    }
-    return subraiz->claves[subraiz->elemNodo-1];
-}
 
-template <typename Type, int grado>
-Type ArbolB<Type, grado>::ObtenerSucesor(Nodo* subraiz) {
-    while(!EsHoja(subraiz)) {
-        subraiz = subraiz->hijo[0];
-    }
-    return subraiz->claves[0];
-}
 
-template <typename Type, int grado>
-typename ArbolB<Type, grado>::Nodo* ArbolB<Type, grado>::EncontrarPadre(Nodo* actual, Nodo* padre, Nodo* buscado) {
-    if(actual == buscado) return padre;
-    if(EsHoja(actual)) return nullptr;
-    
-    for(int i = 0; i <= actual->elemNodo; i++) {
-        Nodo* encontrado = EncontrarPadre(actual->hijo[i], actual, buscado);
-        if(encontrado != nullptr) return encontrado;
-    }
-    return nullptr;
-}
 
-template <typename Type, int grado>
-int ArbolB<Type, grado>::ObtenerIndiceHijo(Nodo* padre, Nodo* hijo) {
-    for(int i = 0; i <= padre->elemNodo; i++) {
-        if(padre->hijo[i] == hijo) return i;
-    }
-    return -1;
-}
+
+
+
+
+//***************************************************************************************************
 
 // Métodos para vaciar el árbol
 template <typename Type, int grado>

@@ -1,7 +1,7 @@
 #include <iostream>
 #include "../Headers/ArbolB.hpp"
 
-void imprimirEstado(const ArbolB<int, 5>& arbol, const std::string& mensaje = "") {
+/*void imprimirEstado(const ArbolB<int, 5>& arbol, const std::string& mensaje = "") {
     if (!mensaje.empty()) {
         std::cout << "\n--- " << mensaje << " ---\n";
     }
@@ -18,28 +18,30 @@ void pruebaBusqueda(const ArbolB<int, 5>& arbol, int valor) {
     std::cout << "Buscando " << valor << ": " 
               << (arbol.Buscar(valor) ? "Encontrado" : "No encontrado") 
               << std::endl;
-}
+}*/
 
 int main() {
     // Prueba 1: Creación e inserción
     ArbolB<int, 5> arbol;
-    for(int i = 1; i <= 10; ++i) {
+    for(int i = 1; i <= 5; ++i) {
         arbol.Agregar(i);
     }
-    imprimirEstado(arbol, "Después de inserciones iniciales");
+
+    arbol.ImprimirNiveles();
+    //imprimirEstado(arbol, "Después de inserciones iniciales");
 
     // Prueba 2: Búsquedas
-    pruebaBusqueda(arbol, 5);
+    /*pruebaBusqueda(arbol, 5);
     pruebaBusqueda(arbol, 15);
 
     // Prueba 3: Eliminaciones
     for(int i : {1, 10, 2, 3, 4}) {
         arbol.Eliminar(i);
         imprimirEstado(arbol, "Después de eliminar " + std::to_string(i));
-    }
+    }*/
 
     // Prueba 4: Insertar elementos desordenados
-    for(int i : {15, 12, 18, 11, 13}) {
+    /*for(int i : {15, 12, 18, 11, 13}) {
         arbol.Agregar(i);
     }
     imprimirEstado(arbol, "Después de inserciones adicionales");
@@ -62,7 +64,7 @@ int main() {
     arbol.Agregar(100);
     arbol.Agregar(50);
     arbol.Agregar(150);
-    imprimirEstado(arbol, "Después de nuevas inserciones en árbol vaciado");
+    imprimirEstado(arbol, "Después de nuevas inserciones en árbol vaciado");*/
 
     return 0;
 }

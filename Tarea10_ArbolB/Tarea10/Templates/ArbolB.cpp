@@ -99,7 +99,7 @@ void ArbolB<Type, grado>::Agregar(Type valor) {
 template <typename Type, int grado>
 void ArbolB<Type, grado>::Agregar(Type valor, Nodo* subraiz) {
     int i = subraiz->elemNodo - 1;
-    
+
     if(EsHoja(subraiz)) {
         while(i >= 0 && valor < subraiz->claves[i]) {
             subraiz->claves[i+1] = subraiz->claves[i];

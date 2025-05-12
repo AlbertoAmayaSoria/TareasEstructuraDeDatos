@@ -40,8 +40,10 @@ private:
     // Métodos auxiliares privados
     Nodo* CopiarArbol(Nodo* subraiz);
     void Agregar(Type valor, Nodo* subraiz);
-    bool EsHoja(Nodo* nodo) const;
-    void dividirNodo(Nodo* padre, int indiceHijo);
+    bool EsHoja(Nodo* subraiz) const; 
+
+    void OrdenarArbol(Nodo* subraiz);
+
     void Vaciar(Nodo* nodo);
     
     // Métodos para búsqueda
@@ -53,18 +55,7 @@ private:
     
     // Métodos para eliminación
     void Eliminar(Type valor, Nodo* subraiz);
-    void EliminarDeHoja(Nodo* nodo, int indice);
-    void EliminarDeNodoInterno(Nodo* nodo, int indice);
-    void ManejarUnderflow(Nodo* padre, int indiceHijo);
-    void PrestarseDeHermanoIzq(Nodo* padre, int indiceHijo);
-    void PrestarseDeHermanoDer(Nodo* padre, int indiceHijo);
-    void FusionarHijos(Nodo* padre, int indiceHijo);
-    Type ObtenerPredecesor(Nodo* subraiz);
-    Type ObtenerSucesor(Nodo* subraiz);
     
-    // Métodos auxiliares adicionales para eliminación
-    Nodo* EncontrarPadre(Nodo* actual, Nodo* padre, Nodo* buscado);
-    int ObtenerIndiceHijo(Nodo* padre, Nodo* hijo);
 };
 
 #include "../Templates/ArbolB.tpp"
