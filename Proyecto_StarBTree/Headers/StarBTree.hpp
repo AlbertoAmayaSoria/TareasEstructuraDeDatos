@@ -7,7 +7,7 @@ public:
     explicit StarBTree(); // Constructor por defecto
     StarBTree(const StarBTree &c); // Constructor de copia
     ~StarBTree(); // Destructor
-    StarBTree& operator=(const ArbolB &c); // Operador asignación
+    StarBTree& operator=(const StarBTree &c); // Operador asignación
 
     void Agregar(Type valor); // Agrega un nuevo elemento
     void Eliminar(Type valor); // Elimina el primer elemento con este valor
